@@ -1,4 +1,4 @@
-import {PlopTypes} from "@turbo/gen";
+import { PlopTypes } from "@turbo/gen";
 
 // Learn more about Turborepo Generators at https://turbo.build/repo/docs/core-concepts/monorepos/code-generation
 
@@ -24,7 +24,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: "append",
         path: "index.tsx",
         pattern: /(\/\/ component exports)/g,
-        template: "export * from \"./{{pascalCase name}}\";",
+        // eslint-disable-next-line quotes
+        template: 'export * from "./{{pascalCase name}}";',
       },
     ],
   });
