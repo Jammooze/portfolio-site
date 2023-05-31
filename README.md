@@ -1,3 +1,3 @@
 # voyage
 
-OpenPublish is a powerful online publishing platform that enables individuals and organizations to share their stories, ideas, and perspectives with a wide audience. Our platform provides a clean and user-friendly interface, empowering writers to create and publish articles on various topics, ranging from personal experiences to informative content.
+Voyage is a powerful online publishing platform that enables individuals and organizations to share their stories, ideas, and perspectives with a wide audience. Our platform provides a clean and user-friendly interface, empowering writers to create and publish articles on various topics, ranging from personal experiences to informative content.
