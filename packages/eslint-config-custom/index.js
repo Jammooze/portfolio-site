@@ -1,7 +1,8 @@
 module.exports = {
-  extends: ["next", "turbo", "prettier"],
+  extends: ["eslint:recommended", "next", "turbo", "prettier", "google"],
   rules: {
     "@next/next/no-html-link-for-pages": "off",
+    "quotes": ["error", "double"],
   },
   parserOptions: {
     babelOptions: {
