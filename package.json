@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "dotenv -- turbo run dev --filter api --filter web",
+    "dev": "dotenv -e ./.env.development.local turbo run dev --filter api --filter web",
     "lint": "turbo run lint",
     "clean": "turbo run prebuild",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
