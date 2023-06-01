@@ -7,7 +7,9 @@
       "outputs": [".next/**", "!.next/cache/**" , ".dist/**"]
     },
     "lint": {},
-    "prebuild" : {},
+    "prebuild" : {
+      "cache": false
+    },
     "dev": {
       "cache": false,
       "persistent": true
