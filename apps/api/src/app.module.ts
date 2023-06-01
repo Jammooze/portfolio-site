@@ -1,21 +1,30 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConfigModule , ConfigService } from "@nestjs/config";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { PostTagModule } from "./post/tag/tag.module";
-
-console.log(process.env.NODE_ENV);
+import configuration from "./config/configuration";
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      host: "localhost",
-      port: 5432,
-      username: "postgres",
-      password: "12012003",
-      // database: "voyage",
-      synchronize: process.env.NODE_ENV === "development",
+    ConfigModule.forRoot({
+      // we are already using dotenv from turbo to load the env file.
+      ignoreEnvFile : true,
+      isGlobal : true,
+      load : [ configuration ]
+    }),
+    TypeOrmModule.forRootAsync({
+      inject : [ConfigService],
+      useFactory : (configService : ConfigService) => ({
+        type: "postgres",
+        host: configService.getOrThrow("DATABASE_HOST"),
+        port: configService.get("DATABASE_PORT"),
+        username: configService.getOrThrow("DATABASE_USERNAME"),
+        password: configService.getOrThrow("DATABASE_PASSWORD"),
+        // database: "voyage",
+        synchronize: configService.get("NODE_ENV") === "development",
+      })
     }),
     PostTagModule,
   ],
