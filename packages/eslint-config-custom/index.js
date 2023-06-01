@@ -4,6 +4,7 @@ module.exports = {
     "@next/next/no-html-link-for-pages": "off",
     "object-curly-spacing": "off",
     "quotes": ["error", "double"],
+    "prettier/prettier": ["error", {endOfLine: "auto"}],
   },
   parserOptions: {
     babelOptions: {
