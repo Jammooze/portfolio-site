@@ -12,6 +12,7 @@
       "cache": false
     },
     "dev": {
+      "env": ["API_PORT"],
       "cache": false,
       "persistent": true
     }
