@@ -3,10 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  BaseEntity,
 } from "typeorm";
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn({
     type: "bigint",
   })
@@ -43,7 +44,12 @@ export class User {
   email: string;
 
   @Column()
-  passwordHash: string;
+  isVerified: boolean;
+
+  @Column({
+    nullable: true,
+  })
+  passwordHash: string | null;
 
   @CreateDateColumn()
   registeredAt: Date;
@@ -54,12 +60,14 @@ export class User {
   })
   lastLogin: Date | null;
 
+  // The brief introduction of the Author to be displayed on each post.
   @Column({
     type: "text",
     nullable: true,
   })
   intro: string | null;
 
+  // The author details to be displayed on the Author Page.
   @Column({
     type: "text",
     nullable: true,

@@ -6,6 +6,7 @@ import { AppService } from "./app.service";
 import { PostTagModule } from "./post/tag/tag.module";
 import configuration from "./config/configuration";
 import { UserModule } from "./users/user.module";
+import { AuthModule } from "./auth/auth.module";
 
 @Module({
   imports: [
@@ -19,16 +20,18 @@ import { UserModule } from "./users/user.module";
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: "postgres",
-        host: configService.getOrThrow("DATABASE_HOST"),
-        port: configService.get("DATABASE_PORT"),
-        username: configService.getOrThrow("DATABASE_USERNAME"),
-        password: configService.getOrThrow("DATABASE_PASSWORD"),
+        host: configService.get("database.host"),
+        port: configService.get("database.port"),
+        username: configService.getOrThrow("database.username"),
+        password: configService.getOrThrow("database.password"),
+        autoLoadEntities: true,
         // database: "voyage",
         synchronize: configService.get("NODE_ENV") === "development",
       }),
     }),
     PostTagModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

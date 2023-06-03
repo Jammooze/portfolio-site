@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 module.exports = {
-  extends: ["eslint:recommended", "next", "turbo", "prettier", "google"],
+  extends: ["eslint:recommended", "google", "next", "turbo", "prettier"],
   rules: {
     "@next/next/no-html-link-for-pages": "off",
     "object-curly-spacing": "off",
