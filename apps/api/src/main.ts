@@ -1,12 +1,23 @@
 import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
+import { ConfigService } from "@nestjs/config";
+import { ValidationPipe } from "@nestjs/common";
 import * as session from "express-session";
 import * as passport from "passport";
-import { ConfigService } from "@nestjs/config";
+import { AppModule } from "./app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      // Will strip validated object of any properties that do not have any decorators.
+      whitelist: true,
+      // Transform payloads to object typed according to their DTO classes.
+      transform: true,
+      stopAtFirstError: true,
+    })
+  );
 
   app.enableCors({
     origin: [configService.getOrThrow<string>("baseUrl")],

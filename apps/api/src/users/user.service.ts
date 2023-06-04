@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { CreateUserDto } from "./dtos/create-user.dto";
 import { Repository } from "typeorm";
 import { User } from "./user.entity";
@@ -8,6 +8,8 @@ import { AuthStrategy } from "../auth/auth-strategy.enum";
 
 @Injectable()
 export class UserService {
+  private readonly logger = new Logger(UserService.name);
+
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,

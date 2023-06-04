@@ -1,5 +1,57 @@
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsStrongPassword,
+  MaxLength,
+  MinLength,
+} from "class-validator";
+
 export class CreateUserDto {
+  @MaxLength(50, {
+    message: "Fullname must not exceed 50 characters.",
+  })
+  @MinLength(1, {
+    message: "Fullname must be at least 1 character long.",
+  })
+  @IsString({
+    message: "Fullname must be a string.",
+  })
+  @IsNotEmpty({
+    message: "Fullname is a required field.",
+  })
   fullName: string;
+
+  @IsEmail(
+    {},
+    {
+      message: "Invalid email format.",
+    }
+  )
+  @IsString({
+    message: "Email must be a string.",
+  })
+  @IsNotEmpty({
+    message: "Email is a required field.",
+  })
   email: string;
+
+  @IsStrongPassword(
+    {
+      minLength: 8,
+      minUppercase: 2,
+      minSymbols: 2,
+    },
+    {
+      message:
+        "Password must be at least 8 characters long and contain at least 2 uppercase letters, and 2 symbols.",
+    }
+  )
+  @IsString({
+    message: "Password must be a string.",
+  })
+  @IsNotEmpty({
+    message: "Password is a required field.",
+  })
   password: string;
 }
