@@ -20,6 +20,8 @@ async function bootstrap() {
       secret: "ewqwqewqqweqweqwe",
       resave: false,
       saveUninitialized: true,
+      // jamesfallen :]
+      name: "voyage-session-cookie",
     })
   );
 

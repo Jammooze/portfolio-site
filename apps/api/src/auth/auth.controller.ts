@@ -1,13 +1,44 @@
-import { Controller, Get, UseGuards, Res } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  UseGuards,
+  Res,
+  Body,
+  Post,
+  ConflictException,
+  HttpCode,
+} from "@nestjs/common";
 import { Response } from "express";
 import { GoogleAuthGuard } from "./guards/google-auth.guard";
 import { FacebookAuthGuard } from "./guards/facebook-auth.guard";
+import { CreateUserDto } from "../users/dtos/create-user.dto";
+import { UserService } from "../users/user.service";
+import { AuthStrategy } from "./auth-strategy.enum";
+import { User } from "../users/user.entity";
+// import { AuthService } from "./auth.service";
 
 @Controller("auth")
 export class AuthController {
-  // Making a request to this route will redirect the client to the oauth page.
-  // @Post("/login")
-  // handleBasicLogin()
+  constructor(private readonly userService: UserService) {}
+
+  @Post("register")
+  @HttpCode(201)
+  async handleBasicRegister(
+    @Body() createUserDto: CreateUserDto
+  ): Promise<User> {
+    const user = await this.userService.findUserByEmail(createUserDto.email);
+
+    if (user) {
+      throw new ConflictException("Email has already been taken.");
+    }
+
+    const createdUser = await this.userService.createUser(
+      createUserDto,
+      AuthStrategy.Email
+    );
+
+    return createdUser;
+  }
 
   @Get("google")
   @UseGuards(GoogleAuthGuard)

@@ -28,8 +28,6 @@ export class UserService {
     user.passwordHash = createUserDto.password
       ? await this.hashService.hash(createUserDto.password)
       : null;
-    user.intro = createUserDto.intro;
-    user.profile = createUserDto.profile;
 
     await user.save();
     return user;
