@@ -8,7 +8,6 @@ import {
   ConflictException,
   HttpCode,
   Req,
-  InternalServerErrorException,
 } from "@nestjs/common";
 import { Request, Response } from "express";
 import { GoogleAuthGuard } from "./guards/google-auth.guard";
@@ -17,6 +16,7 @@ import { CreateUserDto } from "../users/dtos/create-user.dto";
 import { UserService } from "../users/user.service";
 import { AuthStrategy } from "./auth-strategy.enum";
 import { User } from "../users/user.entity";
+import { LocalAuthGuard } from "./guards/local-auth.guard";
 // import { AuthService } from "./auth.service";
 
 @Controller("auth")
@@ -43,12 +43,18 @@ export class AuthController {
     return new Promise<User>((resolve, reject) => {
       req.login(createdUser, (err: any) => {
         if (err) {
-          throw new InternalServerErrorException(err);
+          reject(err);
         } else {
           resolve(createdUser);
         }
       });
     });
+  }
+
+  @Post("login")
+  @UseGuards(LocalAuthGuard)
+  handleBasicLogin(@Req() req: Request) {
+    return req.user;
   }
 
   @Get("google")
