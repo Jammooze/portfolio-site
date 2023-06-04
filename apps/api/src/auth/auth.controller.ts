@@ -81,4 +81,18 @@ export class AuthController {
   handleGoogleCallback(@Res() res: Response) {
     return res.redirect("http://localhost:3001/user/me");
   }
+
+  @Post("logout")
+  @HttpCode(204)
+  handleLogout(@Req() req: Request) {
+    return new Promise((resolve, reject) => {
+      req.session.destroy((err) => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve(null);
+      });
+    });
+  }
 }
