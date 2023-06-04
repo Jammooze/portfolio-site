@@ -6,6 +6,9 @@ import { FacebookAuthGuard } from "./guards/facebook-auth.guard";
 @Controller("auth")
 export class AuthController {
   // Making a request to this route will redirect the client to the oauth page.
+  // @Post("/login")
+  // handleBasicLogin()
+
   @Get("google")
   @UseGuards(GoogleAuthGuard)
   handleGoogleLogin(): void {

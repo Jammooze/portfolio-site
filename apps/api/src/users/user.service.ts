@@ -20,9 +20,7 @@ export class UserService {
   ): Promise<User> {
     const user = new User();
 
-    user.firstName = createUserDto.firstName;
-    user.middleName = createUserDto.middleName;
-    user.lastName = createUserDto.lastName;
+    user.fullName = createUserDto.fullName;
     user.email = createUserDto.email;
 
     // Third party services verifys the email address during the authentication process.

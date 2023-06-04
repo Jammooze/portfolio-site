@@ -25,8 +25,9 @@ import { AuthModule } from "./auth/auth.module";
         username: configService.getOrThrow("database.username"),
         password: configService.getOrThrow("database.password"),
         autoLoadEntities: true,
-        // database: "voyage",
-        synchronize: configService.get("NODE_ENV") === "development",
+        // database: "voyage"
+        synchronize: true,
+        // dropSchema: true,
       }),
     }),
     PostTagModule,

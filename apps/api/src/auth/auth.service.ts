@@ -3,24 +3,48 @@ import { Profile } from "passport";
 import { UserService } from "../users/user.service";
 import { User } from "../users/user.entity";
 import { CreateUserDto } from "../users/dtos/create-user.dto";
+import { HashService } from "../hash/hash.service";
 import { AuthStrategy } from "./auth-strategy.enum";
 import { extractFieldsFromOAuthProfile } from "./utils/extractFieldsFromOAuthProfile";
 
 export type OAuthProfile = {
-  name: {
-    givenName?: string;
-    middleName?: string;
-    familyName?: string;
-  };
+  fullName: string;
   email: string;
   profileUri?: string;
 };
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly hashService: HashService
+  ) {}
 
-  async validateOAuth2(
+  async validateUser(email: string, password: string): Promise<User | null> {
+    const user = await this.userService.findUserByEmail(email);
+
+    if (user === null) {
+      return null;
+    }
+
+    // cannot log into oauth2 accounts using the local-strategy.
+    if (user.passwordHash === null) {
+      return null;
+    }
+
+    const isPasswordValid = await this.hashService.compare(
+      password,
+      user.passwordHash
+    );
+
+    if (!isPasswordValid) {
+      return null;
+    }
+
+    return user;
+  }
+
+  async validateOAuth2User(
     profile: Profile,
     strategy: AuthStrategy
   ): Promise<User> {
@@ -32,9 +56,7 @@ export class AuthService {
     if (user === null) {
       const dto = new CreateUserDto();
 
-      dto.firstName = extractedFields.name.givenName;
-      dto.middleName = extractedFields.name.middleName;
-      dto.lastName = extractedFields.name.familyName;
+      dto.fullName = extractedFields.fullName;
       dto.password = null;
       dto.email = extractedFields.email;
 

@@ -6,11 +6,13 @@ import { AuthService } from "./auth.service";
 import { UserModule } from "../users/user.module";
 import { SessionSerializer } from "./session-serializer";
 import { FacebookStrategy } from "./strategies/facebook.strategy";
+import { HashModule } from "../hash/hash.module";
 
 @Module({
   imports: [
     UserModule,
     PassportModule.register({ session: true, property: "user" }),
+    HashModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, GoogleStrategy, FacebookStrategy, SessionSerializer],
