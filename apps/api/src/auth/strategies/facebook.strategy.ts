@@ -1,29 +1,30 @@
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Strategy, Profile } from "passport-google-oauth20";
+import { Strategy, Profile } from "passport-facebook";
 import { AuthService } from "../auth.service";
 import { AuthStrategy } from "../auth-strategy.enum";
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy) {
+export class FacebookStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly configService: ConfigService,
     private readonly authService: AuthService
   ) {
     super({
-      clientID: configService.getOrThrow("auth.google.clientID"),
-      clientSecret: configService.getOrThrow("auth.google.clientSecret"),
+      clientID: configService.getOrThrow("auth.facebook.clientID"),
+      clientSecret: configService.getOrThrow("auth.facebook.clientSecret"),
       callbackURL:
-        configService.getOrThrow("baseUrl") + "/auth/google/callback",
-      scope: ["profile", "email"],
+        configService.getOrThrow("baseUrl") + "/auth/facebook/callback",
+      scope: "email",
+      profileFields: ["emails", "name"],
     });
   }
 
   async validate(accessToken: string, refreshToken: string, profile: Profile) {
     const user = await this.authService.validateOAuth2(
       profile,
-      AuthStrategy.Google
+      AuthStrategy.Facebook
     );
 
     return user;

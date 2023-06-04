@@ -5,6 +5,7 @@ import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { UserModule } from "../users/user.module";
 import { SessionSerializer } from "./session-serializer";
+import { FacebookStrategy } from "./strategies/facebook.strategy";
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import { SessionSerializer } from "./session-serializer";
     PassportModule.register({ session: true, property: "user" }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, GoogleStrategy, SessionSerializer],
+  providers: [AuthService, GoogleStrategy, FacebookStrategy, SessionSerializer],
 })
 export class AuthModule {}
