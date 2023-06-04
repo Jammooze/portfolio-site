@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -36,6 +37,7 @@ export class User extends BaseEntity {
   @Column({
     nullable: true,
   })
+  @Exclude()
   passwordHash: string | null;
 
   @CreateDateColumn()

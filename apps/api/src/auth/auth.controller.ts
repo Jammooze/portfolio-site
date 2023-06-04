@@ -17,7 +17,8 @@ import { UserService } from "../users/user.service";
 import { AuthStrategy } from "./auth-strategy.enum";
 import { User } from "../users/user.entity";
 import { LocalAuthGuard } from "./guards/local-auth.guard";
-// import { AuthService } from "./auth.service";
+import { BlockAuthGuard } from "./guards/block-auth.guard";
+import { AuthRequiredGuard } from "./guards/auth-required.guard";
 
 @Controller("auth")
 export class AuthController {
@@ -25,6 +26,7 @@ export class AuthController {
 
   @Post("register")
   @HttpCode(201)
+  @UseGuards(BlockAuthGuard)
   async handleBasicRegister(
     @Req() req: Request,
     @Body() createUserDto: CreateUserDto
@@ -52,21 +54,20 @@ export class AuthController {
   }
 
   @Post("login")
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(BlockAuthGuard, LocalAuthGuard)
   handleBasicLogin(@Req() req: Request) {
     return req.user;
   }
 
   @Get("google")
-  @UseGuards(GoogleAuthGuard)
+  @UseGuards(BlockAuthGuard, GoogleAuthGuard)
   handleGoogleLogin(): void {
     return;
   }
 
   @Get("facebook")
-  @UseGuards(FacebookAuthGuard)
+  @UseGuards(BlockAuthGuard, FacebookAuthGuard)
   handleFacebookLogin(): void {
-    console.log("dqwe");
     return;
   }
 
@@ -83,6 +84,7 @@ export class AuthController {
   }
 
   @Post("logout")
+  @UseGuards(AuthRequiredGuard)
   @HttpCode(204)
   handleLogout(@Req() req: Request) {
     return new Promise((resolve, reject) => {

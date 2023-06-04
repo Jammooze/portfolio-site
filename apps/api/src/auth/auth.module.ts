@@ -7,6 +7,7 @@ import { UserModule } from "../users/user.module";
 import { SessionSerializer } from "./session-serializer";
 import { FacebookStrategy } from "./strategies/facebook.strategy";
 import { HashModule } from "../hash/hash.module";
+import { LocalStrategy } from "./strategies/local.strategy";
 
 @Module({
   imports: [
@@ -15,6 +16,12 @@ import { HashModule } from "../hash/hash.module";
     HashModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, GoogleStrategy, FacebookStrategy, SessionSerializer],
+  providers: [
+    AuthService,
+    GoogleStrategy,
+    FacebookStrategy,
+    LocalStrategy,
+    SessionSerializer,
+  ],
 })
 export class AuthModule {}
