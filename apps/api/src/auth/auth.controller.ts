@@ -7,8 +7,10 @@ import {
   Post,
   ConflictException,
   HttpCode,
+  Req,
+  InternalServerErrorException,
 } from "@nestjs/common";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { GoogleAuthGuard } from "./guards/google-auth.guard";
 import { FacebookAuthGuard } from "./guards/facebook-auth.guard";
 import { CreateUserDto } from "../users/dtos/create-user.dto";
@@ -24,6 +26,7 @@ export class AuthController {
   @Post("register")
   @HttpCode(201)
   async handleBasicRegister(
+    @Req() req: Request,
     @Body() createUserDto: CreateUserDto
   ): Promise<User> {
     const user = await this.userService.findUserByEmail(createUserDto.email);
@@ -37,7 +40,15 @@ export class AuthController {
       AuthStrategy.Email
     );
 
-    return createdUser;
+    return new Promise<User>((resolve, reject) => {
+      req.login(createdUser, (err: any) => {
+        if (err) {
+          throw new InternalServerErrorException(err);
+        } else {
+          resolve(createdUser);
+        }
+      });
+    });
   }
 
   @Get("google")
