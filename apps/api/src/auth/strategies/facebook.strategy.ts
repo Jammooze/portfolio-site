@@ -27,6 +27,9 @@ export class FacebookStrategy extends PassportStrategy(Strategy) {
       AuthStrategy.Facebook
     );
 
-    return user;
+    return {
+      id: user.id,
+      email: user.email,
+    };
   }
 }

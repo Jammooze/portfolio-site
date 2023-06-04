@@ -26,6 +26,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
       AuthStrategy.Google
     );
 
-    return user;
+    return {
+      id: user.id,
+      email: user.email,
+    };
   }
 }

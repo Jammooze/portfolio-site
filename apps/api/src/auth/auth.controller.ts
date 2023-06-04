@@ -15,10 +15,10 @@ import { FacebookAuthGuard } from "./guards/facebook-auth.guard";
 import { CreateUserDto } from "../users/dtos/create-user.dto";
 import { UserService } from "../users/user.service";
 import { AuthStrategy } from "./auth-strategy.enum";
-import { User } from "../users/user.entity";
 import { LocalAuthGuard } from "./guards/local-auth.guard";
 import { BlockAuthGuard } from "./guards/block-auth.guard";
 import { AuthRequiredGuard } from "./guards/auth-required.guard";
+import { SessionUser } from "./session-user";
 
 @Controller("auth")
 export class AuthController {
@@ -30,7 +30,7 @@ export class AuthController {
   async handleBasicRegister(
     @Req() req: Request,
     @Body() createUserDto: CreateUserDto
-  ): Promise<User> {
+  ): Promise<SessionUser> {
     const user = await this.userService.findUserByEmail(createUserDto.email);
 
     if (user) {
@@ -42,12 +42,17 @@ export class AuthController {
       AuthStrategy.Email
     );
 
-    return new Promise<User>((resolve, reject) => {
-      req.login(createdUser, (err: any) => {
+    const sessionUser = {
+      id: createdUser.id,
+      email: createdUser.email,
+    };
+
+    return new Promise<SessionUser>((resolve, reject) => {
+      req.login(sessionUser, (err: any) => {
         if (err) {
           reject(err);
         } else {
-          resolve(createdUser);
+          resolve(sessionUser);
         }
       });
     });
