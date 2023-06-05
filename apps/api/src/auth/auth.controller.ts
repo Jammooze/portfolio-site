@@ -58,6 +58,7 @@ export class AuthController {
   }
 
   @Post("login")
+  @HttpCode(200)
   @UseGuards(BlockAuthGuard, LocalAuthGuard)
   handleBasicLogin(@Req() req: Request) {
     return req.user;
