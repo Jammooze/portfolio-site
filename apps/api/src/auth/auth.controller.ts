@@ -79,13 +79,13 @@ export class AuthController {
   @Get("facebook/callback")
   @UseGuards(FacebookAuthGuard)
   handleFacebookCallback(@Res() res: Response): void {
-    return res.redirect("http://localhost:3001/user/me");
+    return res.redirect("/user/me");
   }
 
   @Get("google/callback")
   @UseGuards(GoogleAuthGuard)
   handleGoogleCallback(@Res() res: Response) {
-    return res.redirect("http://localhost:3001/user/me");
+    return res.redirect("/user/me");
   }
 
   @Post("logout")

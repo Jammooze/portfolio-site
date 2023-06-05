@@ -4,7 +4,7 @@ export default () => ({
   baseUrl:
     process.env.NODE_ENV === "production"
       ? "https://voyage.com"
-      : "http://localhost:3001",
+      : "http://localhost:" + (parseInt(process.env.API_PORT, 10) || 3001),
   database: {
     host: process.env.DATABASE_HOST,
     port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
