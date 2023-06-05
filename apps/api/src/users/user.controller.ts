@@ -4,10 +4,12 @@ import {
   Get,
   InternalServerErrorException,
   Req,
+  UseGuards,
   UseInterceptors,
 } from "@nestjs/common";
 import { Request } from "express";
 import { UserService } from "./user.service";
+import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
 
 @Controller("user")
 export class UserController {
@@ -15,6 +17,7 @@ export class UserController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get("/me")
+  @UseGuards(AuthRequiredGuard)
   async getAuthUser(@Req() req: Request) {
     const user = await this.userService.findUserByEmail(req.user.email);
 

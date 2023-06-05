@@ -1,4 +1,5 @@
-import { Exclude } from "class-transformer";
+import { Exclude, Transform } from "class-transformer";
+import { censorEmail } from "src/auth/utils/censorEmail";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -29,6 +30,7 @@ export class User extends BaseEntity {
     unique: true,
     length: 50,
   })
+  @Transform(({ value }: { value: string }) => censorEmail(value))
   email: string;
 
   @Column()
