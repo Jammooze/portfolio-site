@@ -1,20 +1,18 @@
 import { Exclude, Transform } from "class-transformer";
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   BaseEntity,
   OneToMany,
+  PrimaryColumn,
 } from "typeorm";
 import { Post } from "../post/entities/post.entity";
 import { censorEmail } from "../auth/utils/censorEmail";
 
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn({
-    type: "bigint",
-  })
+  @PrimaryColumn()
   id: string;
 
   @Column({

@@ -5,21 +5,26 @@ import { SlugService } from "../slug/slug.service";
 import { CreatePostDto } from "./dtos/create-post.dto";
 import { Post } from "./entities/post.entity";
 import { IdService } from "../id/id.service";
+import { UserService } from "../users/user.service";
 
 @Injectable()
 export class PostService {
   constructor(
     private readonly slugService: SlugService,
     private readonly idService: IdService,
+    private readonly userService: UserService,
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>
   ) {}
 
   async create(createPostDto: CreatePostDto, userId: string): Promise<Post> {
+    // const user = await this.userService.find
+
     const post = new Post();
     const postId = this.idService.generateId();
 
     post.id = postId;
+    post.metaTitle = "1231321";
     post.slug = `${this.slugService.slugify(createPostDto.title)}-${postId}`;
     post.title = createPostDto.title;
     post.userId = userId;
