@@ -9,6 +9,7 @@ import {
   Delete,
   HttpCode,
   Param,
+  Get,
 } from "@nestjs/common";
 import { Request } from "express";
 import { PostService } from "./post.service";
@@ -25,6 +26,12 @@ export class PostController {
   @UseGuards(AuthRequiredGuard)
   async createPost(@Req() req: Request, @Body() body: CreatePostDto) {
     const post = await this.postService.create(body, req.user.id);
+    return post;
+  }
+
+  @Get(":id")
+  async getPostById(@Param("id") id: string) {
+    const post = await this.postService.getById(id);
     return post;
   }
 

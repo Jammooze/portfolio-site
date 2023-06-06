@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { SlugService } from "../slug/slug.service";
@@ -51,12 +55,19 @@ export class PostService {
     return savedPost;
   }
 
-  async getById(id: string): Promise<Post | null> {
+  async getById(id: string): Promise<Post> {
     const post = await this.postRepository.findOneBy({ id });
+
+    if (post === null) {
+      throw new NotFoundException(`Post with ID: ${id} not found.`);
+    }
+
     return post;
   }
 
-  async deleteById(id: string): Promise<void> {
-    await this.postRepository.delete(id);
+  async deleteById(id: string): Promise<Post> {
+    const post = await this.getById(id);
+    const deletedPost = await this.postRepository.remove(post);
+    return deletedPost;
   }
 }
