@@ -1,12 +1,14 @@
 import { Exclude, Transform } from "class-transformer";
-import { censorEmail } from "src/auth/utils/censorEmail";
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   BaseEntity,
+  OneToMany,
 } from "typeorm";
+import { Post } from "../post/entities/post.entity";
+import { censorEmail } from "../auth/utils/censorEmail";
 
 @Entity()
 export class User extends BaseEntity {
@@ -64,4 +66,7 @@ export class User extends BaseEntity {
     nullable: true,
   })
   profile: string | null;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 }

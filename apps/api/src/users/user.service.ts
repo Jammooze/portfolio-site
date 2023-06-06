@@ -31,8 +31,8 @@ export class UserService {
       ? await this.hashService.hash(createUserDto.password)
       : null;
 
-    await user.save();
-    return user;
+    const savedUser = await user.save();
+    return savedUser;
   }
 
   async findUserByEmail(email: string): Promise<User | null> {

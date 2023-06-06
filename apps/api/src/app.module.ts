@@ -7,6 +7,7 @@ import { PostTagModule } from "./post/tag/tag.module";
 import configuration from "./config/configuration";
 import { UserModule } from "./users/user.module";
 import { AuthModule } from "./auth/auth.module";
+import { PostModule } from "./post/post.module";
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AuthModule } from "./auth/auth.module";
         // dropSchema: true,
       }),
     }),
+    PostModule,
     PostTagModule,
     UserModule,
     AuthModule,
