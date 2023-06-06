@@ -6,9 +6,16 @@ import { IdModule } from "../id/id.module";
 import { PostService } from "./post.service";
 import { PostController } from "./post.controller";
 import { UserModule } from "src/users/user.module";
+import { PostMetaModule } from "./meta/post-meta.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post]), SlugModule, IdModule, UserModule],
+  imports: [
+    TypeOrmModule.forFeature([Post]),
+    SlugModule,
+    IdModule,
+    UserModule,
+    PostMetaModule,
+  ],
   providers: [PostService],
   controllers: [PostController],
 })

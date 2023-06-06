@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { SlugService } from "../slug/slug.service";
@@ -6,6 +6,7 @@ import { CreatePostDto } from "./dtos/create-post.dto";
 import { Post } from "./entities/post.entity";
 import { IdService } from "../id/id.service";
 import { UserService } from "../users/user.service";
+import { PostMetaService } from "./meta/post-meta.service";
 
 @Injectable()
 export class PostService {
@@ -14,26 +15,29 @@ export class PostService {
     private readonly postRepository: Repository<Post>,
     private readonly slugService: SlugService,
     private readonly idService: IdService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly metaService: PostMetaService
   ) {}
 
-  // we need to find a way to
   async create(createPostDto: CreatePostDto, userId: string): Promise<Post> {
-    // const user = await this.userService.findUserById(userId);
+    const user = await this.userService.findUserById(userId);
 
-    // if (user === null) {
-    //   throw new InternalServerErrorException(
-    //     `Unable to fetch information about the user with ID: ${userId}.`
-    //   );
-    // }
+    if (user === null) {
+      throw new InternalServerErrorException(
+        `Unable to fetch information about the user with ID: ${userId}.`
+      );
+    }
 
     const post = new Post();
     const postId = this.idService.generateId();
 
     post.id = postId;
-    post.metaTitle = "";
     post.slug = `${this.slugService.slugify(createPostDto.title)}-${postId}`;
     post.title = createPostDto.title;
+    post.metaTitle = this.metaService.createMetaTitle(
+      post.title,
+      user.fullName
+    );
     post.userId = userId;
     post.summary = createPostDto.summary;
     post.content = createPostDto.content;
