@@ -10,21 +10,28 @@ import { UserService } from "../users/user.service";
 @Injectable()
 export class PostService {
   constructor(
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>,
     private readonly slugService: SlugService,
     private readonly idService: IdService,
-    private readonly userService: UserService,
-    @InjectRepository(Post)
-    private readonly postRepository: Repository<Post>
+    private readonly userService: UserService
   ) {}
 
+  // we need to find a way to
   async create(createPostDto: CreatePostDto, userId: string): Promise<Post> {
-    // const user = await this.userService.find
+    // const user = await this.userService.findUserById(userId);
+
+    // if (user === null) {
+    //   throw new InternalServerErrorException(
+    //     `Unable to fetch information about the user with ID: ${userId}.`
+    //   );
+    // }
 
     const post = new Post();
     const postId = this.idService.generateId();
 
     post.id = postId;
-    post.metaTitle = "1231321";
+    post.metaTitle = "";
     post.slug = `${this.slugService.slugify(createPostDto.title)}-${postId}`;
     post.title = createPostDto.title;
     post.userId = userId;

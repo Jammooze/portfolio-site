@@ -10,6 +10,7 @@ import {
   // OneToMany,
 } from "typeorm";
 import { User } from "../../users/user.entity";
+import { Exclude } from "class-transformer";
 // import { PostMeta } from "./meta.entity";
 
 @Entity()
@@ -23,6 +24,7 @@ export class Post extends BaseEntity {
   title: string;
 
   @Column("bigint")
+  @Exclude()
   userId: string;
 
   @Column({
