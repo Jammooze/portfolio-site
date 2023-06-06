@@ -50,4 +50,13 @@ export class PostService {
     const savedPost = await this.postRepository.save(post);
     return savedPost;
   }
+
+  async getById(id: string): Promise<Post | null> {
+    const post = await this.postRepository.findOneBy({ id });
+    return post;
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await this.postRepository.delete(id);
+  }
 }
