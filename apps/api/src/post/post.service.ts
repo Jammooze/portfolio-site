@@ -11,6 +11,7 @@ import { Post } from "./entities/post.entity";
 import { IdService } from "../id/id.service";
 import { UserService } from "../users/user.service";
 import { PostMetaService } from "./meta/post-meta.service";
+import { UpdatePostDto } from "./dtos/update-post.dto";
 
 @Injectable()
 export class PostService {
@@ -23,7 +24,7 @@ export class PostService {
     private readonly metaService: PostMetaService
   ) {}
 
-  async create(createPostDto: CreatePostDto, userId: string): Promise<Post> {
+  async create(userId: string, createData: CreatePostDto): Promise<Post> {
     const user = await this.userService.findUserById(userId);
 
     if (user === null) {
@@ -36,16 +37,16 @@ export class PostService {
     const postId = this.idService.generateId();
 
     post.id = postId;
-    post.slug = `${this.slugService.slugify(createPostDto.title)}-${postId}`;
-    post.title = createPostDto.title;
+    post.slug = `${this.slugService.slugify(createData.title)}-${postId}`;
+    post.title = createData.title;
     post.metaTitle = this.metaService.createMetaTitle(
       post.title,
       user.fullName
     );
     post.userId = userId;
-    post.summary = createPostDto.summary;
-    post.content = createPostDto.content;
-    post.published = createPostDto.published;
+    post.summary = createData.summary;
+    post.content = createData.content;
+    post.published = createData.published;
 
     if (post.published) {
       post.publishedAt = new Date();
@@ -63,6 +64,14 @@ export class PostService {
     }
 
     return post;
+  }
+
+  async updateById(id: string, updateData: UpdatePostDto) {
+    const updatedPost = await this.postRepository.update(id, {
+      ...updateData,
+    });
+
+    return updatedPost;
   }
 
   async deleteById(id: string): Promise<Post> {
