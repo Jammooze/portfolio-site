@@ -17,7 +17,6 @@ import { Request } from "express";
 import { PostService } from "./post.service";
 import { CreatePostDto } from "./dtos/create-post.dto";
 import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
-import { AuthGuard } from "@nestjs/passport";
 import { UpdatePostDto } from "./dtos/update-post.dto";
 
 @Controller("posts")
@@ -29,6 +28,9 @@ export class PostController {
   @UseGuards(AuthRequiredGuard)
   async createPost(@Req() req: Request, @Body() createPostDto: CreatePostDto) {
     const post = await this.postService.create(req.user.id, createPostDto);
+
+    // create the post meta data.
+
     return post;
   }
 
@@ -58,7 +60,7 @@ export class PostController {
 
   @Delete(":id")
   @HttpCode(204)
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthRequiredGuard)
   async deletePost(@Param("id") id: string) {
     await this.postService.deleteById(id);
     return;

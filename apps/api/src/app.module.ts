@@ -3,16 +3,16 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { PostTagModule } from "./post/tag/tag.module";
+// import { PostTagModule } from "./post/tag/tag.module";
 import configuration from "./config/configuration";
 import { UserModule } from "./users/user.module";
 import { AuthModule } from "./auth/auth.module";
 import { PostModule } from "./post/post.module";
+// import { PostMetaModule } from "./post/meta/post-meta.module";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      // we are already using dotenv from turbo to load the env file.
       ignoreEnvFile: true,
       isGlobal: true,
       load: [configuration],
@@ -28,13 +28,14 @@ import { PostModule } from "./post/post.module";
         autoLoadEntities: true,
         // database: "voyage"
         synchronize: true,
-        // dropSchema: true,
+        dropSchema: true,
       }),
     }),
-    PostModule,
-    PostTagModule,
+    // PostTagModule,
     UserModule,
     AuthModule,
+    PostModule,
+    // PostMetaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

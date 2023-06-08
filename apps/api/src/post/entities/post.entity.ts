@@ -7,10 +7,11 @@ import {
   JoinColumn,
   Entity,
   PrimaryColumn,
-  // OneToMany,
+  OneToMany,
 } from "typeorm";
 import { User } from "../../users/user.entity";
 import { Exclude } from "class-transformer";
+import { PostMeta } from "./post-meta.entity";
 // import { PostMeta } from "./meta.entity";
 
 @Entity()
@@ -68,8 +69,8 @@ export class Post extends BaseEntity {
   })
   content: string;
 
-  // @OneToMany(() => PostMeta, (postMeta) => postMeta.post)
-  // meta: PostMeta;
+  @OneToMany(() => PostMeta, (postMeta) => postMeta.post)
+  metas: PostMeta[];
 
   @ManyToOne(() => User, (user) => user.posts, {
     onDelete: "RESTRICT",
