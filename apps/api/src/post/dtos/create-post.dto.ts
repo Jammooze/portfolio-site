@@ -1,3 +1,4 @@
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
   IsBoolean,
   IsNotEmpty,
@@ -8,6 +9,10 @@ import {
 } from "class-validator";
 
 export class CreatePostDto {
+  @ApiProperty({
+    minLength: 1,
+    maxLength: 75,
+  })
   @MaxLength(75, {
     message: "Title must not exceed 75 characters.",
   })
@@ -22,6 +27,7 @@ export class CreatePostDto {
   })
   title: string;
 
+  @ApiProperty()
   @IsString({
     message: "Content must be a string.",
   })
@@ -30,6 +36,7 @@ export class CreatePostDto {
   })
   content: string;
 
+  @ApiProperty()
   @IsBoolean({
     message: "Published must be a boolean.",
   })
@@ -38,6 +45,7 @@ export class CreatePostDto {
   })
   published: boolean;
 
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString({
     message: "Summary must be a string.",
