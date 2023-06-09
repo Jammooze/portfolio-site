@@ -9,6 +9,7 @@ import {
   HttpCode,
   Req,
 } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { Request, Response } from "express";
 import { GoogleAuthGuard } from "./guards/google-auth.guard";
 import { FacebookAuthGuard } from "./guards/facebook-auth.guard";
@@ -20,6 +21,7 @@ import { BlockAuthGuard } from "./guards/block-auth.guard";
 import { AuthRequiredGuard } from "./guards/auth-required.guard";
 
 @Controller("auth")
+@ApiTags("Auth")
 export class AuthController {
   constructor(private readonly userService: UserService) {}
 

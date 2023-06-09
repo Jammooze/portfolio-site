@@ -16,8 +16,10 @@ import { CreatePostDto } from "./dtos/create-post.dto";
 import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
 import { UpdatePostDto } from "./dtos/update-post.dto";
 import { PostOwnershipGuard } from "./guards/post-ownership.guard";
+import { ApiTags } from "@nestjs/swagger";
 
 @Controller("posts")
+@ApiTags("Posts")
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
