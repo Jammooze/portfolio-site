@@ -16,6 +16,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiUnauthorizedResponse,
+  ApiOperation,
 } from "@nestjs/swagger";
 import { Request } from "express";
 import { Post as PostEntity } from "./post.entity";
@@ -32,6 +33,7 @@ export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Post()
+  @ApiOperation({ summary: "Create a new post" })
   @ApiCreatedResponse({
     description: "OK.",
     type: PostEntity,
@@ -49,6 +51,7 @@ export class PostController {
   }
 
   @Patch(":id")
+  @ApiOperation({ summary: "Partially update a post" })
   @ApiOkResponse({
     description: "OK.",
     type: PostEntity,
@@ -72,6 +75,7 @@ export class PostController {
   }
 
   @Get(":id")
+  @ApiOperation({ summary: "Get a post" })
   @ApiOkResponse({
     description: "OK.",
     type: PostEntity,
@@ -85,6 +89,7 @@ export class PostController {
   }
 
   @Delete(":id")
+  @ApiOperation({ summary: "Delete a post" })
   @ApiOkResponse({
     description: "OK.",
     type: PostEntity,
