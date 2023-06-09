@@ -1,15 +1,12 @@
-import { Module } from "@nestjs/common";
+import { ClassSerializerInterceptor, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
-// import { PostTagModule } from "./post/tag/tag.module";
 import configuration from "./config/configuration";
 import { UserModule } from "./users/user.module";
 import { AuthModule } from "./auth/auth.module";
 import { PostModule } from "./post/post.module";
 import { IdModule } from "./id/id.module";
-// import { PostMetaModule } from "./post/meta/post-meta.module";
+import { APP_INTERCEPTOR } from "@nestjs/core";
 
 @Module({
   imports: [
@@ -39,7 +36,12 @@ import { IdModule } from "./id/id.module";
     IdModule,
     // PostMetaModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor,
+    },
+  ],
 })
 export class AppModule {}

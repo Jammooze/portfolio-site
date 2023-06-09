@@ -1,11 +1,9 @@
 import {
-  ClassSerializerInterceptor,
   Controller,
   Get,
   InternalServerErrorException,
   Req,
   UseGuards,
-  UseInterceptors,
 } from "@nestjs/common";
 import { Request } from "express";
 import { UserService } from "./user.service";
@@ -15,7 +13,6 @@ import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get("/me")
   @UseGuards(AuthRequiredGuard)
   async getAuthUser(@Req() req: Request) {

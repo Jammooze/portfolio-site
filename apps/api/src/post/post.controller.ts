@@ -1,11 +1,9 @@
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Post,
   Req,
   UseGuards,
-  UseInterceptors,
   Delete,
   HttpCode,
   Param,
@@ -23,7 +21,6 @@ import { PostOwnershipGuard } from "./guards/post-ownership.guard";
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   @UseGuards(AuthRequiredGuard)
   async createPost(@Req() req: Request, @Body() createPostDto: CreatePostDto) {
@@ -31,7 +28,6 @@ export class PostController {
     return post;
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Patch(":id")
   @UseGuards(AuthRequiredGuard, PostOwnershipGuard)
   async updatePost(
