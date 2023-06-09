@@ -10,11 +10,9 @@ import { CreatePostDto } from "./dtos/create-post.dto";
 import { Post } from "./post.entity";
 import { IdService } from "../id/id.service";
 import { UserService } from "../users/user.service";
-// import { PostMetaService } from "./meta/post-meta.service";
 import { UpdatePostDto } from "./dtos/update-post.dto";
 import { PostMetaService } from "./meta/post-meta.service";
 import { PostMetaHelperService } from "./meta/post-meta.helper.service";
-// import { PostMetaHelperService } from "./meta/post-meta.helper.service";
 
 @Injectable()
 export class PostService {
