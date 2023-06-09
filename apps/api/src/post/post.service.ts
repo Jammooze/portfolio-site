@@ -78,10 +78,11 @@ export class PostService {
   }
 
   async updateById(id: string, updateData: UpdatePostDto) {
-    const updatedPost = await this.postRepository.update(id, {
+    await this.postRepository.update(id, {
       ...updateData,
     });
 
+    const updatedPost = await this.getById(id);
     return updatedPost;
   }
 
@@ -89,5 +90,10 @@ export class PostService {
     const post = await this.getById(id);
     const deletedPost = await this.postRepository.remove(post);
     return deletedPost;
+  }
+
+  async doesUserOwnPost(userId: string, postId: string) {
+    const post = await this.getById(postId);
+    return post.userId === userId;
   }
 }

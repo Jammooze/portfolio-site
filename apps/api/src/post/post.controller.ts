@@ -11,13 +11,13 @@ import {
   Param,
   Get,
   Patch,
-  ForbiddenException,
 } from "@nestjs/common";
 import { Request } from "express";
 import { PostService } from "./post.service";
 import { CreatePostDto } from "./dtos/create-post.dto";
 import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
 import { UpdatePostDto } from "./dtos/update-post.dto";
+import { PostOwnershipGuard } from "./guards/post-ownership.guard";
 
 @Controller("posts")
 export class PostController {
@@ -31,20 +31,13 @@ export class PostController {
     return post;
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Patch(":id")
+  @UseGuards(AuthRequiredGuard, PostOwnershipGuard)
   async updatePost(
-    @Req() req: Request,
     @Param("id") id: string,
     @Body() updatePostDto: UpdatePostDto
   ) {
-    const post = await this.postService.getById(id);
-
-    if (post.userId !== req.user.id) {
-      throw new ForbiddenException(
-        "You are not authorized to update this post."
-      );
-    }
-
     const updatedPost = await this.postService.updateById(id, updatePostDto);
     return updatedPost;
   }
@@ -57,7 +50,7 @@ export class PostController {
 
   @Delete(":id")
   @HttpCode(204)
-  @UseGuards(AuthRequiredGuard)
+  @UseGuards(AuthRequiredGuard, PostOwnershipGuard)
   async deletePost(@Param("id") id: string) {
     await this.postService.deleteById(id);
     return;
