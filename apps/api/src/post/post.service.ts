@@ -88,6 +88,9 @@ export class PostService {
 
   async deleteById(id: string): Promise<Post> {
     const post = await this.getById(id);
+
+    // Delete all of the meta tags that is related to this post.
+    await this.postMetaService.deleteAll(post.id);
     const deletedPost = await this.postRepository.remove(post);
     return deletedPost;
   }

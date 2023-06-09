@@ -5,10 +5,14 @@ import { CreatePostMetaDto } from "./dtos/create-post-meta.dto";
 import { IdService } from "../../id/id.service";
 import { PostMetaHelperService } from "./post-meta.helper.service";
 import { User } from "../../users/user.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class PostMetaService {
   constructor(
+    @InjectRepository(PostMeta)
+    private readonly postMetaRepository: Repository<PostMeta>,
     private readonly idService: IdService,
     private readonly metaHelperService: PostMetaHelperService
   ) {}
@@ -22,6 +26,15 @@ export class PostMetaService {
     const createdPostMeta = await postMeta.save();
     return createdPostMeta;
   }
+
+  async deleteAll(postId: string) {
+    await this.postMetaRepository.delete({
+      postId,
+    });
+
+    return;
+  }
+
   // create all the necessary seo meta tags for a given post
   async createAll(post: Post, author: User): Promise<PostMeta[]> {
     const metaTags = this.metaHelperService.createMetaTags(post, author);
