@@ -10,7 +10,15 @@ import {
   Get,
   Patch,
 } from "@nestjs/common";
+import {
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+} from "@nestjs/swagger";
 import { Request } from "express";
+import { Post as PostEntity } from "./post.entity";
 import { PostService } from "./post.service";
 import { CreatePostDto } from "./dtos/create-post.dto";
 import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
@@ -24,6 +32,16 @@ export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Post()
+  @ApiCreatedResponse({
+    description: "OK.",
+    type: PostEntity,
+  })
+  @ApiForbiddenResponse({
+    description: "You do not have permission to access this resource.",
+  })
+  @ApiUnauthorizedResponse({
+    description: "Authentication is required to access this resource.",
+  })
   @UseGuards(AuthRequiredGuard)
   async createPost(@Req() req: Request, @Body() createPostDto: CreatePostDto) {
     const post = await this.postService.create(req.user.id, createPostDto);
@@ -31,6 +49,19 @@ export class PostController {
   }
 
   @Patch(":id")
+  @ApiOkResponse({
+    description: "OK.",
+    type: PostEntity,
+  })
+  @ApiNotFoundResponse({
+    description: "Post cannot be found.",
+  })
+  @ApiForbiddenResponse({
+    description: "You do not have permission to access this resource.",
+  })
+  @ApiUnauthorizedResponse({
+    description: "Authentication is required to access this resource.",
+  })
   @UseGuards(AuthRequiredGuard, PostOwnershipGuard)
   async updatePost(
     @Param("id") id: string,
@@ -41,12 +72,32 @@ export class PostController {
   }
 
   @Get(":id")
+  @ApiOkResponse({
+    description: "OK.",
+    type: PostEntity,
+  })
+  @ApiNotFoundResponse({
+    description: "Post cannot be found.",
+  })
   async getPostById(@Param("id") id: string) {
     const post = await this.postService.getById(id);
     return post;
   }
 
   @Delete(":id")
+  @ApiOkResponse({
+    description: "OK.",
+    type: PostEntity,
+  })
+  @ApiNotFoundResponse({
+    description: "Post cannot be found.",
+  })
+  @ApiForbiddenResponse({
+    description: "You do not have permission to access this resource.",
+  })
+  @ApiUnauthorizedResponse({
+    description: "Authentication is required to access this resource.",
+  })
   @HttpCode(204)
   @UseGuards(AuthRequiredGuard, PostOwnershipGuard)
   async deletePost(@Param("id") id: string) {
