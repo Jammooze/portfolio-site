@@ -4,10 +4,9 @@ import { User } from "./user.entity";
 import { UserService } from "./user.service";
 import { HashModule } from "../hash/hash.module";
 import { UserController } from "./user.controller";
-import { IdModule } from "../id/id.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), HashModule, IdModule],
+  imports: [TypeOrmModule.forFeature([User]), HashModule],
   providers: [UserService],
   controllers: [UserController],
   exports: [UserService],

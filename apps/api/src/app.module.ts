@@ -8,6 +8,7 @@ import configuration from "./config/configuration";
 import { UserModule } from "./users/user.module";
 import { AuthModule } from "./auth/auth.module";
 import { PostModule } from "./post/post.module";
+import { IdModule } from "./id/id.module";
 // import { PostMetaModule } from "./post/meta/post-meta.module";
 
 @Module({
@@ -35,6 +36,7 @@ import { PostModule } from "./post/post.module";
     UserModule,
     AuthModule,
     PostModule,
+    IdModule,
     // PostMetaModule,
   ],
   controllers: [AppController],
