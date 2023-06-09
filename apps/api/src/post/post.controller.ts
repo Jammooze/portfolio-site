@@ -28,9 +28,6 @@ export class PostController {
   @UseGuards(AuthRequiredGuard)
   async createPost(@Req() req: Request, @Body() createPostDto: CreatePostDto) {
     const post = await this.postService.create(req.user.id, createPostDto);
-
-    // create the post meta data.
-
     return post;
   }
 

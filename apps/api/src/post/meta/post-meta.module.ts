@@ -1,6 +1,6 @@
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Module } from "@nestjs/common";
-import { PostMeta } from "../entities/post-meta.entity";
+import { PostMeta } from "./post-meta.entity";
 import { PostMetaService } from "./post-meta.service";
 import { PostMetaHelperService } from "./post-meta.helper.service";
 import { IdModule } from "../../id/id.module";
@@ -9,6 +9,6 @@ import { IdModule } from "../../id/id.module";
   imports: [TypeOrmModule.forFeature([PostMeta]), IdModule],
   providers: [PostMetaHelperService, PostMetaService],
   // providers: [PostMetaHelperService],
-  // exports: [PostMetaHelperService],
+  exports: [PostMetaService, PostMetaHelperService],
 })
 export class PostMetaModule {}

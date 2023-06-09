@@ -6,7 +6,8 @@ import {
   JoinColumn,
   Column,
 } from "typeorm";
-import { Post } from "./post.entity";
+import { Post } from "../post.entity";
+import { Exclude } from "class-transformer";
 
 @Entity()
 export class PostMeta extends BaseEntity {
@@ -14,6 +15,7 @@ export class PostMeta extends BaseEntity {
   id: string;
 
   @Column()
+  @Exclude()
   postId: string;
 
   @ManyToOne(() => Post, (post) => post.metas)
@@ -23,6 +25,7 @@ export class PostMeta extends BaseEntity {
       name: "postId",
     },
   ])
+  @Exclude()
   post: Post;
 
   @Column({

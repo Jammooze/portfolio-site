@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { Post } from "../entities/post.entity";
-import { PostMeta } from "../entities/post-meta.entity";
+import { Post } from "../post.entity";
+import { PostMeta } from "./post-meta.entity";
 import { CreatePostMetaDto } from "../dtos/meta/create-post-meta.dto";
 import { IdService } from "../../id/id.service";
 import { PostMetaHelperService } from "./post-meta.helper.service";
@@ -12,12 +12,12 @@ export class PostMetaService {
     private readonly idService: IdService,
     private readonly metaHelperService: PostMetaHelperService
   ) {}
-  async create(post: Post, createMetaData: CreatePostMetaDto) {
+  async create(postId: string, createMetaData: CreatePostMetaDto) {
     const postMeta = new PostMeta();
     postMeta.id = this.idService.generateId();
     postMeta.key = createMetaData.key;
     postMeta.content = createMetaData.content;
-    postMeta.post = post;
+    postMeta.postId = postId;
 
     const createdPostMeta = await postMeta.save();
     return createdPostMeta;
@@ -26,12 +26,15 @@ export class PostMetaService {
   async createAll(post: Post, author: User): Promise<PostMeta[]> {
     const metaTags = this.metaHelperService.createMetaTags(post, author);
     const createdMetaTags: Promise<PostMeta>[] = [];
+
     for (const metaTag of metaTags) {
-      const createMetaData = new CreatePostMetaDto();
-      createMetaData.key = metaTag.key;
-      createMetaData.content = metaTag.content;
-      createdMetaTags.push(this.create(post, createMetaData));
+      const postMetaData = new CreatePostMetaDto();
+      postMetaData.key = metaTag.key;
+      postMetaData.content = metaTag.content;
+
+      createdMetaTags.push(this.create(post.id, postMetaData));
     }
-    return Promise.all(createdMetaTags);
+
+    return await Promise.all(createdMetaTags);
   }
 }

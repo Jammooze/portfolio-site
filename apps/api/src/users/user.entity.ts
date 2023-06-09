@@ -7,7 +7,7 @@ import {
   OneToMany,
   PrimaryColumn,
 } from "typeorm";
-import { Post } from "../post/entities/post.entity";
+import { Post } from "../post/post.entity";
 import { censorEmail } from "../auth/utils/censorEmail";
 
 @Entity()

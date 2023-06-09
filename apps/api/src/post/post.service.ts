@@ -7,11 +7,13 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { SlugService } from "../slug/slug.service";
 import { CreatePostDto } from "./dtos/create-post.dto";
-import { Post } from "./entities/post.entity";
+import { Post } from "./post.entity";
 import { IdService } from "../id/id.service";
 import { UserService } from "../users/user.service";
 // import { PostMetaService } from "./meta/post-meta.service";
 import { UpdatePostDto } from "./dtos/update-post.dto";
+import { PostMetaService } from "./meta/post-meta.service";
+import { PostMetaHelperService } from "./meta/post-meta.helper.service";
 // import { PostMetaHelperService } from "./meta/post-meta.helper.service";
 
 @Injectable()
@@ -21,7 +23,9 @@ export class PostService {
     private readonly postRepository: Repository<Post>,
     private readonly slugService: SlugService,
     private readonly idService: IdService,
-    private readonly userService: UserService // private readonly metaService: PostMetaService, // private readonly metaHelperService: PostMetaHelperService
+    private readonly userService: UserService,
+    private readonly postMetaService: PostMetaService,
+    private readonly postMetaHelperService: PostMetaHelperService
   ) {}
 
   async create(userId: string, createData: CreatePostDto): Promise<Post> {
@@ -39,10 +43,10 @@ export class PostService {
     post.id = postId;
     post.slug = `${this.slugService.slugify(createData.title)}-${postId}`;
     post.title = createData.title;
-    // post.metaTitle = this.metaHelperService.createMetaTitle(
-    //   post.title,
-    //   user.fullName
-    // );
+    post.metaTitle = this.postMetaHelperService.createMetaTitle(
+      post.title,
+      user.fullName
+    );
     post.user = user;
     post.summary = createData.summary;
     post.content = createData.content;
@@ -56,8 +60,8 @@ export class PostService {
 
     // We need to access information that is created only when the post is created to create
     // the necessary meta tags. Ex. slug
-    // const metaTags = await this.metaService.createAll(post, user);
-    // savedPost.meta = metaTags;
+    const metaTags = await this.postMetaService.createAll(post, user);
+    savedPost.metas = metaTags;
 
     const updatedPost = await savedPost.save();
     return updatedPost;

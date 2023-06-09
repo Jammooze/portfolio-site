@@ -9,9 +9,9 @@ import {
   PrimaryColumn,
   OneToMany,
 } from "typeorm";
-import { User } from "../../users/user.entity";
+import { User } from "../users/user.entity";
 import { Exclude } from "class-transformer";
-import { PostMeta } from "./post-meta.entity";
+import { PostMeta } from "./meta/post-meta.entity";
 // import { PostMeta } from "./meta.entity";
 
 @Entity()
@@ -70,6 +70,7 @@ export class Post extends BaseEntity {
   content: string;
 
   @OneToMany(() => PostMeta, (postMeta) => postMeta.post)
+  @Exclude()
   metas: PostMeta[];
 
   @ManyToOne(() => User, (user) => user.posts, {
@@ -80,5 +81,6 @@ export class Post extends BaseEntity {
     referencedColumnName: "id",
     name: "userId",
   })
+  @Exclude()
   user: User;
 }

@@ -28,7 +28,7 @@ import { PostModule } from "./post/post.module";
         autoLoadEntities: true,
         // database: "voyage"
         synchronize: true,
-        dropSchema: true,
+        // dropSchema: false,
       }),
     }),
     // PostTagModule,
