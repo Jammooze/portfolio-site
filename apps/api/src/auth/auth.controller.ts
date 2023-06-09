@@ -38,7 +38,7 @@ export class AuthController {
 
   @Post("register")
   @ApiCreatedResponse({
-    description: "User has been successfully registered.",
+    description: "OK.",
     schema: {
       properties: {
         id: { type: "number" },
@@ -87,7 +87,7 @@ export class AuthController {
   @Post("login")
   @ApiBody({ type: LoginUserDto })
   @ApiOkResponse({
-    description: "User has successfully logged in.",
+    description: "OK.",
     schema: {
       properties: {
         id: { type: "number" },
@@ -138,7 +138,7 @@ export class AuthController {
 
   @Post("logout")
   @ApiNoContentResponse({
-    description: "User has been successfully logged out.",
+    description: "OK.",
     schema: {
       properties: {},
     },
