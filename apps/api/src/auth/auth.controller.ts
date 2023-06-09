@@ -18,6 +18,7 @@ import {
   ApiBody,
   ApiUnauthorizedResponse,
   ApiOkResponse,
+  ApiConflictResponse,
 } from "@nestjs/swagger";
 import { Request, Response } from "express";
 import { GoogleAuthGuard } from "./guards/google-auth.guard";
@@ -45,7 +46,10 @@ export class AuthController {
     },
   })
   @ApiForbiddenResponse({
-    description: "Forbidden.",
+    description: "You do not have permission to access this resource.",
+  })
+  @ApiConflictResponse({
+    description: "Email has already been taken.",
   })
   @HttpCode(201)
   @UseGuards(BlockAuthGuard)
@@ -90,11 +94,11 @@ export class AuthController {
       },
     },
   })
-  @ApiUnauthorizedResponse({
-    description: "Incorrect email or password.",
-  })
   @ApiForbiddenResponse({
-    description: "Forbidden",
+    description: "You do not have permission to access this resource.",
+  })
+  @ApiUnauthorizedResponse({
+    description: "Incorrect email/password.",
   })
   @HttpCode(200)
   @UseGuards(BlockAuthGuard, LocalAuthGuard)
@@ -140,7 +144,7 @@ export class AuthController {
     },
   })
   @ApiForbiddenResponse({
-    description: "Forbidden.",
+    description: "You do not have permission to access this resource.",
   })
   @UseGuards(AuthRequiredGuard)
   @HttpCode(204)
