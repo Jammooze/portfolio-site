@@ -9,7 +9,16 @@ import {
   HttpCode,
   Req,
 } from "@nestjs/common";
-import { ApiExcludeEndpoint, ApiTags } from "@nestjs/swagger";
+import {
+  ApiExcludeEndpoint,
+  ApiTags,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNoContentResponse,
+  ApiBody,
+  ApiUnauthorizedResponse,
+  ApiOkResponse,
+} from "@nestjs/swagger";
 import { Request, Response } from "express";
 import { GoogleAuthGuard } from "./guards/google-auth.guard";
 import { FacebookAuthGuard } from "./guards/facebook-auth.guard";
@@ -19,6 +28,7 @@ import { AuthStrategy } from "./auth-strategy.enum";
 import { LocalAuthGuard } from "./guards/local-auth.guard";
 import { BlockAuthGuard } from "./guards/block-auth.guard";
 import { AuthRequiredGuard } from "./guards/auth-required.guard";
+import { LoginUserDto } from "./dtos/login-user.dto";
 
 @Controller("auth")
 @ApiTags("Auth")
@@ -26,6 +36,17 @@ export class AuthController {
   constructor(private readonly userService: UserService) {}
 
   @Post("register")
+  @ApiCreatedResponse({
+    description: "User has been successfully registered.",
+    schema: {
+      properties: {
+        id: { type: "number" },
+      },
+    },
+  })
+  @ApiForbiddenResponse({
+    description: "Forbidden.",
+  })
   @HttpCode(201)
   @UseGuards(BlockAuthGuard)
   async handleBasicRegister(
@@ -60,10 +81,27 @@ export class AuthController {
   }
 
   @Post("login")
+  @ApiBody({ type: LoginUserDto })
+  @ApiOkResponse({
+    description: "User has successfully logged in.",
+    schema: {
+      properties: {
+        id: { type: "number" },
+      },
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: "Incorrect email or password.",
+  })
+  @ApiForbiddenResponse({
+    description: "Forbidden",
+  })
   @HttpCode(200)
   @UseGuards(BlockAuthGuard, LocalAuthGuard)
   handleBasicLogin(@Req() req: Request) {
-    return req.user;
+    return {
+      id: req.user.id,
+    };
   }
 
   @ApiExcludeEndpoint()
@@ -95,6 +133,15 @@ export class AuthController {
   }
 
   @Post("logout")
+  @ApiNoContentResponse({
+    description: "User has been successfully logged out.",
+    schema: {
+      properties: {},
+    },
+  })
+  @ApiForbiddenResponse({
+    description: "Forbidden.",
+  })
   @UseGuards(AuthRequiredGuard)
   @HttpCode(204)
   handleLogout(@Req() req: Request) {

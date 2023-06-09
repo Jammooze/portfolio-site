@@ -43,7 +43,6 @@ export class CreateUserDto {
   email: string;
 
   @ApiProperty({
-    minLength: 8,
     description:
       "Password must be at least 8 characters long and contain at least 2 uppercase letters , 2 numbers, and 2 symbols.",
   })
