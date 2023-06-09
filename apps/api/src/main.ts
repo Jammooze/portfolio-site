@@ -24,7 +24,10 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: [configService.getOrThrow<string>("baseUrl")],
+    origin: [
+      configService.getOrThrow<string>("baseUrl"),
+      "https://accounts.google.com",
+    ],
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     preflightContinue: false,
     optionsSuccessStatus: 204,

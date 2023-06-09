@@ -9,7 +9,7 @@ import {
   HttpCode,
   Req,
 } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiExcludeEndpoint, ApiTags } from "@nestjs/swagger";
 import { Request, Response } from "express";
 import { GoogleAuthGuard } from "./guards/google-auth.guard";
 import { FacebookAuthGuard } from "./guards/facebook-auth.guard";
@@ -66,24 +66,28 @@ export class AuthController {
     return req.user;
   }
 
+  @ApiExcludeEndpoint()
   @Get("google")
   @UseGuards(BlockAuthGuard, GoogleAuthGuard)
   handleGoogleLogin(): void {
     return;
   }
 
+  @ApiExcludeEndpoint()
   @Get("facebook")
   @UseGuards(BlockAuthGuard, FacebookAuthGuard)
   handleFacebookLogin(): void {
     return;
   }
 
+  @ApiExcludeEndpoint()
   @Get("facebook/callback")
   @UseGuards(FacebookAuthGuard)
   handleFacebookCallback(@Res() res: Response): void {
     return res.redirect("/user/me");
   }
 
+  @ApiExcludeEndpoint()
   @Get("google/callback")
   @UseGuards(GoogleAuthGuard)
   handleGoogleCallback(@Res() res: Response) {

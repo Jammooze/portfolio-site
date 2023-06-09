@@ -44,7 +44,6 @@ export class CreateUserDto {
 
   @ApiProperty({
     minLength: 8,
-    example: "JaMeSFallen123!@",
     description:
       "Password must be at least 8 characters long and contain at least 2 uppercase letters , 2 numbers, and 2 symbols.",
   })
@@ -60,7 +59,6 @@ export class CreateUserDto {
         "Password must be at least 8 characters long and contain at least 2 uppercase letters , 2 numbers, and 2 symbols.",
     }
   )
-  @ApiProperty()
   @IsString({
     message: "Password must be a string.",
   })
