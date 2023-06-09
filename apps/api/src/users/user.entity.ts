@@ -9,23 +9,30 @@ import {
 } from "typeorm";
 import { Post } from "../post/post.entity";
 import { censorEmail } from "../auth/utils/censorEmail";
+import { ApiProperty } from "@nestjs/swagger";
 
 @Entity()
 export class User extends BaseEntity {
+  @ApiProperty()
   @PrimaryColumn()
   id: string;
 
+  @ApiProperty()
   @Column({
     length: 50,
   })
   fullName: string;
 
+  @ApiProperty({
+    nullable: true,
+  })
   @Column({
     nullable: true,
     length: 15,
   })
   mobile: string | null;
 
+  @ApiProperty()
   @Column({
     unique: true,
     length: 50,
@@ -33,6 +40,7 @@ export class User extends BaseEntity {
   @Transform(({ value }: { value: string }) => censorEmail(value))
   email: string;
 
+  @ApiProperty()
   @Column()
   isVerified: boolean;
 
@@ -42,23 +50,31 @@ export class User extends BaseEntity {
   @Exclude()
   passwordHash: string | null;
 
+  @ApiProperty()
   @CreateDateColumn()
   registeredAt: Date;
 
+  @ApiProperty({
+    nullable: true,
+  })
   @Column({
     type: "timestamptz",
     nullable: true,
   })
   lastLogin: Date | null;
 
-  // The brief introduction of the Author to be displayed on each post.
+  @ApiProperty({
+    nullable: true,
+  })
   @Column({
     type: "text",
     nullable: true,
   })
   intro: string | null;
 
-  // The author details to be displayed on the Author Page.
+  @ApiProperty({
+    nullable: true,
+  })
   @Column({
     type: "text",
     nullable: true,
