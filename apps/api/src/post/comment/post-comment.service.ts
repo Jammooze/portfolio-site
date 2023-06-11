@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { PostComment } from "./post-comment.entity";
-import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class PostCommentService {
@@ -9,4 +9,8 @@ export class PostCommentService {
     @InjectRepository(PostComment)
     private readonly postCommentRepository: Repository<PostComment>
   ) {}
+
+  async create() {
+    return;
+  }
 }

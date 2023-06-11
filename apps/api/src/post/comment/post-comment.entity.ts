@@ -5,8 +5,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  // JoinColumn,
-  // ManyToOne,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
@@ -73,6 +71,11 @@ export class PostComment extends BaseEntity {
   @Column()
   published: boolean;
 
+  // @Column({
+  //   default: false,
+  // })
+  // edited: boolean;
+
   @CreateDateColumn({
     type: "timestamptz",
   })
@@ -91,7 +94,7 @@ export class PostComment extends BaseEntity {
   publishedAt: Date | null;
 
   @Column({
-    length: 250,
+    length: 750,
   })
   content: string;
 }
