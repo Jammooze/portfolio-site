@@ -2,9 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { PostComment } from "./post-comment.entity";
-import { PostService } from "../post.service";
-import { UserService } from "../../users/user.service";
 import { CreatePostCommentDto } from "./dtos/create-post-comment.dto";
+import { PostService } from "../post.service";
+import { IdService } from "../../id/id.service";
+import { UserService } from "../../users/user.service";
 
 @Injectable()
 export class PostCommentService {
@@ -12,7 +13,8 @@ export class PostCommentService {
     @InjectRepository(PostComment)
     private readonly postCommentRepository: Repository<PostComment>,
     private readonly postService: PostService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly idService: IdService
   ) {}
 
   async create(
@@ -25,6 +27,7 @@ export class PostCommentService {
 
     const comment = new PostComment();
 
+    comment.id = this.idService.generateId();
     comment.user = user;
     comment.post = post;
 

@@ -5,7 +5,7 @@ import { UserModule } from "../../users/user.module";
 import { PostComment } from "./post-comment.entity";
 import { PostCommentController } from "./post-comment.controller";
 import { PostCommentService } from "./post-comment.service";
-import { PostCommentInteractionController } from "./post-comment-interaction.controller";
+// import { PostCommentInteractionController } from "./post-comment-interaction.controller";
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { PostCommentInteractionController } from "./post-comment-interaction.con
     UserModule,
     forwardRef(() => PostModule),
   ],
-  controllers: [PostCommentController, PostCommentInteractionController],
+  controllers: [PostCommentController],
   providers: [PostCommentService],
   exports: [],
 })

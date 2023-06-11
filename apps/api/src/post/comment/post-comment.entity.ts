@@ -40,6 +40,7 @@ export class PostComment extends BaseEntity {
       name: "postId",
     },
   ])
+  @Exclude()
   post: Post;
 
   @ManyToOne(() => User, (user) => user.comments, {
@@ -52,6 +53,7 @@ export class PostComment extends BaseEntity {
       name: "userId",
     },
   ])
+  @Exclude()
   user: User;
 
   @ManyToOne(() => PostComment, (postComment) => postComment.comments, {

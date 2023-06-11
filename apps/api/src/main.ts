@@ -8,6 +8,7 @@ import { AppModule } from "./app.module";
 import { UserModule } from "./users/user.module";
 import { AuthModule } from "./auth/auth.module";
 import { PostModule } from "./post/post.module";
+import { PostCommentModule } from "./post/comment/post-comment.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -65,6 +66,22 @@ async function bootstrap() {
     include: [PostModule],
   });
   SwaggerModule.setup("docs/posts", app, postDocument);
+
+  const postCommentConfig = new DocumentBuilder()
+    .setTitle("Posts Comment API")
+    .setDescription("API for managing the posts comments.")
+    .setVersion("1.0")
+    .build();
+
+  const postCommentDocument = SwaggerModule.createDocument(
+    app,
+    postCommentConfig,
+    {
+      include: [PostCommentModule],
+    }
+  );
+
+  SwaggerModule.setup("docs/posts-comments", app, postCommentDocument);
 
   app.use(
     session({

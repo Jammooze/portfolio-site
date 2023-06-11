@@ -26,7 +26,7 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
         autoLoadEntities: true,
         // database: "voyage"
         synchronize: true,
-        dropSchema: true,
+        // dropSchema: true,
       }),
     }),
     IdModule,
