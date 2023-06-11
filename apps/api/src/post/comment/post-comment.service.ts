@@ -6,6 +6,9 @@ import { CreatePostCommentDto } from "./dtos/create-post-comment.dto";
 import { PostService } from "../post.service";
 import { IdService } from "../../id/id.service";
 import { UserService } from "../../users/user.service";
+import { GetCommentsQueryDto } from "./dtos/get-comments-query.dto";
+import { PostCommentDto } from "./dtos/post-comment.dto";
+import { PostCommentUserDto } from "./dtos/post-comment-user.dto";
 
 @Injectable()
 export class PostCommentService {
@@ -30,17 +33,43 @@ export class PostCommentService {
     comment.id = this.idService.generateId();
     comment.user = user;
     comment.post = post;
+    comment.published = true;
+    comment.publishedAt = new Date();
 
-    // default published
-    // comment.published = true;
     comment.content = createCommentData.content;
 
     const createdComment = await comment.save();
-    return createdComment;
+    const createdCommentDto = PostCommentDto.from(createdComment);
+    return createdCommentDto;
   }
 
-  async getCommentsByPostId(postId: string) {
-    // const comments = await this.postCommentRepository.findBy
-    return;
+  async getCommentsByPostId(
+    postId: string,
+    getCommentsData: GetCommentsQueryDto
+  ) {
+    await this.postService.getById(postId);
+
+    const queryBuilder = await this.postCommentRepository.createQueryBuilder(
+      "comment"
+    );
+
+    queryBuilder
+      .leftJoinAndSelect("comment.user", "user")
+      .where("comment.postId = :postId", { postId });
+
+    if (getCommentsData.sort === "desc") {
+      queryBuilder.orderBy("comment.createdAt", "DESC");
+    } else {
+      queryBuilder.orderBy("comment.createdAt", "ASC");
+    }
+
+    queryBuilder.limit(getCommentsData.limit);
+
+    const comments = await queryBuilder.getMany();
+    const commentDtos = comments.map((comment) =>
+      PostCommentUserDto.from(comment)
+    );
+
+    return commentDtos;
   }
 }

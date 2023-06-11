@@ -12,8 +12,9 @@ import { Request } from "express";
 import { PostCommentService } from "./post-comment.service";
 import { CreatePostCommentDto } from "./dtos/create-post-comment.dto";
 import { AuthRequiredGuard } from "../../auth/guards/auth-required.guard";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
 import { GetCommentsQueryDto } from "./dtos/get-comments-query.dto";
+import { PostCommentDto } from "./dtos/post-comment.dto";
 
 @Controller("posts/:postId/comments")
 @ApiTags("Posts Comments")
@@ -21,6 +22,9 @@ export class PostCommentController {
   constructor(private readonly postCommentService: PostCommentService) {}
 
   @Post()
+  @ApiCreatedResponse({
+    type: PostCommentDto,
+  })
   @UseGuards(AuthRequiredGuard)
   async createComment(
     @Req() req: Request,
@@ -43,12 +47,15 @@ export class PostCommentController {
     @Param("postId") postId: string,
     @Query() query: GetCommentsQueryDto
   ) {
-    console.log(query);
+    const comments = await this.postCommentService.getCommentsByPostId(
+      postId,
+      query
+    );
 
     return {
       previousPageCursor: "",
       nextPageCursor: "",
-      comments: [],
+      comments,
     };
   }
 }

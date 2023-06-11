@@ -53,7 +53,6 @@ export class PostComment extends BaseEntity {
       name: "userId",
     },
   ])
-  @Exclude()
   user: User;
 
   @ManyToOne(() => PostComment, (postComment) => postComment.comments, {
@@ -74,9 +73,7 @@ export class PostComment extends BaseEntity {
   // })
   // title: string;
 
-  @Column({
-    default: true,
-  })
+  @Column()
   @Exclude()
   published: boolean;
 
