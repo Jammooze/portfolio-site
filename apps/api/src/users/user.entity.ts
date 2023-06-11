@@ -1,4 +1,4 @@
-import { Exclude, Transform } from "class-transformer";
+import { ApiProperty } from "@nestjs/swagger";
 import {
   Entity,
   Column,
@@ -7,9 +7,10 @@ import {
   OneToMany,
   PrimaryColumn,
 } from "typeorm";
-import { Post } from "../post/post.entity";
+import { Exclude, Transform } from "class-transformer";
 import { censorEmail } from "../auth/utils/censorEmail";
-import { ApiProperty } from "@nestjs/swagger";
+import { Post } from "../post/post.entity";
+import { PostComment } from "../post/comment/post-comment.entity";
 
 @Entity()
 export class User extends BaseEntity {
@@ -83,4 +84,7 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
+
+  @OneToMany(() => PostComment, (postComment) => postComment.user)
+  comments: PostComment[];
 }

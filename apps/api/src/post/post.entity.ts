@@ -13,6 +13,7 @@ import { User } from "../users/user.entity";
 import { Exclude } from "class-transformer";
 import { PostMeta } from "./meta/post-meta.entity";
 import { ApiProperty } from "@nestjs/swagger";
+import { PostComment } from "./comment/post-comment.entity";
 
 @Entity()
 export class Post extends BaseEntity {
@@ -90,6 +91,9 @@ export class Post extends BaseEntity {
   @OneToMany(() => PostMeta, (postMeta) => postMeta.post)
   @Exclude()
   metas: PostMeta[];
+
+  @OneToMany(() => PostComment, (postComment) => postComment.post)
+  comments: PostComment[];
 
   @ManyToOne(() => User, (user) => user.posts, {
     onDelete: "RESTRICT",

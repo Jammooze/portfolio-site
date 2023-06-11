@@ -6,13 +6,15 @@ import { PostService } from "./post.service";
 import { PostController } from "./post.controller";
 import { UserModule } from "../users/user.module";
 import { PostMetaModule } from "./meta/post-meta.module";
+import { PostCommentModule } from "./comment/post-comment.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Post]),
-    SlugModule,
     UserModule,
+    SlugModule,
     PostMetaModule,
+    PostCommentModule,
   ],
   providers: [PostService],
   controllers: [PostController],
