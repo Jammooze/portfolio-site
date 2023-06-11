@@ -25,7 +25,9 @@ export class UserService {
     createUserDto: CreateUserDto,
     strategy: AuthStrategy
   ): Promise<User> {
-    if (this.isEmailTaken(createUserDto.email)) {
+    const isEmailTaken = await this.isEmailTaken(createUserDto.email);
+
+    if (isEmailTaken) {
       throw new ConflictException("Email has already been taken.");
     }
 
@@ -50,7 +52,7 @@ export class UserService {
     return !!user;
   }
 
-  async getByEmail(email: string): Promise<User | null> {
+  async getByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOneBy({ email });
 
     if (user === null) {
@@ -62,7 +64,7 @@ export class UserService {
     return user;
   }
 
-  async getById(id: string): Promise<User | null> {
+  async getById(id: string): Promise<User> {
     const user = await this.userRepository.findOneBy({ id });
 
     if (user === null) {
