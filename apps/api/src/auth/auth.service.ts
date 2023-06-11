@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { Profile } from "passport";
 import { UserService } from "../users/user.service";
 import { User } from "../users/user.entity";
@@ -20,28 +24,31 @@ export class AuthService {
     private readonly hashService: HashService
   ) {}
 
-  async validateUser(email: string, password: string): Promise<User | null> {
-    const user = await this.userService.findUserByEmail(email);
+  async validateUser(email: string, password: string): Promise<User> {
+    try {
+      const user = await this.userService.getByEmail(email);
 
-    if (user === null) {
-      return null;
+      if (user.passwordHash === null) {
+        throw new UnauthorizedException("Invalid email or password.");
+      }
+
+      const isPasswordValid = await this.hashService.compare(
+        password,
+        user.passwordHash
+      );
+
+      if (!isPasswordValid) {
+        throw new UnauthorizedException("Invalid email or password.");
+      }
+
+      return user;
+    } catch (e) {
+      if (e instanceof NotFoundException) {
+        throw new UnauthorizedException("Invalid email or password.");
+      }
+
+      throw e;
     }
-
-    // cannot log into oauth2 accounts using the local-strategy.
-    if (user.passwordHash === null) {
-      return null;
-    }
-
-    const isPasswordValid = await this.hashService.compare(
-      password,
-      user.passwordHash
-    );
-
-    if (!isPasswordValid) {
-      return null;
-    }
-
-    return user;
   }
 
   async validateOAuth2User(
@@ -50,19 +57,23 @@ export class AuthService {
   ): Promise<User> {
     const extractedFields = extractFieldsFromOAuthProfile(profile);
 
-    let user = await this.userService.findUserByEmail(extractedFields.email);
+    try {
+      const user = await this.userService.getByEmail(extractedFields.email);
+      return user;
+    } catch (e) {
+      // will throw an notfoundexception if a user with the email cannot be found.
+      if (e instanceof NotFoundException) {
+        const dto = new CreateUserDto();
 
-    // if the user doesn't exist we will do an account creation on login.
-    if (user === null) {
-      const dto = new CreateUserDto();
+        dto.fullName = extractedFields.fullName;
+        dto.password = null;
+        dto.email = extractedFields.email;
 
-      dto.fullName = extractedFields.fullName;
-      dto.password = null;
-      dto.email = extractedFields.email;
+        const createdUser = await this.userService.create(dto, strategy);
+        return createdUser;
+      }
 
-      user = await this.userService.createUser(dto, strategy);
+      throw e;
     }
-
-    return user;
   }
 }

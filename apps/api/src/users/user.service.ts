@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateUserDto } from "./dtos/create-user.dto";
@@ -6,6 +10,7 @@ import { User } from "./user.entity";
 import { HashService } from "../hash/hash.service";
 import { AuthStrategy } from "../auth/auth-strategy.enum";
 import { IdService } from "../id/id.service";
+import { censorEmail } from "../auth/utils/censorEmail";
 
 @Injectable()
 export class UserService {
@@ -16,10 +21,14 @@ export class UserService {
     private readonly idService: IdService
   ) {}
 
-  async createUser(
+  async create(
     createUserDto: CreateUserDto,
     strategy: AuthStrategy
   ): Promise<User> {
+    if (this.isEmailTaken(createUserDto.email)) {
+      throw new ConflictException("Email has already been taken.");
+    }
+
     const user = new User();
 
     user.id = this.idService.generateId();
@@ -36,13 +45,30 @@ export class UserService {
     return savedUser;
   }
 
-  async findUserByEmail(email: string): Promise<User | null> {
+  async isEmailTaken(email: string): Promise<boolean> {
     const user = await this.userRepository.findOneBy({ email });
+    return !!user;
+  }
+
+  async getByEmail(email: string): Promise<User | null> {
+    const user = await this.userRepository.findOneBy({ email });
+
+    if (user === null) {
+      throw new NotFoundException(
+        `User with email: ${censorEmail(email)} not found.`
+      );
+    }
+
     return user;
   }
 
-  async findUserById(id: string): Promise<User | null> {
+  async getById(id: string): Promise<User | null> {
     const user = await this.userRepository.findOneBy({ id });
+
+    if (user === null) {
+      throw new NotFoundException(`User with ID: ${id} not found.`);
+    }
+
     return user;
   }
 }

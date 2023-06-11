@@ -5,7 +5,6 @@ import {
   Res,
   Body,
   Post,
-  ConflictException,
   HttpCode,
   Req,
 } from "@nestjs/common";
@@ -30,6 +29,7 @@ import { LocalAuthGuard } from "./guards/local-auth.guard";
 import { BlockAuthGuard } from "./guards/block-auth.guard";
 import { AuthRequiredGuard } from "./guards/auth-required.guard";
 import { LoginUserDto } from "./dtos/login-user.dto";
+import { ValidateLoginGuard } from "./guards/validate-login.guard";
 
 @Controller("auth")
 @ApiTags("Auth")
@@ -57,13 +57,7 @@ export class AuthController {
     @Req() req: Request,
     @Body() createUserDto: CreateUserDto
   ) {
-    const user = await this.userService.findUserByEmail(createUserDto.email);
-
-    if (user) {
-      throw new ConflictException("Email has already been taken.");
-    }
-
-    const createdUser = await this.userService.createUser(
+    const createdUser = await this.userService.create(
       createUserDto,
       AuthStrategy.Email
     );
@@ -101,7 +95,7 @@ export class AuthController {
     description: "Incorrect email/password.",
   })
   @HttpCode(200)
-  @UseGuards(BlockAuthGuard, LocalAuthGuard)
+  @UseGuards(BlockAuthGuard, ValidateLoginGuard, LocalAuthGuard)
   handleBasicLogin(@Req() req: Request) {
     return {
       id: req.user.id,

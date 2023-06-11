@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { SlugService } from "../slug/slug.service";
@@ -27,14 +23,7 @@ export class PostService {
   ) {}
 
   async create(userId: string, createData: CreatePostDto): Promise<Post> {
-    const user = await this.userService.findUserById(userId);
-
-    if (user === null) {
-      throw new InternalServerErrorException(
-        `Unable to fetch information about the user with ID: ${userId}.`
-      );
-    }
-
+    const user = await this.userService.getById(userId);
     const post = new Post();
     const postId = this.idService.generateId();
 
