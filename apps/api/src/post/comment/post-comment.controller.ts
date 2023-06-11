@@ -1,10 +1,22 @@
-import { Controller, Param, Post, Body, Req, UseGuards } from "@nestjs/common";
+import {
+  Controller,
+  Param,
+  Post,
+  Body,
+  Req,
+  UseGuards,
+  Get,
+  Query,
+} from "@nestjs/common";
 import { Request } from "express";
 import { PostCommentService } from "./post-comment.service";
 import { CreatePostCommentDto } from "./dtos/create-post-comment.dto";
 import { AuthRequiredGuard } from "../../auth/guards/auth-required.guard";
+import { ApiTags } from "@nestjs/swagger";
+import { GetCommentsQueryDto } from "./dtos/get-comments-query.dto";
 
 @Controller("posts/:postId/comments")
+@ApiTags("Posts Comments")
 export class PostCommentController {
   constructor(private readonly postCommentService: PostCommentService) {}
 
@@ -24,5 +36,19 @@ export class PostCommentController {
     );
 
     return comment;
+  }
+
+  @Get()
+  async getComments(
+    @Param("postId") postId: string,
+    @Query() query: GetCommentsQueryDto
+  ) {
+    console.log(query);
+
+    return {
+      previousPageCursor: "",
+      nextPageCursor: "",
+      comments: [],
+    };
   }
 }

@@ -38,4 +38,9 @@ export class PostCommentService {
     const createdComment = await comment.save();
     return createdComment;
   }
+
+  async getCommentsByPostId(postId: string) {
+    // const comments = await this.postCommentRepository.findBy
+    return;
+  }
 }

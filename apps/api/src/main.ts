@@ -68,7 +68,7 @@ async function bootstrap() {
   SwaggerModule.setup("docs/posts", app, postDocument);
 
   const postCommentConfig = new DocumentBuilder()
-    .setTitle("Posts Comment API")
+    .setTitle("Posts Comments API")
     .setDescription("API for managing the posts comments.")
     .setVersion("1.0")
     .build();
