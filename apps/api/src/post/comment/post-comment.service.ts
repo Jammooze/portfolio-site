@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import { PostComment } from "./post-comment.entity";
 import { PostService } from "../post.service";
 import { UserService } from "../../users/user.service";
+import { CreatePostCommentDto } from "./dtos/create-post-comment.dto";
 
 @Injectable()
 export class PostCommentService {
@@ -14,12 +15,24 @@ export class PostCommentService {
     private readonly userService: UserService
   ) {}
 
-  async create(postId: string, userId: string) {
+  async create(
+    postId: string,
+    userId: string,
+    createCommentData: CreatePostCommentDto
+  ) {
     const post = await this.postService.getById(postId);
     const user = await this.userService.getById(userId);
 
-    console.log(post, user);
+    const comment = new PostComment();
 
-    // const comment = new PostComment();
+    comment.user = user;
+    comment.post = post;
+
+    // default published
+    // comment.published = true;
+    comment.content = createCommentData.content;
+
+    const createdComment = await comment.save();
+    return createdComment;
   }
 }

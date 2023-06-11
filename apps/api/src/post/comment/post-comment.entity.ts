@@ -11,6 +11,7 @@ import {
 } from "typeorm";
 import { Post } from "../post.entity";
 import { User } from "../../users/user.entity";
+import { Exclude } from "class-transformer";
 
 @Entity()
 export class PostComment extends BaseEntity {
@@ -18,12 +19,15 @@ export class PostComment extends BaseEntity {
   id: string;
 
   @Column()
+  @Exclude()
   postId: string;
 
   @Column()
+  @Exclude()
   userId: string;
 
   @Column({ nullable: true })
+  @Exclude()
   parentId: string | null;
 
   @ManyToOne(() => Post, (post) => post.comments, {
@@ -68,7 +72,10 @@ export class PostComment extends BaseEntity {
   // })
   // title: string;
 
-  @Column()
+  @Column({
+    default: true,
+  })
+  @Exclude()
   published: boolean;
 
   // @Column({
