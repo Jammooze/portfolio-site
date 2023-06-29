@@ -18,6 +18,9 @@ export class PostCommentDto {
   @ApiProperty()
   createdAt: Date;
 
+  @ApiProperty()
+  edited: boolean;
+
   @ApiPropertyOptional()
   user: UserDto;
 

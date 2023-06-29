@@ -8,9 +8,17 @@ import {
   Get,
   Query,
   Patch,
+  Delete,
 } from "@nestjs/common";
 import { Request } from "express";
-import { ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
+import {
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from "@nestjs/swagger";
 import { PaginationQuery } from "src/pagination/paginationQuery";
 import { PostCommentService } from "./post-comment.service";
 import { CreatePostCommentDto } from "./dtos/create-post-comment.dto";
@@ -18,6 +26,7 @@ import { AuthRequiredGuard } from "../../auth/guards/auth-required.guard";
 import { PostCommentDto } from "./dtos/post-comment.dto";
 import { GetPostCommentsDto } from "./dtos/get-post.comments.dto";
 import { UpdatePostCommentDto } from "./dtos/update-post-comment.dto";
+import { PostCommentOwnership } from "./guards/post-comment.ownership.guard";
 
 @Controller("posts/:postId/comments")
 @ApiTags("Posts Comments")
@@ -26,7 +35,16 @@ export class PostCommentController {
 
   @Post()
   @ApiCreatedResponse({
+    description: "Successfully created post comment.",
     type: PostCommentDto,
+  })
+  @ApiNotFoundResponse({
+    description: `
+      1. Post cannot be found.
+    `,
+  })
+  @ApiUnauthorizedResponse({
+    description: "Authentication is required to access this resource.",
   })
   @UseGuards(AuthRequiredGuard)
   async createComment(
@@ -46,7 +64,23 @@ export class PostCommentController {
   }
 
   @Patch(":commentId")
-  @UseGuards(AuthRequiredGuard)
+  @ApiCreatedResponse({
+    description: "Successfully updated post comment.",
+    type: PostCommentDto,
+  })
+  @ApiNotFoundResponse({
+    description: `
+      1. Post cannot be found.
+      2. Post comment cannot be found.
+    `,
+  })
+  @ApiForbiddenResponse({
+    description: "You do not have permission to access this resource.",
+  })
+  @ApiUnauthorizedResponse({
+    description: "Authentication is required to access this resource.",
+  })
+  @UseGuards(AuthRequiredGuard, PostCommentOwnership)
   async updateComment(
     @Param("postId") postId: string,
     @Param("commentId") commentId: string,
@@ -61,9 +95,41 @@ export class PostCommentController {
     return updatedPost;
   }
 
+  @Delete(":commentId")
+  @ApiOkResponse({
+    description: "Succesfully deleted post comment.",
+  })
+  @ApiNotFoundResponse({
+    description: `
+      1. Post cannot be found.
+      2. Post comment cannot be found.
+    `,
+  })
+  @ApiForbiddenResponse({
+    description: "You do not have permission to access this resource.",
+  })
+  @ApiUnauthorizedResponse({
+    description: "Authentication is required to access this resource.",
+  })
+  async deleteComment(
+    @Param("postId") postId: string,
+    @Param("commentId") commentId: string
+  ) {
+    this.commentService.deleteCommentById(postId, commentId);
+  }
+
   @Get()
   @ApiCreatedResponse({
+    description: "Successfully fetched post comment.",
     type: GetPostCommentsDto,
+  })
+  @ApiNotFoundResponse({
+    description: `
+      1. Post cannot be found.
+    `,
+  })
+  @ApiUnauthorizedResponse({
+    description: "Authentication is required to access this resource.",
   })
   async getComments(
     @Param("postId") postId: string,

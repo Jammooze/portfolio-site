@@ -6,28 +6,32 @@ import {
   UnauthorizedException,
   ForbiddenException,
 } from "@nestjs/common";
-import { PostService } from "../post.service";
+import { PostCommentService } from "../post-comment.service";
 
 @Injectable()
-export class PostOwnershipGuard implements CanActivate {
-  constructor(private readonly postService: PostService) {}
+export class PostCommentOwnership implements CanActivate {
+  constructor(private readonly commentService: PostCommentService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req: Request = context.switchToHttp().getRequest();
 
     if (!req.isAuthenticated()) {
       throw new UnauthorizedException(
-        "Authentication is required to use the PostOwnershipGuard guard."
+        "Authentication is required to use the PostCommentOwnership guard."
       );
     }
 
+    const userId = req.user.id;
     const postId = req.params.id;
-    const doesUserOwnPost = await this.postService.doesUserOwnPost(
-      req.user.id,
-      postId
+    const commentId = req.params.commentId;
+
+    const doesUserOwnComment = await this.commentService.doesUserOwnComment(
+      postId,
+      commentId,
+      userId
     );
 
-    if (!doesUserOwnPost) {
+    if (!doesUserOwnComment) {
       throw new ForbiddenException(
         "You do not have permission to perform this action."
       );

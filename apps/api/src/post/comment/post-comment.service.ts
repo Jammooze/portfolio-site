@@ -47,11 +47,16 @@ export class PostCommentService {
     return createdCommentDto;
   }
 
-  async getById(id: string) {
-    const comment = await this.commentRepository.findOneBy({ id });
+  async getById(postId: string, commentId: string) {
+    const comment = await this.commentRepository.findOneBy({
+      id: commentId,
+      postId,
+    });
 
     if (comment === null) {
-      throw new NotFoundException(`Comment with ID: ${id} not found.`);
+      throw new NotFoundException(
+        `Comment with ID ${commentId} for Post ID ${postId} not found.`
+      );
     }
 
     return comment;
@@ -62,18 +67,21 @@ export class PostCommentService {
     commentId: string,
     updateData: UpdatePostCommentDto
   ) {
-    await this.postService.getById(postId);
-
-    const result = await this.commentRepository.update(commentId, {
-      ...updateData,
-      edited: true,
-    });
+    const result = await this.commentRepository.update(
+      { id: commentId, postId },
+      {
+        ...updateData,
+        edited: true,
+      }
+    );
 
     if (result.affected === 0) {
-      throw new NotFoundException(`Comment with ID: ${commentId} not found.`);
+      throw new NotFoundException(
+        `Comment with ID ${commentId} for Post ID ${postId} not found.`
+      );
     }
 
-    const comment = await this.getById(commentId);
+    const comment = await this.getById(postId, commentId);
     return comment;
   }
 
@@ -90,5 +98,16 @@ export class PostCommentService {
     );
 
     return paginationData;
+  }
+
+  async deleteCommentById(postId: string, commentId: string) {
+    const comment = await this.getById(postId, commentId);
+    const deletedComment = await this.commentRepository.remove(comment);
+    return deletedComment;
+  }
+
+  async doesUserOwnComment(postId: string, commentId: string, userId: string) {
+    const comment = await this.getById(postId, commentId);
+    return comment.userId === userId;
   }
 }
