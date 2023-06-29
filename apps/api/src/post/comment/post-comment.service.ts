@@ -1,23 +1,25 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import {
+  PaginationService,
+  PaginationResult,
+  PaginationQuery,
+} from "src/pagination/pagination.service";
 import { PostComment } from "./post-comment.entity";
 import { CreatePostCommentDto } from "./dtos/create-post-comment.dto";
-import { PostService } from "../post.service";
-import { IdService } from "../../id/id.service";
-import { UserService } from "../../users/user.service";
-import { GetCommentsQueryDto } from "./dtos/get-comments-query.dto";
 import { PostCommentDto } from "./dtos/post-comment.dto";
-import { PostCommentUserDto } from "./dtos/post-comment-user.dto";
+import { PostService } from "../post.service";
+import { UserService } from "../../users/user.service";
 
 @Injectable()
 export class PostCommentService {
   constructor(
     @InjectRepository(PostComment)
-    private readonly postCommentRepository: Repository<PostComment>,
+    private readonly commentRepository: Repository<PostComment>,
+    private readonly paginationService: PaginationService,
     private readonly postService: PostService,
-    private readonly userService: UserService,
-    private readonly idService: IdService
+    private readonly userService: UserService
   ) {}
 
   async create(
@@ -30,7 +32,7 @@ export class PostCommentService {
 
     const comment = new PostComment();
 
-    comment.id = this.idService.generateId();
+    // comment.id = this.idService.generateId();
     comment.user = user;
     comment.post = post;
     comment.published = true;
@@ -45,31 +47,16 @@ export class PostCommentService {
 
   async getCommentsByPostId(
     postId: string,
-    getCommentsData: GetCommentsQueryDto
-  ) {
+    query: PaginationQuery
+  ): Promise<PaginationResult<PostCommentDto>> {
     await this.postService.getById(postId);
-
-    const queryBuilder = await this.postCommentRepository.createQueryBuilder(
-      "comment"
+    const paginationData = await this.paginationService.paginate(
+      this.commentRepository,
+      query,
+      ["user"],
+      PostCommentDto.fromArray
     );
 
-    queryBuilder
-      .leftJoinAndSelect("comment.user", "user")
-      .where("comment.postId = :postId", { postId });
-
-    if (getCommentsData.sort === "desc") {
-      queryBuilder.orderBy("comment.createdAt", "DESC");
-    } else {
-      queryBuilder.orderBy("comment.createdAt", "ASC");
-    }
-
-    queryBuilder.limit(getCommentsData.limit);
-
-    const comments = await queryBuilder.getMany();
-    const commentDtos = comments.map((comment) =>
-      PostCommentUserDto.from(comment)
-    );
-
-    return commentDtos;
+    return paginationData;
   }
 }

@@ -9,7 +9,6 @@ import { CreateUserDto } from "./dtos/create-user.dto";
 import { User } from "./user.entity";
 import { HashService } from "../hash/hash.service";
 import { AuthStrategy } from "../auth/auth-strategy.enum";
-import { IdService } from "../id/id.service";
 import { censorEmail } from "../auth/utils/censorEmail";
 
 @Injectable()
@@ -17,8 +16,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly hashService: HashService,
-    private readonly idService: IdService
+    private readonly hashService: HashService
   ) {}
 
   async create(
@@ -33,7 +31,6 @@ export class UserService {
 
     const user = new User();
 
-    user.id = this.idService.generateId();
     user.fullName = createUserDto.fullName;
     user.email = createUserDto.email;
 

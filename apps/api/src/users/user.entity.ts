@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   BaseEntity,
   OneToMany,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { Exclude, Transform } from "class-transformer";
 import { censorEmail } from "../auth/utils/censorEmail";
@@ -15,7 +15,10 @@ import { PostComment } from "../post/comment/post-comment.entity";
 @Entity()
 export class User extends BaseEntity {
   @ApiProperty()
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn({
+    type: "bigint",
+  })
+  // @PrimaryColumn()
   id: string;
 
   @ApiProperty()

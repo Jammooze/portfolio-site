@@ -1,17 +1,19 @@
 import {
   Entity,
   BaseEntity,
-  PrimaryColumn,
   ManyToOne,
   JoinColumn,
   Column,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { Post } from "../post.entity";
 import { Exclude } from "class-transformer";
 
 @Entity()
 export class PostMeta extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn({
+    type: "bigint",
+  })
   id: string;
 
   @Column()

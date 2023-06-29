@@ -1,4 +1,5 @@
 import { Module, forwardRef } from "@nestjs/common";
+import { PaginationModule } from "src/pagination/pagination.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { PostModule } from "../post.module";
 import { UserModule } from "../../users/user.module";
@@ -11,6 +12,7 @@ import { PostCommentService } from "./post-comment.service";
   imports: [
     TypeOrmModule.forFeature([PostComment]),
     UserModule,
+    PaginationModule,
     forwardRef(() => PostModule),
   ],
   controllers: [PostCommentController],

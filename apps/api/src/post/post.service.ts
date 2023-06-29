@@ -25,10 +25,10 @@ export class PostService {
   async create(userId: string, createData: CreatePostDto): Promise<Post> {
     const user = await this.userService.getById(userId);
     const post = new Post();
-    const postId = this.idService.generateId();
+    const postSlugId = this.idService.generateId();
 
-    post.id = postId;
-    post.slug = `${this.slugService.slugify(createData.title)}-${postId}`;
+    post.slugId = postSlugId;
+    post.slug = `${this.slugService.slugify(createData.title)}-${postSlugId}`;
     post.title = createData.title;
     post.metaTitle = this.postMetaHelperService.createMetaTitle(
       post.title,

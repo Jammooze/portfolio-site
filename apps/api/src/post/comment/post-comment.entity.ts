@@ -6,7 +6,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Post } from "../post.entity";
@@ -15,7 +15,9 @@ import { Exclude } from "class-transformer";
 
 @Entity()
 export class PostComment extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn({
+    type: "bigint",
+  })
   id: string;
 
   @Column()

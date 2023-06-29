@@ -8,11 +8,11 @@ export class UserDto {
   @ApiProperty()
   fullName: string;
 
-  static from(user: User): UserDto {
+  static from(record: User): UserDto {
     const userDto = new UserDto();
 
-    userDto.id = user.id;
-    userDto.fullName = user.fullName;
+    userDto.id = record.id;
+    userDto.fullName = record.fullName;
 
     return userDto;
   }

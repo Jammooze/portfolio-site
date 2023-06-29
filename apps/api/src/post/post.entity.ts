@@ -6,8 +6,8 @@ import {
   ManyToOne,
   JoinColumn,
   Entity,
-  PrimaryColumn,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "../users/user.entity";
 import { Exclude } from "class-transformer";
@@ -18,7 +18,9 @@ import { PostComment } from "./comment/post-comment.entity";
 @Entity()
 export class Post extends BaseEntity {
   @ApiProperty()
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn({
+    type: "bigint",
+  })
   id: string;
 
   @ApiProperty()
@@ -45,6 +47,13 @@ export class Post extends BaseEntity {
     length: 100,
   })
   slug: string;
+
+  @ApiProperty()
+  @Column({
+    unique: true,
+  })
+  @Exclude()
+  slugId: string;
 
   @ApiProperty({
     nullable: true,

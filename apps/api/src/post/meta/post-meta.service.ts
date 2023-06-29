@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { Post } from "../post.entity";
 import { PostMeta } from "./post-meta.entity";
 import { CreatePostMetaDto } from "./dtos/create-post-meta.dto";
-import { IdService } from "../../id/id.service";
 import { PostMetaHelperService } from "./post-meta.helper.service";
 import { User } from "../../users/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -13,12 +12,10 @@ export class PostMetaService {
   constructor(
     @InjectRepository(PostMeta)
     private readonly postMetaRepository: Repository<PostMeta>,
-    private readonly idService: IdService,
     private readonly metaHelperService: PostMetaHelperService
   ) {}
   async create(postId: string, createMetaData: CreatePostMetaDto) {
     const postMeta = new PostMeta();
-    postMeta.id = this.idService.generateId();
     postMeta.key = createMetaData.key;
     postMeta.content = createMetaData.content;
     postMeta.postId = postId;

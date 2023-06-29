@@ -9,10 +9,14 @@ export class PostCommentUserDto extends PostCommentDto {
   })
   user: UserDto;
 
-  static from(comment: PostComment): PostCommentUserDto {
-    const postCommentDto = super.from(comment) as PostCommentUserDto;
-    postCommentDto.user = UserDto.from(comment.user);
+  static from(record: PostComment): PostCommentUserDto {
+    const postCommentDto = super.from(record) as PostCommentUserDto;
+    postCommentDto.user = UserDto.from(record.user);
 
     return postCommentDto;
+  }
+
+  static fromArray(records: PostComment[]): PostCommentUserDto[] {
+    return records.map((record) => PostCommentUserDto.from(record), this);
   }
 }
