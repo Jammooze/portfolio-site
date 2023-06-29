@@ -79,10 +79,10 @@ export class PostComment extends BaseEntity {
   @Exclude()
   published: boolean;
 
-  // @Column({
-  //   default: false,
-  // })
-  // edited: boolean;
+  @Column({
+    default: false,
+  })
+  edited: boolean;
 
   @CreateDateColumn({
     type: "timestamptz",

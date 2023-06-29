@@ -23,9 +23,8 @@ export class PaginationService {
     const skip = (query.pageIndex - 1) * query.pageSize;
 
     if (skip > totalRecords) {
-      const repositoryName = repository.constructor.name;
       throw new BadRequestException(
-        `Invalid pagination parameters: The requested page exceeds the total number of records in ${repositoryName}.`
+        "Invalid pagination parameters: The requested page exceeds the total number of records in repository."
       );
     }
 

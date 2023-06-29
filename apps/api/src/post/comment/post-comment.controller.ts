@@ -7,6 +7,7 @@ import {
   UseGuards,
   Get,
   Query,
+  Patch,
 } from "@nestjs/common";
 import { Request } from "express";
 import { ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
@@ -16,11 +17,12 @@ import { CreatePostCommentDto } from "./dtos/create-post-comment.dto";
 import { AuthRequiredGuard } from "../../auth/guards/auth-required.guard";
 import { PostCommentDto } from "./dtos/post-comment.dto";
 import { GetPostCommentsDto } from "./dtos/get-post.comments.dto";
+import { UpdatePostCommentDto } from "./dtos/update-post-comment.dto";
 
 @Controller("posts/:postId/comments")
 @ApiTags("Posts Comments")
 export class PostCommentController {
-  constructor(private readonly postCommentService: PostCommentService) {}
+  constructor(private readonly commentService: PostCommentService) {}
 
   @Post()
   @ApiCreatedResponse({
@@ -34,13 +36,29 @@ export class PostCommentController {
   ) {
     const userId = req.user.id;
 
-    const comment = await this.postCommentService.create(
+    const comment = await this.commentService.create(
       postId,
       userId,
       createPostCommentDto
     );
 
     return comment;
+  }
+
+  @Patch(":commentId")
+  @UseGuards(AuthRequiredGuard)
+  async updateComment(
+    @Param("postId") postId: string,
+    @Param("commentId") commentId: string,
+    @Body() updatePostCommentDto: UpdatePostCommentDto
+  ) {
+    const updatedPost = await this.commentService.updateById(
+      postId,
+      commentId,
+      updatePostCommentDto
+    );
+
+    return updatedPost;
   }
 
   @Get()
@@ -51,7 +69,7 @@ export class PostCommentController {
     @Param("postId") postId: string,
     @Query() query: PaginationQuery
   ) {
-    const comments = await this.postCommentService.getCommentsByPostId(
+    const comments = await this.commentService.getCommentsByPostId(
       postId,
       query
     );

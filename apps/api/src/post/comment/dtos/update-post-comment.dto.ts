@@ -1,11 +1,12 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 
-export class CreatePostCommentDto {
-  @ApiProperty({
+export class UpdatePostCommentDto {
+  @ApiPropertyOptional({
     minLength: 1,
     maxLength: 750,
   })
+  @IsOptional()
   @MaxLength(750, {
     message: "content must not exceed 750 characters.",
   })
@@ -14,9 +15,6 @@ export class CreatePostCommentDto {
   })
   @IsString({
     message: "content must be a string.",
-  })
-  @IsNotEmpty({
-    message: "content is a required field.",
   })
   content: string;
 }

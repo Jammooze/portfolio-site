@@ -65,9 +65,13 @@ export class PostService {
   }
 
   async updateById(id: string, updateData: UpdatePostDto) {
-    await this.postRepository.update(id, {
+    const result = await this.postRepository.update(id, {
       ...updateData,
     });
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Post with ID: ${id} not found.`);
+    }
 
     const updatedPost = await this.getById(id);
     return updatedPost;
