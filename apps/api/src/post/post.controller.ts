@@ -49,7 +49,7 @@ export class PostController {
     return post;
   }
 
-  @Patch(":id")
+  @Patch(":postId")
   @ApiOperation({ summary: "Partially update a post" })
   @ApiOkResponse({
     description: "OK.",
@@ -66,14 +66,17 @@ export class PostController {
   })
   @UseGuards(AuthRequiredGuard, PostOwnershipGuard)
   async updatePost(
-    @Param("id") id: string,
+    @Param("postId") postId: string,
     @Body() updatePostDto: UpdatePostDto
   ) {
-    const updatedPost = await this.postService.updateById(id, updatePostDto);
+    const updatedPost = await this.postService.updateById(
+      postId,
+      updatePostDto
+    );
     return updatedPost;
   }
 
-  @Get(":id")
+  @Get(":postId")
   @ApiOperation({ summary: "Get a post" })
   @ApiOkResponse({
     description: "OK.",
@@ -82,12 +85,12 @@ export class PostController {
   @ApiNotFoundResponse({
     description: "Post cannot be found.",
   })
-  async getPostById(@Param("id") id: string) {
-    const post = await this.postService.getById(id);
+  async getPostById(@Param("postId") postId: string) {
+    const post = await this.postService.getById(postId);
     return post;
   }
 
-  @Delete(":id")
+  @Delete(":postId")
   @ApiOperation({ summary: "Delete a post" })
   @ApiOkResponse({
     description: "OK.",
@@ -104,8 +107,8 @@ export class PostController {
   })
   @HttpCode(204)
   @UseGuards(AuthRequiredGuard, PostOwnershipGuard)
-  async deletePost(@Param("id") id: string) {
-    await this.postService.deleteById(id);
+  async deletePost(@Param("postId") postId: string) {
+    await this.postService.deleteById(postId);
     return;
   }
 }
