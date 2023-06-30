@@ -96,12 +96,14 @@ export class PostCommentService {
     query: PaginationQuery
   ): Promise<PaginationResult<PostCommentDto>> {
     await this.postService.getById(postId);
-    const paginationData = await this.paginationService.paginate(
-      this.commentRepository,
+    const paginationData = await this.paginationService.paginate({
+      repository: this.commentRepository,
       query,
-      ["user"],
-      PostCommentDto.fromArray
-    );
+      transformFn: PostCommentDto.fromArray,
+      options: {
+        relations: ["user"],
+      },
+    });
 
     return paginationData;
   }

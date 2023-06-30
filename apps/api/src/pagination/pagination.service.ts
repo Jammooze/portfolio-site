@@ -1,10 +1,17 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { Repository } from "typeorm";
+import { FindManyOptions, Repository } from "typeorm";
 import { PaginationQuery } from "./paginationQuery";
 import { PaginationResult } from "./paginationResult.interface";
 
 export * from "./paginationQuery";
 export * from "./paginationResult.interface";
+
+export interface PaginateData<T, U> {
+  repository: Repository<T>;
+  query: PaginationQuery;
+  options?: FindManyOptions<T>;
+  transformFn?: (records: T[]) => U[] | Promise<U[]>;
+}
 
 @Injectable()
 export class PaginationService {
@@ -13,12 +20,12 @@ export class PaginationService {
     return totalRecords;
   }
 
-  async paginate<T, U>(
-    repository: Repository<T>,
-    query: PaginationQuery,
-    relations?: string[],
-    transformFn?: (records: T[]) => U[] | Promise<U[]>
-  ): Promise<PaginationResult<U>> {
+  async paginate<T, U>({
+    repository,
+    query,
+    options,
+    transformFn,
+  }: PaginateData<T, U>): Promise<PaginationResult<U>> {
     const totalRecords = await this.getTotalRecords(repository);
     const skip = (query.pageIndex - 1) * query.pageSize;
 
@@ -31,7 +38,7 @@ export class PaginationService {
     const records = await repository.find({
       skip,
       take: query.pageSize,
-      relations,
+      ...options,
     });
 
     const transformedResults = transformFn

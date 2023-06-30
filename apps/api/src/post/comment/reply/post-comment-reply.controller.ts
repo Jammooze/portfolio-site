@@ -1,5 +1,6 @@
-import { Body, Controller, Param, Post, Req } from "@nestjs/common";
+import { Body, Controller, Param, Post, Req, Get, Query } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
+import { PaginationQuery } from "src/pagination/paginationQuery";
 import { Request } from "express";
 import { PostCommentReplyService } from "./post-comment-reply-service.controller";
 import { CreatePostCommentDto } from "../../dtos/comment";
@@ -9,7 +10,20 @@ import { CreatePostCommentDto } from "../../dtos/comment";
 export class PostCommentReplyController {
   constructor(private readonly replyService: PostCommentReplyService) {}
 
-  // async getReplies() {}
+  @Get("/replies")
+  async getReplies(
+    @Param("postId") postId: string,
+    @Param("commentId") commentId: string,
+    @Query() query: PaginationQuery
+  ) {
+    const comments = await this.replyService.getReplies(
+      postId,
+      commentId,
+      query
+    );
+
+    return comments;
+  }
 
   @Post("/reply")
   async createReply(
