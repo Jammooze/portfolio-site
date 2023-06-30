@@ -11,9 +11,9 @@ import {
 } from "typeorm";
 import { User } from "../../users/user.entity";
 import { Exclude } from "class-transformer";
-import { PostMeta } from "./post-meta.entity";
+import { PostMeta } from "./postMeta.entity";
 import { ApiProperty } from "@nestjs/swagger";
-import { PostComment } from "./post-comment.entity";
+import { PostComment } from "./postComment.entity";
 
 @Entity()
 export class Post extends BaseEntity {

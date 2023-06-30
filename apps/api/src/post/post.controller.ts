@@ -23,7 +23,7 @@ import { Post as PostEntity } from "./entities/post.entity";
 import { PostService } from "./post.service";
 import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
 import { UpdatePostDto, CreatePostDto } from "./dtos/post";
-import { PostOwnershipGuard } from "./guards/post-ownership.guard";
+import { PostOwnershipGuard } from "./guards/postOwnership.guard";
 import { ApiTags } from "@nestjs/swagger";
 
 @Controller("posts")

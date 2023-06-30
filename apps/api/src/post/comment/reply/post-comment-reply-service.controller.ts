@@ -5,9 +5,9 @@ import {
   PaginationQuery,
   PaginationService,
 } from "src/pagination/pagination.service";
-import { PostComment } from "src/post/entities/post-comment.entity";
+import { PostComment } from "src/post/entities/postComment.entity";
 import { PostCommentDto } from "src/post/dtos/comment";
-import { PostCommentService, CommentData } from "../post-comment.service";
+import { PostCommentService, CommentData } from "../postComment.service";
 
 @Injectable()
 export class PostCommentReplyService {

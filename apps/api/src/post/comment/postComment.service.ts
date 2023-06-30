@@ -6,8 +6,8 @@ import {
   PaginationResult,
   PaginationQuery,
 } from "src/pagination/pagination.service";
-import { PostComment } from "../entities/post-comment.entity";
-import { CreatePostCommentDto } from "../dtos/comment/create-post-comment.dto";
+import { PostComment } from "../entities/postComment.entity";
+import { CreatePostCommentDto } from "../dtos/comment/createPostComment.dto";
 import { PostCommentDto, UpdatePostCommentDto } from "../dtos/comment";
 import { PostService } from "../post.service";
 import { UserService } from "../../users/user.service";

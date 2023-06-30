@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
   ForbiddenException,
 } from "@nestjs/common";
-import { PostCommentService } from "../comment/post-comment.service";
+import { PostCommentService } from "../comment/postComment.service";
 
 @Injectable()
 export class PostCommentOwnership implements CanActivate {

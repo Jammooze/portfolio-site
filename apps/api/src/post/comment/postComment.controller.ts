@@ -20,15 +20,15 @@ import {
   ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
 import { PaginationQuery } from "src/pagination/paginationQuery";
-import { PostCommentService } from "./post-comment.service";
-import { CreatePostCommentDto } from "../dtos/comment/create-post-comment.dto";
+import { PostCommentService } from "./postComment.service";
+import { CreatePostCommentDto } from "../dtos/comment/createPostComment.dto";
 import { AuthRequiredGuard } from "../../auth/guards/auth-required.guard";
 import {
   PostCommentDto,
   GetPostCommentsDto,
   UpdatePostCommentDto,
 } from "../dtos/comment";
-import { PostCommentOwnership } from "../guards/post-comment.ownership.guard";
+import { PostCommentOwnership } from "../guards/postCommentOwnership.guard";
 
 @Controller("posts/:postId/comments")
 @ApiTags("Posts Comments")

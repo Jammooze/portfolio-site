@@ -1,4 +1,4 @@
-export { CreatePostCommentDto } from "./create-post-comment.dto";
-export { GetPostCommentsDto } from "./get-post.comments.dto";
-export { PostCommentDto } from "./post-comment.dto";
-export { UpdatePostCommentDto } from "./update-post-comment.dto";
+export { CreatePostCommentDto } from "./createPostComment.dto";
+export { GetPostCommentsDto } from "./getPostComments.dto";
+export { PostCommentDto } from "./postComment.dto";
+export { UpdatePostCommentDto } from "./updatePostComment.dto";

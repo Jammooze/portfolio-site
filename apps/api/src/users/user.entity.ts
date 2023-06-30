@@ -10,7 +10,7 @@ import {
 import { Exclude, Transform } from "class-transformer";
 import { censorEmail } from "../auth/utils/censorEmail";
 import { Post } from "../post/entities/post.entity";
-import { PostComment } from "../post/entities/post-comment.entity";
+import { PostComment } from "../post/entities/postComment.entity";
 
 @Entity()
 export class User extends BaseEntity {

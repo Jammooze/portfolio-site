@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Post } from "../entities/post.entity";
-import { PostMeta } from "../entities/post-meta.entity";
+import { PostMeta } from "../entities/postMeta.entity";
 import { CreatePostMetaDto } from "../dtos/meta/create-post-meta.dto";
 import { PostMetaHelperService } from "./post-meta.helper.service";
 import { User } from "../../users/user.entity";
