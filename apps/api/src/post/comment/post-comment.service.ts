@@ -12,7 +12,7 @@ import { PostCommentDto, UpdatePostCommentDto } from "../dtos/comment";
 import { PostService } from "../post.service";
 import { UserService } from "../../users/user.service";
 
-interface CommentData {
+export interface CommentData {
   postId: string;
   userId: string;
   parentId?: string;
@@ -115,5 +115,10 @@ export class PostCommentService {
   async doesUserOwnComment(postId: string, commentId: string, userId: string) {
     const comment = await this.getById(postId, commentId);
     return comment.userId === userId;
+  }
+
+  async hasCommentParent(postId: string, commentId: string) {
+    const comment = await this.getById(postId, commentId);
+    return !!comment.parentId;
   }
 }
