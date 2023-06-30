@@ -9,8 +9,8 @@ import {
 } from "typeorm";
 import { Exclude, Transform } from "class-transformer";
 import { censorEmail } from "../auth/utils/censorEmail";
-import { Post } from "../post/post.entity";
-import { PostComment } from "../post/comment/post-comment.entity";
+import { Post } from "../post/entities/post.entity";
+import { PostComment } from "../post/entities/post-comment.entity";
 
 @Entity()
 export class User extends BaseEntity {

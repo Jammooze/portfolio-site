@@ -21,12 +21,14 @@ import {
 } from "@nestjs/swagger";
 import { PaginationQuery } from "src/pagination/paginationQuery";
 import { PostCommentService } from "./post-comment.service";
-import { CreatePostCommentDto } from "./dtos/create-post-comment.dto";
+import { CreatePostCommentDto } from "../dtos/comment/create-post-comment.dto";
 import { AuthRequiredGuard } from "../../auth/guards/auth-required.guard";
-import { PostCommentDto } from "./dtos/post-comment.dto";
-import { GetPostCommentsDto } from "./dtos/get-post.comments.dto";
-import { UpdatePostCommentDto } from "./dtos/update-post-comment.dto";
-import { PostCommentOwnership } from "./guards/post-comment.ownership.guard";
+import {
+  PostCommentDto,
+  GetPostCommentsDto,
+  UpdatePostCommentDto,
+} from "../dtos/comment";
+import { PostCommentOwnership } from "../guards/post-comment.ownership.guard";
 
 @Controller("posts/:postId/comments")
 @ApiTags("Posts Comments")

@@ -9,11 +9,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from "../users/user.entity";
+import { User } from "../../users/user.entity";
 import { Exclude } from "class-transformer";
-import { PostMeta } from "./meta/post-meta.entity";
+import { PostMeta } from "./post-meta.entity";
 import { ApiProperty } from "@nestjs/swagger";
-import { PostComment } from "./comment/post-comment.entity";
+import { PostComment } from "./post-comment.entity";
 
 @Entity()
 export class Post extends BaseEntity {

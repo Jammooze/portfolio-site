@@ -19,11 +19,10 @@ import {
   ApiOperation,
 } from "@nestjs/swagger";
 import { Request } from "express";
-import { Post as PostEntity } from "./post.entity";
+import { Post as PostEntity } from "./entities/post.entity";
 import { PostService } from "./post.service";
-import { CreatePostDto } from "./dtos/create-post.dto";
 import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
-import { UpdatePostDto } from "./dtos/update-post.dto";
+import { UpdatePostDto, CreatePostDto } from "./dtos/post";
 import { PostOwnershipGuard } from "./guards/post-ownership.guard";
 import { ApiTags } from "@nestjs/swagger";
 

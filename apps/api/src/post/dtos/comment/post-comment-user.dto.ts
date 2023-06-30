@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { PostComment } from "../post-comment.entity";
+import { PostComment } from "../../entities/post-comment.entity";
 import { UserDto } from "../../../users/dtos/user.dto";
 import { PostCommentDto } from "./post-comment.dto";
 

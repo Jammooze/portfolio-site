@@ -6,12 +6,11 @@ import {
   PaginationResult,
   PaginationQuery,
 } from "src/pagination/pagination.service";
-import { PostComment } from "./post-comment.entity";
-import { CreatePostCommentDto } from "./dtos/create-post-comment.dto";
-import { PostCommentDto } from "./dtos/post-comment.dto";
+import { PostComment } from "../entities/post-comment.entity";
+import { CreatePostCommentDto } from "../dtos/comment/create-post-comment.dto";
+import { PostCommentDto, UpdatePostCommentDto } from "../dtos/comment";
 import { PostService } from "../post.service";
 import { UserService } from "../../users/user.service";
-import { UpdatePostCommentDto } from "./dtos/update-post-comment.dto";
 
 @Injectable()
 export class PostCommentService {

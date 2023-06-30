@@ -6,7 +6,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Post } from "../post.entity";
+import { Post } from "./post.entity";
 import { Exclude } from "class-transformer";
 
 @Entity()

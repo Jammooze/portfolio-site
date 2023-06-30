@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Post } from "../post.entity";
+import { Post } from "./post.entity";
 import { User } from "../../users/user.entity";
 import { Exclude } from "class-transformer";
 
