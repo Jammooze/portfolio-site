@@ -56,11 +56,11 @@ export class PostCommentController {
   ) {
     const userId = req.user.id;
 
-    const comment = await this.commentService.create(
+    const comment = await this.commentService.create({
       postId,
       userId,
-      createPostCommentDto
-    );
+      createCommentData: createPostCommentDto,
+    });
 
     return comment;
   }

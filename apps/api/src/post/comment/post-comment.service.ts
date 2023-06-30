@@ -12,6 +12,13 @@ import { PostCommentDto, UpdatePostCommentDto } from "../dtos/comment";
 import { PostService } from "../post.service";
 import { UserService } from "../../users/user.service";
 
+interface CommentData {
+  postId: string;
+  userId: string;
+  parentId?: string;
+  createCommentData: CreatePostCommentDto;
+}
+
 @Injectable()
 export class PostCommentService {
   constructor(
@@ -22,11 +29,7 @@ export class PostCommentService {
     private readonly userService: UserService
   ) {}
 
-  async create(
-    postId: string,
-    userId: string,
-    createCommentData: CreatePostCommentDto
-  ) {
+  async create({ postId, userId, parentId, createCommentData }: CommentData) {
     const post = await this.postService.getById(postId);
     const user = await this.userService.getById(userId);
 
@@ -38,6 +41,10 @@ export class PostCommentService {
     comment.published = true;
     comment.edited = false;
     comment.publishedAt = new Date();
+
+    if (parentId) {
+      comment.parentId = parentId;
+    }
 
     comment.content = createCommentData.content;
 
