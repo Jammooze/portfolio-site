@@ -6,6 +6,7 @@ import {
   BaseEntity,
   OneToMany,
   PrimaryGeneratedColumn,
+  ManyToMany,
 } from "typeorm";
 import { Exclude, Transform } from "class-transformer";
 import { censorEmail } from "../auth/utils/censorEmail";
@@ -87,6 +88,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
+
+  @ManyToMany(() => PostComment, (postComment) => postComment.heartedUsers)
+  heartedComments: [];
 
   @OneToMany(() => PostComment, (postComment) => postComment.user)
   comments: PostComment[];

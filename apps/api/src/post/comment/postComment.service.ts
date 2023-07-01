@@ -35,7 +35,6 @@ export class PostCommentService {
 
     const comment = new PostComment();
 
-    // comment.id = this.idService.generateId();
     comment.user = user;
     comment.post = post;
     comment.published = true;
@@ -53,10 +52,13 @@ export class PostCommentService {
     return createdCommentDto;
   }
 
-  async getById(postId: string, commentId: string) {
-    const comment = await this.commentRepository.findOneBy({
-      id: commentId,
-      postId,
+  async getById(postId: string, commentId: string, relations?: string[]) {
+    const comment = await this.commentRepository.findOne({
+      where: {
+        id: commentId,
+        postId,
+      },
+      relations,
     });
 
     if (comment === null) {

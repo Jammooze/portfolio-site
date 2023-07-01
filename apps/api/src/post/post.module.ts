@@ -13,6 +13,7 @@ import { PostMetaHelperService } from "./meta/post-meta.helper.service";
 import { PostCommentReplyController } from "./comment/reply/post-comment-reply.controller";
 import { PostCommentReplyService } from "./comment/reply/post-comment-reply-service.controller";
 import { PostCommentInteractionController } from "./comment/interaction/postCommentInteraction.controller";
+import { PostCommentInteractionService } from "./comment/interaction/postCommentInteraction.service";
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { PostCommentInteractionController } from "./comment/interaction/postComm
   providers: [
     PostService,
     PostCommentService,
+    PostCommentInteractionService,
     PostMetaService,
     PostMetaHelperService,
     PostCommentReplyService,

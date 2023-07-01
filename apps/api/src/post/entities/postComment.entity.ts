@@ -4,6 +4,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -70,10 +72,23 @@ export class PostComment extends BaseEntity {
   @OneToMany(() => PostComment, (postComment) => postComment.parent)
   comments: PostComment[];
 
-  // @Column({
-  //   length: 100,
-  // })
-  // title: string;
+  @ManyToMany(() => User, (user) => user.heartedComments)
+  @JoinTable({
+    name: "user_hearted_comment",
+    joinColumns: [
+      {
+        name: "userId",
+        referencedColumnName: "id",
+      },
+    ],
+    inverseJoinColumns: [
+      {
+        name: "commentId",
+        referencedColumnName: "id",
+      },
+    ],
+  })
+  heartedUsers: User[];
 
   @Column()
   @Exclude()

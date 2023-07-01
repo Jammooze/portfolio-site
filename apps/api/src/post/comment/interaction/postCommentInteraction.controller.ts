@@ -1,16 +1,48 @@
-import { Body, Controller, Param, Post } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
-import { SubmitCommentVoteDto } from "../../dtos/commentInteraction/submitCommentVote.dto";
+import {
+  Controller,
+  HttpCode,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from "@nestjs/common";
+import {
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from "@nestjs/swagger";
+import { AuthRequiredGuard } from "src/auth/guards/auth-required.guard";
+import { HeartCommentResponse } from "src/post/dtos/commentInteraction/heartCommentResponse.dto";
+import { PostCommentInteractionService } from "./postCommentInteraction.service";
+import { Request } from "express";
 
 @Controller("posts/:postId/comments/:commentId/interaction")
 @ApiTags("Post Comments Interaction")
 export class PostCommentInteractionController {
-  @Post("vote")
-  async submitVote(
+  constructor(
+    private readonly interactionService: PostCommentInteractionService
+  ) {}
+
+  @Post("heart")
+  @UseGuards(AuthRequiredGuard)
+  @ApiOkResponse({
+    description: "Comment has been successfully hearted.",
+    type: HeartCommentResponse,
+  })
+  @ApiUnauthorizedResponse({
+    description: "Authentication is required to access this resource.",
+  })
+  @HttpCode(200)
+  async heartComment(
+    @Req() req: Request,
     @Param("postId") postId: string,
-    @Param("commentId") commentId: string,
-    @Body() submitCommentVoteDto: SubmitCommentVoteDto
-  ) {
-    return;
+    @Param("commentId") commentId: string
+  ): Promise<HeartCommentResponse> {
+    const response = this.interactionService.heartComment(
+      postId,
+      commentId,
+      req.user.id
+    );
+    return response;
   }
 }
