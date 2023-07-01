@@ -22,7 +22,7 @@ export class PostCommentOwnership implements CanActivate {
     }
 
     const userId = req.user.id;
-    const postId = req.params.id;
+    const postId = req.params.postId;
     const commentId = req.params.commentId;
 
     const doesUserOwnComment = await this.commentService.doesUserOwnComment(

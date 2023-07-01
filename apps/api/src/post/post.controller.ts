@@ -25,6 +25,7 @@ import { PostService } from "./post.service";
 import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
 import { UpdatePostBody, CreatePostBody } from "./dtos/post";
 import { PostOwnershipGuard } from "./guards/postOwnership.guard";
+import { PostViewGuard } from "./guards/postView.guard";
 
 @Controller("posts")
 @ApiTags("Posts")
@@ -77,6 +78,7 @@ export class PostController {
   }
 
   @Get(":postId")
+  @UseGuards(PostViewGuard)
   @ApiOperation({ summary: "Get a post" })
   @ApiOkResponse({
     description: "OK.",
@@ -85,8 +87,8 @@ export class PostController {
   @ApiNotFoundResponse({
     description: "Post cannot be found.",
   })
-  async getPostById(@Param("postId") postId: string) {
-    const post = PostDto.from(await this.postService.getById(postId, ["user"]));
+  async getPostById(@Req() req: Request) {
+    const post = PostDto.from(req["post"]);
     return post;
   }
 

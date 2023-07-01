@@ -115,7 +115,12 @@ export class PostService {
     return deletedPost;
   }
 
-  async doesUserOwnPost(userId: string, postId: string) {
+  async canUserViewPost(postId: string, userId: string) {
+    const isOwner = await this.isUserPostOwner(postId, userId);
+    return isOwner;
+  }
+
+  async isUserPostOwner(postId: string, userId: string) {
     const post = await this.getById(postId);
     return post.userId === userId;
   }
