@@ -21,12 +21,12 @@ import {
 } from "@nestjs/swagger";
 import { PaginationQuery } from "src/pagination/paginationQuery";
 import { PostCommentService } from "./postComment.service";
-import { CreatePostCommentDto } from "../dtos/comment/createPostComment.dto";
+import { CreatePostCommentBody } from "../dtos/comment/createPostComment.dto";
 import { AuthRequiredGuard } from "../../auth/guards/auth-required.guard";
 import {
-  PostCommentDto,
-  GetPostCommentsDto,
-  UpdatePostCommentDto,
+  PostComment,
+  GetPostCommentsResponse,
+  UpdatePostCommentBody,
 } from "../dtos/comment";
 import { PostCommentOwnership } from "../guards/postCommentOwnership.guard";
 
@@ -38,7 +38,7 @@ export class PostCommentController {
   @Post()
   @ApiCreatedResponse({
     description: "Successfully created post comment.",
-    type: PostCommentDto,
+    type: PostComment,
   })
   @ApiNotFoundResponse({
     description: `
@@ -52,7 +52,7 @@ export class PostCommentController {
   async createComment(
     @Req() req: Request,
     @Param("postId") postId: string,
-    @Body() createPostCommentDto: CreatePostCommentDto
+    @Body() createPostCommentDto: CreatePostCommentBody
   ) {
     const userId = req.user.id;
 
@@ -68,7 +68,7 @@ export class PostCommentController {
   @Patch(":commentId")
   @ApiCreatedResponse({
     description: "Successfully updated post comment.",
-    type: PostCommentDto,
+    type: PostComment,
   })
   @ApiNotFoundResponse({
     description: `
@@ -86,7 +86,7 @@ export class PostCommentController {
   async updateComment(
     @Param("postId") postId: string,
     @Param("commentId") commentId: string,
-    @Body() updatePostCommentDto: UpdatePostCommentDto
+    @Body() updatePostCommentDto: UpdatePostCommentBody
   ) {
     const updatedPost = await this.commentService.updateById(
       postId,
@@ -123,7 +123,7 @@ export class PostCommentController {
   @Get()
   @ApiCreatedResponse({
     description: "Successfully fetched post comment.",
-    type: GetPostCommentsDto,
+    type: GetPostCommentsResponse,
   })
   @ApiNotFoundResponse({
     description: `

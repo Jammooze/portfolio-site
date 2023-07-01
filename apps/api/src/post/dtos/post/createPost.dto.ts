@@ -8,7 +8,7 @@ import {
   MinLength,
 } from "class-validator";
 
-export class CreatePostDto {
+export class CreatePostBody {
   @ApiProperty({
     minLength: 1,
     maxLength: 75,

@@ -1,8 +1,8 @@
 import { PaginationResult } from "src/pagination/paginationResult.interface";
-import { PostCommentDto } from "./postComment.dto";
+import { PostComment } from "./postComment.dto";
 import { ApiProperty } from "@nestjs/swagger";
 
-export class GetPostCommentsDto extends PaginationResult<PostCommentDto> {
-  @ApiProperty({ type: [PostCommentDto] })
-  results: PostCommentDto[];
+export class GetPostCommentsResponse extends PaginationResult<PostComment> {
+  @ApiProperty({ type: [PostComment] })
+  results: PostComment[];
 }

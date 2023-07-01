@@ -22,7 +22,7 @@ import { Request } from "express";
 import { Post as PostEntity } from "./entities/post.entity";
 import { PostService } from "./post.service";
 import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
-import { UpdatePostDto, CreatePostDto } from "./dtos/post";
+import { UpdatePostBody, CreatePostBody } from "./dtos/post";
 import { PostOwnershipGuard } from "./guards/postOwnership.guard";
 import { ApiTags } from "@nestjs/swagger";
 
@@ -44,7 +44,7 @@ export class PostController {
     description: "Authentication is required to access this resource.",
   })
   @UseGuards(AuthRequiredGuard)
-  async createPost(@Req() req: Request, @Body() createPostDto: CreatePostDto) {
+  async createPost(@Req() req: Request, @Body() createPostDto: CreatePostBody) {
     const post = await this.postService.create(req.user.id, createPostDto);
     return post;
   }
@@ -67,7 +67,7 @@ export class PostController {
   @UseGuards(AuthRequiredGuard, PostOwnershipGuard)
   async updatePost(
     @Param("postId") postId: string,
-    @Body() updatePostDto: UpdatePostDto
+    @Body() updatePostDto: UpdatePostBody
   ) {
     const updatedPost = await this.postService.updateById(
       postId,

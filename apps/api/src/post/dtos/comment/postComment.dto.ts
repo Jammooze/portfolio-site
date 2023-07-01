@@ -1,8 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { PostComment } from "../../entities/postComment.entity";
+import { PostComment as PostCommentEntity } from "../../entities/postComment.entity";
 import { UserDto } from "src/users/dtos/user.dto";
 
-export class PostCommentDto {
+export class PostComment {
   @ApiProperty()
   id: string;
 
@@ -24,8 +24,8 @@ export class PostCommentDto {
   @ApiPropertyOptional()
   user: UserDto;
 
-  static from(record: PostComment) {
-    const commentDto = new PostCommentDto();
+  static from(record: PostCommentEntity) {
+    const commentDto = new PostComment();
 
     commentDto.id = record.id;
     commentDto.content = record.content;
@@ -40,7 +40,7 @@ export class PostCommentDto {
     return commentDto;
   }
 
-  static fromArray(records: PostComment[]) {
-    return records.map((record) => PostCommentDto.from(record));
+  static fromArray(records: PostCommentEntity[]) {
+    return records.map((record) => PostComment.from(record));
   }
 }

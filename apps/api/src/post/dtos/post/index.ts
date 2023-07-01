@@ -1,2 +1,2 @@
-export { CreatePostDto } from "./createPost.dto";
-export { UpdatePostDto } from "./updatePost.dto";
+export { CreatePostBody } from "./createPost.dto";
+export { UpdatePostBody } from "./updatePost.dto";

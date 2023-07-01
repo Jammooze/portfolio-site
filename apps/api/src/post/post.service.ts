@@ -5,7 +5,7 @@ import { SlugService } from "../slug/slug.service";
 import { Post } from "./entities/post.entity";
 import { IdService } from "../id/id.service";
 import { UserService } from "../users/user.service";
-import { UpdatePostDto, CreatePostDto } from "./dtos/post";
+import { UpdatePostBody, CreatePostBody } from "./dtos/post";
 import { PostMetaService } from "./meta/post-meta.service";
 import { PostMetaHelperService } from "./meta/post-meta.helper.service";
 
@@ -21,7 +21,7 @@ export class PostService {
     private readonly postMetaHelperService: PostMetaHelperService
   ) {}
 
-  async create(userId: string, createData: CreatePostDto): Promise<Post> {
+  async create(userId: string, createData: CreatePostBody): Promise<Post> {
     const user = await this.userService.getById(userId);
     const post = new Post();
     const postSlugId = this.idService.generateId();
@@ -63,7 +63,7 @@ export class PostService {
     return post;
   }
 
-  async updateById(id: string, updateData: UpdatePostDto) {
+  async updateById(id: string, updateData: UpdatePostBody) {
     const result = await this.postRepository.update(id, {
       ...updateData,
     });

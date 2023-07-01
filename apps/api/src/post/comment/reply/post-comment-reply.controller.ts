@@ -1,9 +1,9 @@
 import { Body, Controller, Param, Post, Req, Get, Query } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
-import { PaginationQuery } from "src/pagination/paginationQuery";
 import { Request } from "express";
+import { PaginationQuery } from "src/pagination/paginationQuery";
 import { PostCommentReplyService } from "./post-comment-reply-service.controller";
-import { CreatePostCommentDto } from "../../dtos/comment";
+import { CreatePostCommentBody } from "../../dtos/comment";
 
 @Controller("posts/:postId/comments/:commentId")
 @ApiTags("Posts Comments Reply")
@@ -30,7 +30,7 @@ export class PostCommentReplyController {
     @Req() req: Request,
     @Param("postId") postId: string,
     @Param("commentId") commentId: string,
-    @Body() createPostCommentDto: CreatePostCommentDto
+    @Body() createPostCommentDto: CreatePostCommentBody
   ) {
     const comment = await this.replyService.create({
       postId,

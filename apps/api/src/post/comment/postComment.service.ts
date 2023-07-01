@@ -3,12 +3,15 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import {
   PaginationService,
-  PaginationResult,
   PaginationQuery,
 } from "src/pagination/pagination.service";
 import { PostComment } from "../entities/postComment.entity";
-import { CreatePostCommentDto } from "../dtos/comment/createPostComment.dto";
-import { PostCommentDto, UpdatePostCommentDto } from "../dtos/comment";
+import { CreatePostCommentBody } from "../dtos/comment/createPostComment.dto";
+import {
+  GetPostCommentsResponse,
+  PostComment as PostCommentDto,
+  UpdatePostCommentBody,
+} from "../dtos/comment";
 import { PostService } from "../post.service";
 import { UserService } from "../../users/user.service";
 
@@ -16,7 +19,7 @@ export interface CommentData {
   postId: string;
   userId: string;
   parentId?: string;
-  createCommentData: CreatePostCommentDto;
+  createCommentData: CreatePostCommentBody;
 }
 
 @Injectable()
@@ -73,7 +76,7 @@ export class PostCommentService {
   async updateById(
     postId: string,
     commentId: string,
-    updateData: UpdatePostCommentDto
+    updateData: UpdatePostCommentBody
   ) {
     const result = await this.commentRepository.update(
       { id: commentId, postId },
@@ -96,7 +99,7 @@ export class PostCommentService {
   async getCommentsByPostId(
     postId: string,
     query: PaginationQuery
-  ): Promise<PaginationResult<PostCommentDto>> {
+  ): Promise<GetPostCommentsResponse> {
     await this.postService.getById(postId);
     const paginationData = await this.paginationService.paginate({
       repository: this.commentRepository,

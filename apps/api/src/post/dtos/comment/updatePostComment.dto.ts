@@ -1,7 +1,7 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 
-export class UpdatePostCommentDto {
+export class UpdatePostCommentBody {
   @ApiPropertyOptional({
     minLength: 1,
     maxLength: 750,

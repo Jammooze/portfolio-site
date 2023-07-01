@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
 
-export class CreatePostCommentDto {
+export class CreatePostCommentBody {
   @ApiProperty({
     minLength: 1,
     maxLength: 750,
