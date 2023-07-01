@@ -11,10 +11,10 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-import { AuthRequiredGuard } from "src/auth/guards/auth-required.guard";
-import { HeartCommentResponse } from "src/post/dtos/commentInteraction/heartCommentResponse.dto";
-import { PostCommentInteractionService } from "./postCommentInteraction.service";
 import { Request } from "express";
+import { AuthRequiredGuard } from "src/auth/guards/auth-required.guard";
+import { HeartCommentResponse } from "src/post/dtos/comment";
+import { PostCommentInteractionService } from "./postCommentInteraction.service";
 
 @Controller("posts/:postId/comments/:commentId/interaction")
 @ApiTags("Post Comments Interaction")

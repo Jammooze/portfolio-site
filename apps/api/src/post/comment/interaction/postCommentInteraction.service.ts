@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { UserService } from "src/users/user.service";
-import { HeartCommentResponse } from "src/post/dtos/commentInteraction/heartCommentResponse.dto";
+import { HeartCommentResponse } from "src/post/dtos/comment";
 import { PostCommentService } from "../postComment.service";
 
 @Injectable()
