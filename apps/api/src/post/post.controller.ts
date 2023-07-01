@@ -35,7 +35,7 @@ export class PostController {
   @Post()
   @ApiOperation({ summary: "Create a new post" })
   @ApiCreatedResponse({
-    description: "OK.",
+    description: "Successfully created post.",
     type: PostDto,
   })
   @ApiForbiddenResponse({
@@ -53,7 +53,7 @@ export class PostController {
   @Patch(":postId")
   @ApiOperation({ summary: "Partially update a post" })
   @ApiOkResponse({
-    description: "OK.",
+    description: "Successfully updated post.",
     type: PostDto,
   })
   @ApiNotFoundResponse({
@@ -81,7 +81,7 @@ export class PostController {
   @UseGuards(PostViewGuard)
   @ApiOperation({ summary: "Get a post" })
   @ApiOkResponse({
-    description: "OK.",
+    description: "Successfully fetched post.",
     type: PostDto,
   })
   @ApiNotFoundResponse({
@@ -95,7 +95,7 @@ export class PostController {
   @Delete(":postId")
   @ApiOperation({ summary: "Delete a post" })
   @ApiOkResponse({
-    description: "OK.",
+    description: "Successfully deleted post.",
   })
   @ApiNotFoundResponse({
     description: "Post cannot be found.",
