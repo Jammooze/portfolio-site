@@ -1,15 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { User } from "../user.entity";
+import { User as UserEntity } from "../user.entity";
 
-export class UserDto {
+export class User {
   @ApiProperty()
   id: string;
 
   @ApiProperty()
   fullName: string;
 
-  static from(record: User): UserDto {
-    const userDto = new UserDto();
+  static from(record: UserEntity): User {
+    const userDto = new User();
 
     userDto.id = record.id;
     userDto.fullName = record.fullName;

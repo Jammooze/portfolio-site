@@ -114,4 +114,6 @@ export class Post extends BaseEntity {
   })
   @Exclude()
   user: User;
+
+  commentCount: number;
 }

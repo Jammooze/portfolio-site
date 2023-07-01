@@ -18,13 +18,13 @@ import {
   ApiUnauthorizedResponse,
   ApiOperation,
 } from "@nestjs/swagger";
+import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
-import { Post as PostEntity } from "./entities/post.entity";
+import { Post as PostDto } from "./dtos/post/";
 import { PostService } from "./post.service";
 import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
 import { UpdatePostBody, CreatePostBody } from "./dtos/post";
 import { PostOwnershipGuard } from "./guards/postOwnership.guard";
-import { ApiTags } from "@nestjs/swagger";
 
 @Controller("posts")
 @ApiTags("Posts")
@@ -35,7 +35,7 @@ export class PostController {
   @ApiOperation({ summary: "Create a new post" })
   @ApiCreatedResponse({
     description: "OK.",
-    type: PostEntity,
+    type: PostDto,
   })
   @ApiForbiddenResponse({
     description: "You do not have permission to access this resource.",
@@ -53,7 +53,7 @@ export class PostController {
   @ApiOperation({ summary: "Partially update a post" })
   @ApiOkResponse({
     description: "OK.",
-    type: PostEntity,
+    type: PostDto,
   })
   @ApiNotFoundResponse({
     description: "Post cannot be found.",
@@ -80,13 +80,13 @@ export class PostController {
   @ApiOperation({ summary: "Get a post" })
   @ApiOkResponse({
     description: "OK.",
-    type: PostEntity,
+    type: PostDto,
   })
   @ApiNotFoundResponse({
     description: "Post cannot be found.",
   })
   async getPostById(@Param("postId") postId: string) {
-    const post = await this.postService.getById(postId);
+    const post = PostDto.from(await this.postService.getById(postId, ["user"]));
     return post;
   }
 
@@ -94,7 +94,6 @@ export class PostController {
   @ApiOperation({ summary: "Delete a post" })
   @ApiOkResponse({
     description: "OK.",
-    type: PostEntity,
   })
   @ApiNotFoundResponse({
     description: "Post cannot be found.",

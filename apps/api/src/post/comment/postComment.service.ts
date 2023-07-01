@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import {
@@ -27,8 +32,9 @@ export class PostCommentService {
   constructor(
     @InjectRepository(PostComment)
     private readonly commentRepository: Repository<PostComment>,
-    private readonly paginationService: PaginationService,
+    @Inject(forwardRef(() => PostService))
     private readonly postService: PostService,
+    private readonly paginationService: PaginationService,
     private readonly userService: UserService
   ) {}
 
@@ -71,6 +77,14 @@ export class PostCommentService {
     }
 
     return comment;
+  }
+
+  async getTotalPostComments(postId: string) {
+    const commentCount = await this.commentRepository.countBy({
+      id: postId,
+    });
+
+    return commentCount;
   }
 
   async updateById(

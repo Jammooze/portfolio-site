@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { PostComment as PostCommentEntity } from "../../entities/postComment.entity";
-import { UserDto } from "src/users/dtos/user.dto";
+import { User } from "src/users/dtos/user.dto";
 
 export class PostComment {
   @ApiProperty()
@@ -22,7 +22,7 @@ export class PostComment {
   edited: boolean;
 
   @ApiPropertyOptional()
-  user: UserDto;
+  user: User;
 
   static from(record: PostCommentEntity) {
     const commentDto = new PostComment();
@@ -34,7 +34,7 @@ export class PostComment {
     commentDto.publishedAt = record.publishedAt;
 
     if (record.user) {
-      commentDto.user = UserDto.from(record.user);
+      commentDto.user = User.from(record.user);
     }
 
     return commentDto;
