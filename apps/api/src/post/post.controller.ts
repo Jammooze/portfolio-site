@@ -17,6 +17,7 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
   ApiOperation,
+  ApiNoContentResponse,
 } from "@nestjs/swagger";
 import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
@@ -87,6 +88,9 @@ export class PostController {
   @ApiNotFoundResponse({
     description: "Post cannot be found.",
   })
+  @ApiForbiddenResponse({
+    description: "You do not have permission to access this resource.",
+  })
   async getPostById(@Req() req: Request) {
     const post = PostDto.from(req["post"]);
     return post;
@@ -94,7 +98,7 @@ export class PostController {
 
   @Delete(":postId")
   @ApiOperation({ summary: "Delete a post" })
-  @ApiOkResponse({
+  @ApiNoContentResponse({
     description: "Successfully deleted post.",
   })
   @ApiNotFoundResponse({
