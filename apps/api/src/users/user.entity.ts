@@ -7,6 +7,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { Exclude, Transform } from "class-transformer";
 import { censorEmail } from "../auth/utils/censorEmail";
@@ -93,6 +94,21 @@ export class User extends BaseEntity {
   heartedComments: PostComment[];
 
   @ManyToMany(() => Post, (post) => post.heartedUsers)
+  @JoinTable({
+    name: "user_hearted_post",
+    joinColumns: [
+      {
+        name: "userId",
+        referencedColumnName: "id",
+      },
+    ],
+    inverseJoinColumns: [
+      {
+        name: "postId",
+        referencedColumnName: "id",
+      },
+    ],
+  })
   heartedPosts: Post[];
 
   @OneToMany(() => PostComment, (postComment) => postComment.user)

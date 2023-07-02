@@ -32,6 +32,9 @@ export class Post {
   @ApiProperty()
   commentCount: number;
 
+  @ApiProperty()
+  heartCount: number;
+
   static from(record: PostEntity) {
     const post = new Post();
 
@@ -44,6 +47,7 @@ export class Post {
     post.updatedAt = record.updatedAt;
     post.content = record.content;
     post.commentCount = record.commentCount;
+    post.heartCount = record.heartCount;
 
     if (record.user) {
       post.author = User.from(record.user);

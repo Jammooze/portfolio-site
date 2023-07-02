@@ -1,29 +1,20 @@
-import {
-  // ForbiddenException,
-  Inject,
-  Injectable,
-  NotFoundException,
-  forwardRef,
-} from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { SlugService } from "../slug/slug.service";
 import { Post } from "./entities/post.entity";
-// import { Post as PostDto } from "./dtos/post";
+import { Post as PostDto } from "./dtos/post";
 import { IdService } from "../id/id.service";
 import { UserService } from "../users/user.service";
 import { UpdatePostBody, CreatePostBody } from "./dtos/post";
 import { PostMetaService } from "./meta/post-meta.service";
 import { PostMetaHelperService } from "./meta/post-meta.helper.service";
-import { PostCommentService } from "./comment/postComment.service";
 
 @Injectable()
 export class PostService {
   constructor(
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
-    @Inject(forwardRef(() => PostCommentService))
-    private readonly commentService: PostCommentService,
     private readonly slugService: SlugService,
     private readonly idService: IdService,
     private readonly userService: UserService,
@@ -73,30 +64,26 @@ export class PostService {
       throw new NotFoundException(`Post with ID: ${postId} not found.`);
     }
 
-    const commentCount = await this.commentService.getTotalPostComments(postId);
-    post.commentCount = commentCount;
-
     return post;
+  }
+
+  async fetchById(postId: string): Promise<PostDto> {
+    const post = await this.getById(postId, [
+      "user",
+      "heartedUsers",
+      "comments",
+    ]);
+
+    post.commentCount = post.comments.length;
+    post.heartCount = post.heartedUsers.length;
+
+    return PostDto.from(post);
   }
 
   async doesPostExistById(postId: string): Promise<boolean> {
     const post = await this.postRepository.findOneBy({ id: postId });
     return !!post;
   }
-
-  // async getByPostAndUserId(postId: string, userId: string) {
-  //   const post = await this.getById(postId, ["user"]);
-
-  //   // if the post is not published and not the owner then
-  //   // have no permission to fetch the information.
-  //   if (!post.published && !(post.user.id !== userId)) {
-  //     throw new ForbiddenException(
-  //       "You do not have permission to fetch this post."
-  //     );
-  //   }
-
-  //   return PostDto.from(post);
-  // }
 
   async updateById(id: string, updateData: UpdatePostBody) {
     const result = await this.postRepository.update(id, {

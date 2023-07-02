@@ -78,8 +78,8 @@ export class PostController {
     description: "Post cannot be found.",
   })
   @ApiAccessDeniedResponse()
-  async getPostById(@Req() req: Request, @Param("postId") postId: string) {
-    const post = PostDto.from(req["post"]);
+  async getPostById(@Param("postId") postId: string) {
+    const post = this.postService.fetchById(postId);
     return post;
   }
 
