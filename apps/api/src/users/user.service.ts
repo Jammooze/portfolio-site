@@ -19,11 +19,8 @@ export class UserService {
     private readonly hashService: HashService
   ) {}
 
-  async create(
-    createUserDto: CreateUserDto,
-    strategy: AuthStrategy
-  ): Promise<User> {
-    const isEmailTaken = await this.isEmailTaken(createUserDto.email);
+  async create(userData: CreateUserDto, strategy: AuthStrategy): Promise<User> {
+    const isEmailTaken = await this.isEmailTaken(userData.email);
 
     if (isEmailTaken) {
       throw new ConflictException("Email has already been taken.");
@@ -31,13 +28,14 @@ export class UserService {
 
     const user = new User();
 
-    user.fullName = createUserDto.fullName;
-    user.email = createUserDto.email;
+    user.fullName = userData.fullName;
+    user.email = userData.email;
+    user.profileUrl = `https://api.dicebear.com/6.x/adventurer-neutral/png?seed=${userData.fullName}`;
 
     // Third party services verifys the email address during the authentication process.
     user.isVerified = strategy !== AuthStrategy.Email;
-    user.passwordHash = createUserDto.password
-      ? await this.hashService.hash(createUserDto.password)
+    user.passwordHash = userData.password
+      ? await this.hashService.hash(userData.password)
       : null;
 
     const savedUser = await user.save();

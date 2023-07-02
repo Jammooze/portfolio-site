@@ -50,6 +50,10 @@ export class User extends BaseEntity {
   @Column()
   isVerified: boolean;
 
+  @ApiProperty()
+  @Column()
+  profileUrl: string;
+
   @Column({
     nullable: true,
   })

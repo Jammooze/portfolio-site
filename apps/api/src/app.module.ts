@@ -1,12 +1,12 @@
 import { ClassSerializerInterceptor, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { APP_INTERCEPTOR } from "@nestjs/core";
 import configuration from "./config/configuration";
 import { UserModule } from "./users/user.module";
 import { AuthModule } from "./auth/auth.module";
 import { PostModule } from "./post/post.module";
 import { IdModule } from "./id/id.module";
-import { APP_INTERCEPTOR } from "@nestjs/core";
 import { InteractionModule } from "./interaction/interaction.module";
 
 @Module({
@@ -26,7 +26,7 @@ import { InteractionModule } from "./interaction/interaction.module";
         password: configService.getOrThrow("database.password"),
         autoLoadEntities: true,
         // database: "voyage"
-        synchronize: true,
+        synchronize: configService.get("NODE_ENV") === "development",
         // dropSchema: true,
       }),
     }),
