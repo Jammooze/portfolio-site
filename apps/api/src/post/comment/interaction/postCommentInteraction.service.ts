@@ -1,30 +1,27 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import {
-  InteractionService,
-  HeartItemType,
-} from "src/interaction/interaction.service";
-import { PostService } from "src/post/post.service";
+import { Injectable } from "@nestjs/common";
+import { HeartInteractionService } from "src/interaction/heartInteraction.service";
+import { UserService } from "src/users/user.service";
+import { PostCommentService } from "../postComment.service";
 
 @Injectable()
 export class PostCommentInteractionService {
   constructor(
-    private readonly postService: PostService,
-    private readonly interactionService: InteractionService
+    private readonly commentService: PostCommentService,
+    private readonly userService: UserService,
+    private readonly interactionService: HeartInteractionService
   ) {}
 
   async heartComment(postId: string, commentId: string, userId: string) {
-    const doesPostExist = await this.postService.doesPostExistById(postId);
-
-    if (!doesPostExist) {
-      throw new NotFoundException(`Post with ID: ${postId} not found.`);
-    }
-
-    const data = await this.interactionService.heartItem(
+    const comment = this.commentService.getByPostAndCommentId(
+      postId,
       commentId,
-      HeartItemType.Comment,
-      userId
+      ["heartedUsers"]
     );
-
+    const user = this.userService.getById(userId);
+    const data = await this.interactionService.heartItem(
+      await comment,
+      await user
+    );
     return data;
   }
 }

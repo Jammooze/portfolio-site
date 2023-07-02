@@ -28,7 +28,7 @@ import { AddProfileUrlToUser1688282368862 } from "./typeorm/migrations/168828236
         autoLoadEntities: true,
         // database: "voyage"
         migrations: [AddProfileUrlToUser1688282368862],
-        migrationsRun: true,
+        migrationsRun: false,
         synchronize: configService.get("NODE_ENV") === "development",
         // dropSchema: true,
       }),

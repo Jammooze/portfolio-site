@@ -115,6 +115,27 @@ export class User extends BaseEntity {
   })
   heartedPosts: Post[];
 
+  @ManyToMany(() => User, (user) => user.followingUsers)
+  @JoinTable({
+    name: "user_follow",
+    joinColumns: [
+      {
+        name: "followerId",
+        referencedColumnName: "id",
+      },
+    ],
+    inverseJoinColumns: [
+      {
+        name: "followingId",
+        referencedColumnName: "id",
+      },
+    ],
+  })
+  followedUsers: User[];
+
+  @ManyToMany(() => User, (user) => user.followedUsers)
+  followingUsers: User[];
+
   @OneToMany(() => PostComment, (postComment) => postComment.user)
   comments: PostComment[];
 }

@@ -1,11 +1,7 @@
-import { Module, forwardRef } from "@nestjs/common";
-import { InteractionService } from "./interaction.service";
-import { UserModule } from "src/users/user.module";
-import { PostModule } from "src/post/post.module";
-
+import { Module } from "@nestjs/common";
+import { HeartInteractionService } from "./heartInteraction.service";
 @Module({
-  imports: [UserModule, forwardRef(() => PostModule)],
-  providers: [InteractionService],
-  exports: [InteractionService],
+  providers: [HeartInteractionService],
+  exports: [HeartInteractionService],
 })
 export class InteractionModule {}
