@@ -14,13 +14,12 @@ import {
 import { Request } from "express";
 import {
   ApiCreatedResponse,
-  ApiForbiddenResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
-  ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
+import { ApiAccessDeniedResponse } from "src/decorators/apiAccessDeniedResponse";
 import { PaginationQuery } from "src/pagination/paginationQuery";
 import { PostCommentService } from "./postComment.service";
 import { CreatePostCommentBody } from "../dtos/comment/createPostComment.dto";
@@ -31,6 +30,7 @@ import {
   UpdatePostCommentBody,
 } from "../dtos/comment";
 import { PostCommentOwnership } from "../guards/postCommentOwnership.guard";
+import { PostViewGuard } from "../guards/postView.guard";
 
 @Controller("posts/:postId/comments")
 @ApiTags("Posts Comments")
@@ -45,10 +45,8 @@ export class PostCommentController {
   @ApiNotFoundResponse({
     description: "Post cannot be found.",
   })
-  @ApiUnauthorizedResponse({
-    description: "Authentication is required to access this resource.",
-  })
-  @UseGuards(AuthRequiredGuard)
+  @ApiAccessDeniedResponse()
+  @UseGuards(AuthRequiredGuard, PostViewGuard)
   async createComment(
     @Req() req: Request,
     @Param("postId") postId: string,
@@ -76,14 +74,9 @@ export class PostCommentController {
       2. Post comment cannot be found.
     `,
   })
-  @ApiForbiddenResponse({
-    description: "You do not have permission to access this resource.",
-  })
-  @ApiUnauthorizedResponse({
-    description: "Authentication is required to access this resource.",
-  })
+  @ApiAccessDeniedResponse()
   @HttpCode(200)
-  @UseGuards(AuthRequiredGuard, PostCommentOwnership)
+  @UseGuards(AuthRequiredGuard, PostViewGuard, PostCommentOwnership)
   async updateComment(
     @Param("postId") postId: string,
     @Param("commentId") commentId: string,
@@ -99,6 +92,7 @@ export class PostCommentController {
   }
 
   @Delete(":commentId")
+  @UseGuards(AuthRequiredGuard, PostViewGuard, PostCommentOwnership)
   @ApiNoContentResponse({
     description: "Succesfully deleted post comment.",
   })
@@ -108,12 +102,7 @@ export class PostCommentController {
       2. Post comment cannot be found.
     `,
   })
-  @ApiForbiddenResponse({
-    description: "You do not have permission to access this resource.",
-  })
-  @ApiUnauthorizedResponse({
-    description: "Authentication is required to access this resource.",
-  })
+  @ApiAccessDeniedResponse()
   async deleteComment(
     @Param("postId") postId: string,
     @Param("commentId") commentId: string
@@ -123,6 +112,7 @@ export class PostCommentController {
   }
 
   @Get()
+  @UseGuards(PostViewGuard)
   @ApiOkResponse({
     description: "Successfully fetched post comment.",
     type: GetPostCommentsResponse,
@@ -130,9 +120,7 @@ export class PostCommentController {
   @ApiNotFoundResponse({
     description: "Post cannot be found.",
   })
-  @ApiUnauthorizedResponse({
-    description: "Authentication is required to access this resource.",
-  })
+  @ApiAccessDeniedResponse()
   @HttpCode(200)
   async getComments(
     @Param("postId") postId: string,

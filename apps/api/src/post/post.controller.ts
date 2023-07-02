@@ -12,15 +12,14 @@ import {
 } from "@nestjs/common";
 import {
   ApiCreatedResponse,
-  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiUnauthorizedResponse,
   ApiOperation,
   ApiNoContentResponse,
 } from "@nestjs/swagger";
 import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
+import { ApiAccessDeniedResponse } from "src/decorators/apiAccessDeniedResponse";
 import { Post as PostDto } from "./dtos/post/";
 import { PostService } from "./post.service";
 import { AuthRequiredGuard } from "../auth/guards/auth-required.guard";
@@ -39,12 +38,7 @@ export class PostController {
     description: "Successfully created post.",
     type: PostDto,
   })
-  @ApiForbiddenResponse({
-    description: "You do not have permission to access this resource.",
-  })
-  @ApiUnauthorizedResponse({
-    description: "Authentication is required to access this resource.",
-  })
+  @ApiAccessDeniedResponse()
   @UseGuards(AuthRequiredGuard)
   async createPost(@Req() req: Request, @Body() createPostDto: CreatePostBody) {
     const post = await this.postService.create(req.user.id, createPostDto);
@@ -60,12 +54,7 @@ export class PostController {
   @ApiNotFoundResponse({
     description: "Post cannot be found.",
   })
-  @ApiForbiddenResponse({
-    description: "You do not have permission to access this resource.",
-  })
-  @ApiUnauthorizedResponse({
-    description: "Authentication is required to access this resource.",
-  })
+  @ApiAccessDeniedResponse()
   @UseGuards(AuthRequiredGuard, PostOwnershipGuard)
   async updatePost(
     @Param("postId") postId: string,
@@ -88,10 +77,8 @@ export class PostController {
   @ApiNotFoundResponse({
     description: "Post cannot be found.",
   })
-  @ApiForbiddenResponse({
-    description: "You do not have permission to access this resource.",
-  })
-  async getPostById(@Req() req: Request) {
+  @ApiAccessDeniedResponse()
+  async getPostById(@Req() req: Request, @Param("postId") postId: string) {
     const post = PostDto.from(req["post"]);
     return post;
   }
@@ -104,12 +91,7 @@ export class PostController {
   @ApiNotFoundResponse({
     description: "Post cannot be found.",
   })
-  @ApiForbiddenResponse({
-    description: "You do not have permission to access this resource.",
-  })
-  @ApiUnauthorizedResponse({
-    description: "Authentication is required to access this resource.",
-  })
+  @ApiAccessDeniedResponse()
   @HttpCode(204)
   @UseGuards(AuthRequiredGuard, PostOwnershipGuard)
   async deletePost(@Param("postId") postId: string) {

@@ -6,15 +6,13 @@ import {
   Req,
   UseGuards,
 } from "@nestjs/common";
-import {
-  ApiOkResponse,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from "@nestjs/swagger";
+import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { AuthRequiredGuard } from "src/auth/guards/auth-required.guard";
 import { HeartItemResponse } from "src/interaction/heartItem.dto";
 import { PostCommentInteractionService } from "./postCommentInteraction.service";
+import { PostViewGuard } from "src/post/guards/postView.guard";
+import { ApiAccessDeniedResponse } from "src/decorators/apiAccessDeniedResponse";
 
 @Controller("posts/:postId/comments/:commentId/interaction")
 @ApiTags("Post Comments Interaction")
@@ -24,14 +22,12 @@ export class PostCommentInteractionController {
   ) {}
 
   @Post("heart")
-  @UseGuards(AuthRequiredGuard)
+  @UseGuards(AuthRequiredGuard, PostViewGuard)
   @ApiOkResponse({
     description: "Comment has been successfully hearted.",
     type: HeartItemResponse,
   })
-  @ApiUnauthorizedResponse({
-    description: "Authentication is required to access this resource.",
-  })
+  @ApiAccessDeniedResponse()
   @HttpCode(200)
   async heartComment(
     @Req() req: Request,
