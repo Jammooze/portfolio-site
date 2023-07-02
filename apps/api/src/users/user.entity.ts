@@ -90,7 +90,10 @@ export class User extends BaseEntity {
   posts: Post[];
 
   @ManyToMany(() => PostComment, (postComment) => postComment.heartedUsers)
-  heartedComments: [];
+  heartedComments: PostComment[];
+
+  @ManyToMany(() => Post, (post) => post.heartedUsers)
+  heartedPosts: Post[];
 
   @OneToMany(() => PostComment, (postComment) => postComment.user)
   comments: PostComment[];

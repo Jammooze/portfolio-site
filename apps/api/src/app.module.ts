@@ -7,6 +7,7 @@ import { AuthModule } from "./auth/auth.module";
 import { PostModule } from "./post/post.module";
 import { IdModule } from "./id/id.module";
 import { APP_INTERCEPTOR } from "@nestjs/core";
+import { InteractionModule } from "./interaction/interaction.module";
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
     UserModule,
     AuthModule,
     PostModule,
-    // PostMetaModule,
+    InteractionModule,
   ],
   controllers: [],
   providers: [

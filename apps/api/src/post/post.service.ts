@@ -79,6 +79,11 @@ export class PostService {
     return post;
   }
 
+  async doesPostExistById(postId: string): Promise<boolean> {
+    const post = await this.postRepository.findOneBy({ id: postId });
+    return !!post;
+  }
+
   // async getByPostAndUserId(postId: string, userId: string) {
   //   const post = await this.getById(postId, ["user"]);
 

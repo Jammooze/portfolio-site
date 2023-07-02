@@ -8,6 +8,8 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { User } from "../../users/user.entity";
 import { Exclude } from "class-transformer";
@@ -114,6 +116,24 @@ export class Post extends BaseEntity {
   })
   @Exclude()
   user: User;
+
+  @ManyToMany(() => User, (user) => user.heartedPosts)
+  @JoinTable({
+    name: "user_hearted_post",
+    joinColumns: [
+      {
+        name: "userId",
+        referencedColumnName: "id",
+      },
+    ],
+    inverseJoinColumns: [
+      {
+        name: "postId",
+        referencedColumnName: "id",
+      },
+    ],
+  })
+  heartedUsers: User[];
 
   commentCount: number;
 }

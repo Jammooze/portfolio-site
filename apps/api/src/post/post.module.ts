@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { PaginationModule } from "src/pagination/pagination.module";
 import { Post, PostComment, PostMeta } from "./entities";
@@ -14,10 +14,12 @@ import { PostCommentReplyController } from "./comment/reply/post-comment-reply.c
 import { PostCommentReplyService } from "./comment/reply/post-comment-reply-service.controller";
 import { PostCommentInteractionController } from "./comment/interaction/postCommentInteraction.controller";
 import { PostCommentInteractionService } from "./comment/interaction/postCommentInteraction.service";
+import { InteractionModule } from "src/interaction/interaction.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Post, PostComment, PostMeta]),
+    forwardRef(() => InteractionModule),
     UserModule,
     SlugModule,
     PaginationModule,
@@ -37,6 +39,6 @@ import { PostCommentInteractionService } from "./comment/interaction/postComment
     PostCommentReplyController,
     PostCommentInteractionController,
   ],
-  exports: [PostService],
+  exports: [PostService, PostCommentService],
 })
 export class PostModule {}
