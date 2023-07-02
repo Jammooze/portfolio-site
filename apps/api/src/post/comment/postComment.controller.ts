@@ -9,11 +9,13 @@ import {
   Query,
   Patch,
   Delete,
+  HttpCode,
 } from "@nestjs/common";
 import { Request } from "express";
 import {
   ApiCreatedResponse,
   ApiForbiddenResponse,
+  ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
@@ -41,9 +43,7 @@ export class PostCommentController {
     type: PostComment,
   })
   @ApiNotFoundResponse({
-    description: `
-      1. Post cannot be found.
-    `,
+    description: "Post cannot be found.",
   })
   @ApiUnauthorizedResponse({
     description: "Authentication is required to access this resource.",
@@ -66,7 +66,7 @@ export class PostCommentController {
   }
 
   @Patch(":commentId")
-  @ApiCreatedResponse({
+  @ApiOkResponse({
     description: "Successfully updated post comment.",
     type: PostComment,
   })
@@ -82,6 +82,7 @@ export class PostCommentController {
   @ApiUnauthorizedResponse({
     description: "Authentication is required to access this resource.",
   })
+  @HttpCode(200)
   @UseGuards(AuthRequiredGuard, PostCommentOwnership)
   async updateComment(
     @Param("postId") postId: string,
@@ -98,7 +99,7 @@ export class PostCommentController {
   }
 
   @Delete(":commentId")
-  @ApiOkResponse({
+  @ApiNoContentResponse({
     description: "Succesfully deleted post comment.",
   })
   @ApiNotFoundResponse({
@@ -117,22 +118,22 @@ export class PostCommentController {
     @Param("postId") postId: string,
     @Param("commentId") commentId: string
   ) {
-    this.commentService.deleteCommentById(postId, commentId);
+    await this.commentService.deleteCommentById(postId, commentId);
+    return;
   }
 
   @Get()
-  @ApiCreatedResponse({
+  @ApiOkResponse({
     description: "Successfully fetched post comment.",
     type: GetPostCommentsResponse,
   })
   @ApiNotFoundResponse({
-    description: `
-      1. Post cannot be found.
-    `,
+    description: "Post cannot be found.",
   })
   @ApiUnauthorizedResponse({
     description: "Authentication is required to access this resource.",
   })
+  @HttpCode(200)
   async getComments(
     @Param("postId") postId: string,
     @Query() query: PaginationQuery
