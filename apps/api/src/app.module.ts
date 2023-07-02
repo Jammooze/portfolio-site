@@ -8,6 +8,7 @@ import { AuthModule } from "./auth/auth.module";
 import { PostModule } from "./post/post.module";
 import { IdModule } from "./id/id.module";
 import { InteractionModule } from "./interaction/interaction.module";
+import { AddProfileUrlToUser1688282368862 } from "./typeorm/migrations/1688282368862-AddProfileUrlToUser";
 
 @Module({
   imports: [
@@ -26,6 +27,8 @@ import { InteractionModule } from "./interaction/interaction.module";
         password: configService.getOrThrow("database.password"),
         autoLoadEntities: true,
         // database: "voyage"
+        migrations: [AddProfileUrlToUser1688282368862],
+        migrationsRun: true,
         synchronize: configService.get("NODE_ENV") === "development",
         // dropSchema: true,
       }),

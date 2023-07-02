@@ -8,12 +8,16 @@ export class User {
   @ApiProperty()
   fullName: string;
 
+  @ApiProperty()
+  profileUrl: string;
+
   static from(record: UserEntity): User {
-    const userDto = new User();
+    const user = new User();
 
-    userDto.id = record.id;
-    userDto.fullName = record.fullName;
+    user.id = record.id;
+    user.fullName = record.fullName;
+    user.profileUrl = record.profileUrl;
 
-    return userDto;
+    return user;
   }
 }

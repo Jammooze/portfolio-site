@@ -15,8 +15,6 @@
       "env": ["API_PORT"],
       "cache": false,
       "persistent": true
-    },
-    "typeorm-run-migrations" : {},
-    "typeorm-revert-migrations" : {}
+    }
   }
 }

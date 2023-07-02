@@ -3,8 +3,6 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "dotenv -e ./.env.development.local turbo run dev",
-    "typeorm-run-migrations" : "dotenv -e ./.env.development.local turbo run typeorm-run-migrations",
-    "typeorm-revert-migrations" : "dotenv -e ./.env.development.local turbo run typeorm-revert-migrations",
     "lint": "turbo run lint",
     "clean": "turbo run prebuild",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
