@@ -35,8 +35,6 @@ export class PostViewGuard implements CanActivate {
       );
     }
 
-    req["post"] = post;
-
     return true;
   }
 }
