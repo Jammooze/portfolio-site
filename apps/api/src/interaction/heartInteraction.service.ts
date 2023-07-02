@@ -27,9 +27,7 @@ export class HeartInteractionService {
     } else if (itemType === HeartItemType.Post) {
       item = await this.postService.getById(itemId, ["heartedUsers"]);
     } else {
-      throw new InternalServerErrorException(
-        "HeartInteractionService - Invalid heart item type."
-      );
+      throw new InternalServerErrorException("Invalid heart item type.");
     }
 
     return item;
