@@ -13,7 +13,7 @@ import {
 } from "@nestjs/swagger";
 import { Request } from "express";
 import { AuthRequiredGuard } from "src/auth/guards/auth-required.guard";
-import { HeartCommentResponse } from "src/post/dtos/comment";
+import { HeartItemResponse } from "src/interaction/heartItem.dto";
 import { PostCommentInteractionService } from "./postCommentInteraction.service";
 
 @Controller("posts/:postId/comments/:commentId/interaction")
@@ -27,7 +27,7 @@ export class PostCommentInteractionController {
   @UseGuards(AuthRequiredGuard)
   @ApiOkResponse({
     description: "Comment has been successfully hearted.",
-    type: HeartCommentResponse,
+    type: HeartItemResponse,
   })
   @ApiUnauthorizedResponse({
     description: "Authentication is required to access this resource.",
@@ -37,12 +37,12 @@ export class PostCommentInteractionController {
     @Req() req: Request,
     @Param("postId") postId: string,
     @Param("commentId") commentId: string
-  ): Promise<HeartCommentResponse> {
-    const response = this.interactionService.heartComment(
+  ) {
+    const data = await this.interactionService.heartComment(
       postId,
       commentId,
       req.user.id
     );
-    return response;
+    return data;
   }
 }

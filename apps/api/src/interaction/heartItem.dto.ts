@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsBoolean, IsNumber } from "class-validator";
 
-export class HeartCommentResponse {
+export class HeartItemResponse {
   @ApiProperty()
   @IsNumber(
     {},

@@ -5,6 +5,7 @@ import { PostService } from "src/post/post.service";
 import { PostCommentService } from "src/post/comment/postComment.service";
 import { UserService } from "src/users/user.service";
 import { Post } from "src/post/entities";
+import { HeartItemResponse } from "./heartItem.dto";
 
 export enum HeartItemType {
   Comment = "comment",
@@ -12,7 +13,7 @@ export enum HeartItemType {
 }
 
 @Injectable()
-export class HeartInteractionService {
+export class InteractionService {
   constructor(
     private readonly userService: UserService,
     private readonly postService: PostService,
@@ -33,7 +34,11 @@ export class HeartInteractionService {
     return item;
   }
 
-  async heartItem(itemId: string, itemType: HeartItemType, userId: string) {
+  async heartItem(
+    itemId: string,
+    itemType: HeartItemType,
+    userId: string
+  ): Promise<HeartItemResponse> {
     const user = await this.userService.getById(userId);
     const item = await this.getHeartedItemById(itemId, itemType);
 
