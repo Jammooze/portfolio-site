@@ -1,7 +1,11 @@
+import { BaseEntity } from "typeorm";
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { HeartItemResponse } from "./heartItem.dto";
 import { User } from "src/users/user.entity";
-import { HeartedUsersColumnEntity } from "./heartedColumn.entity";
+
+class HeartedUsersColumnEntity extends BaseEntity {
+  heartedUsers: User[];
+}
 
 @Injectable()
 export class HeartInteractionService {

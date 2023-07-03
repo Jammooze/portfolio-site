@@ -1,4 +1,3 @@
-import { ApiProperty } from "@nestjs/swagger";
 import {
   Entity,
   Column,
@@ -16,29 +15,23 @@ import { PostComment } from "../post/entities/postComment.entity";
 
 @Entity()
 export class User extends BaseEntity {
-  @ApiProperty()
   @PrimaryGeneratedColumn({
     type: "bigint",
   })
   // @PrimaryColumn()
   id: string;
 
-  @ApiProperty()
   @Column({
     length: 50,
   })
   fullName: string;
 
-  @ApiProperty({
-    nullable: true,
-  })
   @Column({
     nullable: true,
     length: 15,
   })
   mobile: string | null;
 
-  @ApiProperty()
   @Column({
     unique: true,
     length: 50,
@@ -46,11 +39,9 @@ export class User extends BaseEntity {
   @Transform(({ value }: { value: string }) => censorEmail(value))
   email: string;
 
-  @ApiProperty()
   @Column()
   isVerified: boolean;
 
-  @ApiProperty()
   @Column()
   profileUrl: string;
 
@@ -60,31 +51,21 @@ export class User extends BaseEntity {
   @Exclude()
   passwordHash: string | null;
 
-  @ApiProperty()
   @CreateDateColumn()
   registeredAt: Date;
 
-  @ApiProperty({
-    nullable: true,
-  })
   @Column({
     type: "timestamptz",
     nullable: true,
   })
   lastLogin: Date | null;
 
-  @ApiProperty({
-    nullable: true,
-  })
   @Column({
     type: "text",
     nullable: true,
   })
   intro: string | null;
 
-  @ApiProperty({
-    nullable: true,
-  })
   @Column({
     type: "text",
     nullable: true,
@@ -138,4 +119,7 @@ export class User extends BaseEntity {
 
   @OneToMany(() => PostComment, (postComment) => postComment.user)
   comments: PostComment[];
+
+  followingCount: number;
+  followerCount: number;
 }

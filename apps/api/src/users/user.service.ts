@@ -10,6 +10,7 @@ import { User } from "./user.entity";
 import { HashService } from "../hash/hash.service";
 import { AuthStrategy } from "../auth/auth-strategy.enum";
 import { censorEmail } from "../auth/utils/censorEmail";
+import { ProfileUser } from "./dtos/profileUser.dto";
 
 @Injectable()
 export class UserService {
@@ -72,5 +73,17 @@ export class UserService {
     }
 
     return user;
+  }
+
+  async getProfileById(userId: string) {
+    const user = await this.getById(userId, [
+      "followedUsers",
+      "followingUsers",
+    ]);
+
+    user.followerCount = user.followedUsers.length;
+    user.followingCount = user.followingUsers.length;
+
+    return ProfileUser.from(user);
   }
 }

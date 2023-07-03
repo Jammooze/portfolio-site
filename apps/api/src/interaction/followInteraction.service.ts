@@ -1,35 +1,28 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
-import { UserService } from "src/users/user.service";
+import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import { User } from "src/users/user.entity";
 
 @Injectable()
 export class FollowInteractionService {
-  constructor(private readonly userSerivce: UserService) {}
-
-  async followUser(followerId: string, followingId: string) {
-    if (followerId === followingId) {
-      throw new BadRequestException(
-        "followerId and followingId cannot be the same."
+  async followUser(follower: User, following: User) {
+    if (!("followingUser" in following)) {
+      throw new InternalServerErrorException(
+        "followingUser field is missing in the following user entity."
       );
     }
 
-    const followerUser = await this.userSerivce.getById(followerId);
-    const followingUser = await this.userSerivce.getById(followerId, [
-      "followedUsers",
-    ]);
-
-    const isAlreadyFollowing = followingUser.followedUsers.some(
-      (user) => user.id === followerUser.id
+    const isAlreadyFollowing = following.followedUsers.some(
+      (user) => user.id === follower.id
     );
 
     if (!isAlreadyFollowing) {
-      followingUser.followedUsers.push(followerUser);
+      following.followedUsers.push(follower);
     } else {
-      followingUser.followingUsers = followingUser.followingUsers.filter(
-        (user) => user.id !== followerUser.id
+      following.followingUsers = follower.followingUsers.filter(
+        (user) => user.id !== follower.id
       );
     }
 
-    const updatedUser = await followerUser.save();
+    const updatedUser = await following.save();
 
     return {
       userId: updatedUser.id,
