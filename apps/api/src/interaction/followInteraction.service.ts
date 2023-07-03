@@ -1,32 +1,66 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from "@nestjs/common";
 import { User } from "src/users/user.entity";
 
 @Injectable()
 export class FollowInteractionService {
-  async followUser(follower: User, following: User) {
-    if (!("followingUser" in following)) {
+  private checkFollowingUserEntity(user: User) {
+    if (!("followingUsers" in user)) {
       throw new InternalServerErrorException(
-        "followingUser field is missing in the following user entity."
+        "followingUsers field is missing in the following user entity."
       );
     }
+
+    if (!("followedUsers" in user)) {
+      throw new InternalServerErrorException(
+        "followedUsers field is missing in the following user entity."
+      );
+    }
+  }
+
+  async followUser(follower: User, following: User) {
+    this.checkFollowingUserEntity(following);
 
     const isAlreadyFollowing = following.followedUsers.some(
       (user) => user.id === follower.id
     );
 
-    if (!isAlreadyFollowing) {
-      following.followedUsers.push(follower);
-    } else {
-      following.followingUsers = follower.followingUsers.filter(
-        (user) => user.id !== follower.id
+    if (isAlreadyFollowing) {
+      throw new BadRequestException("You are already following this user.");
+    }
+
+    following.followedUsers.push(follower);
+    const updatedUser = await following.save();
+
+    return {
+      followerCount: updatedUser.followedUsers.length,
+    };
+  }
+
+  async unfollowUser(follower: User, following: User) {
+    this.checkFollowingUserEntity(following);
+
+    const isCurrentlyFollowing = following.followedUsers.some(
+      (user) => user.id === follower.id
+    );
+
+    if (!isCurrentlyFollowing) {
+      throw new BadRequestException(
+        "You are not currently following this user."
       );
     }
+
+    following.followedUsers = following.followedUsers.filter(
+      (user) => user.id !== follower.id
+    );
 
     const updatedUser = await following.save();
 
     return {
-      userId: updatedUser.id,
-      followerCount: updatedUser.followedUsers,
+      followerCount: updatedUser.followedUsers.length,
     };
   }
 }

@@ -11,7 +11,10 @@ export class UserInteractionService {
 
   async followUser(followerId: string, followingId: string) {
     const follower = this.userService.getById(followerId);
-    const following = this.userService.getById(followingId, ["followingUser"]);
+    const following = this.userService.getById(followingId, [
+      "followingUsers",
+      "followedUsers",
+    ]);
 
     const followResult = await this.followService.followUser(
       await follower,

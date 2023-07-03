@@ -6,10 +6,11 @@ import { UserService } from "./user.service";
 import { HashModule } from "../hash/hash.module";
 import { UserController } from "./user.controller";
 import { UserInteractionController } from "./interaction/userInteraction.controller";
+import { UserInteractionService } from "./interaction/userInteraction.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), InteractionModule, HashModule],
-  providers: [UserService],
+  providers: [UserService, UserInteractionService],
   controllers: [UserController, UserInteractionController],
   exports: [UserService],
 })
