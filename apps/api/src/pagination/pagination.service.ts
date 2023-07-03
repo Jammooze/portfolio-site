@@ -54,6 +54,18 @@ export class PaginationService {
 
     const queryBuilder = repository.createQueryBuilder("repo");
 
+    if (options && options.filters) {
+      queryBuilder.where(
+        options.filters
+          .map((filter) => `repo.${filter.field} ${filter.operator} :value`)
+          .join(" AND "),
+        options.filters.reduce(
+          (params, filter) => ({ ...params, value: filter.value }),
+          {}
+        )
+      );
+    }
+
     if (options && options.relations) {
       options.relations.forEach((relation) => {
         const joinProperty = `repo.${relation.alias ?? relation.property}`;
@@ -76,18 +88,6 @@ export class PaginationService {
 
     queryBuilder.skip(skip);
     queryBuilder.take(query.pageSize);
-
-    // if (options && options.filters) {
-    //   queryBuilder.where(
-    //     options.filters
-    //       .map((filter) => `repo.${filter.field} ${filter.operator} :value`)
-    //       .join(" AND "),
-    //     options.filters.reduce(
-    //       (params, filter) => ({ ...params, value: filter.value }),
-    //       {}
-    //     )
-    //   );
-    // }
 
     const records = await queryBuilder.getMany();
 

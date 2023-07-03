@@ -125,13 +125,18 @@ export class PostCommentService {
     postId: string,
     query: PaginationQuery
   ): Promise<GetPostCommentsResponse> {
-    console.log("help");
-
     const offsetPaginationData = await this.paginationService.offsetPaginate({
       repository: this.commentRepository,
       query,
       transformFn: PostCommentDto.fromArray,
       options: {
+        filters: [
+          {
+            operator: "=",
+            field: "postId",
+            value: postId,
+          },
+        ],
         relations: [{ property: "user" }],
         relationsCount: [{ alias: "heartedCount", property: "heartedUsers" }],
       },
