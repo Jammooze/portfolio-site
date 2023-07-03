@@ -76,13 +76,19 @@ export class UserService {
   }
 
   async getProfileById(userId: string) {
-    const user = await this.getById(userId, [
-      "followedUsers",
-      "followingUsers",
-    ]);
+    const query = this.userRepository
+      .createQueryBuilder("user")
+      .leftJoin("user.followedUsers", "followedUsers")
+      .leftJoin("user.followingUsers", "followingUsers")
+      .loadRelationCountAndMap("user.followerCount", "user.followedUsers")
+      .loadRelationCountAndMap("user.followingCount", "user.followingUsers")
+      .where("user.id = :id", { id: userId });
 
-    user.followerCount = user.followedUsers.length;
-    user.followingCount = user.followingUsers.length;
+    const user = await query.getOne();
+
+    if (user === null) {
+      throw new NotFoundException(`User with ID: ${userId} not found.`);
+    }
 
     return ProfileUser.from(user);
   }
