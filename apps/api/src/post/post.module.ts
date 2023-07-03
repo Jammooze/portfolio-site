@@ -1,4 +1,4 @@
-import { Module, forwardRef } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { PaginationModule } from "src/pagination/pagination.module";
 import { InteractionModule } from "src/interaction/interaction.module";
@@ -21,7 +21,7 @@ import { PostInteractionService } from "./interaction/postInteraction.service";
 @Module({
   imports: [
     TypeOrmModule.forFeature([Post, PostComment, PostMeta]),
-    forwardRef(() => InteractionModule),
+    InteractionModule,
     UserModule,
     SlugModule,
     PaginationModule,
