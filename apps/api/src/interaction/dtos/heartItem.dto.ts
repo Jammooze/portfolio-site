@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsBoolean, IsNumber } from "class-validator";
+import { IsNotEmpty, IsNumber } from "class-validator";
 
 export class HeartItemResponse {
   @ApiProperty()
@@ -13,13 +13,4 @@ export class HeartItemResponse {
     message: "heartCount is a required field.",
   })
   heartCount: number;
-
-  @ApiProperty()
-  @IsBoolean({
-    message: "isUserHearted must be a boolean.",
-  })
-  @IsNotEmpty({
-    message: "isUserHearted is a required field.",
-  })
-  isUserHearted: boolean;
 }
