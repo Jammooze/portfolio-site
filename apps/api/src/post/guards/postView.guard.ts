@@ -23,18 +23,16 @@ export class PostViewGuard implements CanActivate {
 
     const post = await this.postService.getById(postId, ["user"]);
 
-    if (!post.published) {
-      throw new ForbiddenException(
-        "You do not have permission to peform this action."
-      );
+    if (post.published) {
+      return true;
+    } else {
+      if (req.isAuthenticated() && post.userId === req.user.id) {
+        return true;
+      }
     }
 
-    if (req.isAuthenticated() && post.userId !== req.user.id) {
-      throw new ForbiddenException(
-        "You do not have permission to perform this action."
-      );
-    }
-
-    return true;
+    throw new ForbiddenException(
+      "You do not have permission to peform this action."
+    );
   }
 }
