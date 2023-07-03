@@ -137,7 +137,7 @@ export class PostCommentService {
       query,
       transformFn: PostCommentDto.fromArray,
       options: {
-        relations: ["user"],
+        relations: ["user", "heartedUsers"],
       },
     });
 

@@ -24,6 +24,9 @@ export class PostComment {
   @ApiPropertyOptional()
   user: User;
 
+  @ApiProperty()
+  heartedCount: number;
+
   static from(record: PostCommentEntity) {
     const commentDto = new PostComment();
 
@@ -32,6 +35,7 @@ export class PostComment {
     commentDto.createdAt = record.createdAt;
     commentDto.updatedAt = record.updatedAt;
     commentDto.publishedAt = record.publishedAt;
+    commentDto.heartedCount = record.heartedUsers.length || 0;
 
     if (record.user) {
       commentDto.user = User.from(record.user);
