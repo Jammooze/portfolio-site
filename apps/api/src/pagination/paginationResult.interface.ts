@@ -8,7 +8,7 @@ export class PaginationResult<T> {
   pageSize: number;
 
   @ApiProperty()
-  recordCount: number;
+  entityCount: number;
 
   @ApiProperty()
   totalPages: number;

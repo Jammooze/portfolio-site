@@ -43,15 +43,7 @@ export class PaginationService {
     options,
     transformFn,
   }: OffsetPaginateData<T, U>): Promise<PaginationResult<U>> {
-    const totalRecords = await this.getTotalRecords(repository);
     const skip = (query.pageIndex - 1) * query.pageSize;
-
-    if (skip > totalRecords) {
-      throw new BadRequestException(
-        "Invalid pagination parameters: The requested page exceeds the total number of records in repository."
-      );
-    }
-
     const queryBuilder = repository.createQueryBuilder("repo");
 
     if (options && options.filters) {
@@ -86,6 +78,14 @@ export class PaginationService {
       });
     }
 
+    const totalRecords = await queryBuilder.getCount();
+
+    if (skip > totalRecords) {
+      throw new BadRequestException(
+        "Invalid pagination parameters: The requested page exceeds the total number of records in repository."
+      );
+    }
+
     queryBuilder.skip(skip);
     queryBuilder.take(query.pageSize);
 
@@ -97,7 +97,7 @@ export class PaginationService {
 
     return {
       ...query,
-      recordCount: totalRecords,
+      entityCount: totalRecords,
       totalPages: Math.ceil(totalRecords / query.pageSize),
       results: transformedResults,
     };
