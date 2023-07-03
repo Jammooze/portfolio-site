@@ -29,7 +29,7 @@ import { AddProfileUrlToUser1688282368862 } from "./typeorm/migrations/168828236
         // database: "voyage"
         migrations: [AddProfileUrlToUser1688282368862],
         migrationsRun: false,
-        synchronize: configService.get("NODE_ENV") === "development",
+        synchronize: configService.get("NODE_ENV") !== "production",
         // dropSchema: true,
       }),
     }),

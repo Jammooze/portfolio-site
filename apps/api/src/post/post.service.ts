@@ -68,15 +68,15 @@ export class PostService {
   }
 
   async fetchById(postId: string): Promise<PostDto> {
-    const post = await this.getById(postId, [
-      "user",
-      "heartedUsers",
-      "comments",
-    ]);
+    const queryBuilder = this.postRepository
+      .createQueryBuilder("post")
+      .leftJoin("post.comments", "comments")
+      .leftJoin("post.heartedUsers", "heartedUsers")
+      .loadRelationCountAndMap("post.commentCount", "post.comments")
+      .loadRelationCountAndMap("post.heartCount", "post.heartedUsers")
+      .where("post.id = :id", { id: postId });
 
-    post.commentCount = post.comments.length;
-    post.heartCount = post.heartedUsers.length;
-
+    const post = await queryBuilder.getOne();
     return PostDto.from(post);
   }
 
