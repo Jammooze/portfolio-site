@@ -41,4 +41,25 @@ export class PostCommentInteractionController {
     );
     return data;
   }
+
+  @Post("unheart")
+  @UseGuards(AuthRequiredGuard, PostViewGuard)
+  @ApiOkResponse({
+    description: "Comment has been successfully unhearted.",
+    type: HeartItemResponse,
+  })
+  @ApiAccessDeniedResponse()
+  @HttpCode(200)
+  async unheartComment(
+    @Req() req: Request,
+    @Param("postId") postId: string,
+    @Param("commentId") commentId: string
+  ) {
+    const data = await this.interactionService.unheartComment(
+      postId,
+      commentId,
+      req.user.id
+    );
+    return data;
+  }
 }
