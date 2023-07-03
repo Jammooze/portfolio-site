@@ -68,8 +68,10 @@ export class PostService {
   }
 
   async fetchById(postId: string): Promise<PostDto> {
+    // we forgot the author?!?!??!
     const queryBuilder = this.postRepository
       .createQueryBuilder("post")
+      // .leftJoinAndSelect("post.user", "user")
       .leftJoin("post.comments", "comments")
       .leftJoin("post.heartedUsers", "heartedUsers")
       .loadRelationCountAndMap("post.commentCount", "post.comments")

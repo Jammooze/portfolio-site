@@ -1,15 +1,23 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { FindManyOptions, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { PaginationQuery } from "./paginationQuery";
 import { PaginationResult } from "./paginationResult.interface";
 
 export * from "./paginationQuery";
 export * from "./paginationResult.interface";
 
-export interface PaginateData<T, U> {
+export interface AliasProperty {
+  alias?: string;
+  property: string;
+}
+
+export interface OffsetPaginateData<T, U> {
   repository: Repository<T>;
   query: PaginationQuery;
-  options?: FindManyOptions<T>;
+  options?: {
+    relations?: AliasProperty[];
+    relationsCount?: AliasProperty[];
+  };
   transformFn?: (records: T[]) => U[] | Promise<U[]>;
 }
 
@@ -20,12 +28,16 @@ export class PaginationService {
     return totalRecords;
   }
 
-  async paginate<T, U>({
+  private async createWhereQueryString();
+
+  // async cursorPaginate() {}
+
+  async offsetPaginate<T, U>({
     repository,
     query,
     options,
     transformFn,
-  }: PaginateData<T, U>): Promise<PaginationResult<U>> {
+  }: OffsetPaginateData<T, U>): Promise<PaginationResult<U>> {
     const totalRecords = await this.getTotalRecords(repository);
     const skip = (query.pageIndex - 1) * query.pageSize;
 
@@ -35,12 +47,31 @@ export class PaginationService {
       );
     }
 
-    const records = await repository.find({
-      skip,
-      take: query.pageSize,
-      ...options,
-    });
+    const queryBuilder = repository.createQueryBuilder("repo");
 
+    if (options && options.relations) {
+      options.relations.forEach((relation) => {
+        const joinProperty = `repo.${relation.alias ?? relation.property}`;
+
+        queryBuilder.leftJoinAndSelect(joinProperty, relation.property);
+      });
+    }
+
+    if (options && options.relationsCount) {
+      options.relationsCount.forEach((relation) => {
+        const joinProperty = `repo.${relation.alias ?? relation.property}`;
+        queryBuilder.leftJoin(joinProperty, relation.property);
+        queryBuilder.loadRelationCountAndMap(
+          joinProperty,
+          `repo.${relation.property}`
+        );
+      });
+    }
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(query.pageSize);
+
+    const records = await queryBuilder.getMany();
     const transformedResults = transformFn
       ? await transformFn(records)
       : (records as unknown as U[]);

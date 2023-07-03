@@ -1,9 +1,4 @@
-import {
-  Inject,
-  Injectable,
-  NotFoundException,
-  forwardRef,
-} from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import {
@@ -32,7 +27,6 @@ export class PostCommentService {
   constructor(
     @InjectRepository(PostComment)
     private readonly commentRepository: Repository<PostComment>,
-    @Inject(forwardRef(() => PostService))
     private readonly postService: PostService,
     private readonly paginationService: PaginationService,
     private readonly userService: UserService
@@ -131,17 +125,17 @@ export class PostCommentService {
     postId: string,
     query: PaginationQuery
   ): Promise<GetPostCommentsResponse> {
-    await this.postService.getById(postId);
-    const paginationData = await this.paginationService.paginate({
+    const offsetPaginationData = await this.paginationService.offsetPaginate({
       repository: this.commentRepository,
       query,
       transformFn: PostCommentDto.fromArray,
       options: {
-        relations: ["user", "heartedUsers"],
+        relations: [{ property: "user" }],
+        relationsCount: [{ alias: "heartedCount", property: "heartedUsers" }],
       },
     });
 
-    return paginationData;
+    return offsetPaginationData;
   }
 
   async deleteCommentById(postId: string, commentId: string) {
