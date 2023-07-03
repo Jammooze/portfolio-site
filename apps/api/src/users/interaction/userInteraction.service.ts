@@ -9,16 +9,45 @@ export class UserInteractionService {
     private readonly followService: FollowInteractionService
   ) {}
 
-  async followUser(followerId: string, followingId: string) {
+  private async getFollowerAndFollowingUser(
+    followerId: string,
+    followingId: string
+  ) {
     const follower = this.userService.getById(followerId);
     const following = this.userService.getById(followingId, [
       "followingUsers",
       "followedUsers",
     ]);
 
+    return {
+      follower: await follower,
+      following: await following,
+    };
+  }
+
+  async followUser(followerId: string, followingId: string) {
+    const { follower, following } = await this.getFollowerAndFollowingUser(
+      followerId,
+      followingId
+    );
+
     const followResult = await this.followService.followUser(
-      await follower,
-      await following
+      follower,
+      following
+    );
+
+    return followResult;
+  }
+
+  async unfollowUser(followerId: string, followingId: string) {
+    const { follower, following } = await this.getFollowerAndFollowingUser(
+      followerId,
+      followingId
+    );
+
+    const followResult = await this.followService.unfollowUser(
+      follower,
+      following
     );
 
     return followResult;

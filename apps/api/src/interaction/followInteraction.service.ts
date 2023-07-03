@@ -4,6 +4,7 @@ import {
   InternalServerErrorException,
 } from "@nestjs/common";
 import { User } from "src/users/user.entity";
+import { FollowUserResponse } from "./dtos/followUser.dto";
 
 @Injectable()
 export class FollowInteractionService {
@@ -21,7 +22,10 @@ export class FollowInteractionService {
     }
   }
 
-  async followUser(follower: User, following: User) {
+  async followUser(
+    follower: User,
+    following: User
+  ): Promise<FollowUserResponse> {
     this.checkFollowingUserEntity(following);
 
     const isAlreadyFollowing = following.followedUsers.some(
@@ -40,7 +44,10 @@ export class FollowInteractionService {
     };
   }
 
-  async unfollowUser(follower: User, following: User) {
+  async unfollowUser(
+    follower: User,
+    following: User
+  ): Promise<FollowUserResponse> {
     this.checkFollowingUserEntity(following);
 
     const isCurrentlyFollowing = following.followedUsers.some(
@@ -48,9 +55,7 @@ export class FollowInteractionService {
     );
 
     if (!isCurrentlyFollowing) {
-      throw new BadRequestException(
-        "You are not currently following this user."
-      );
+      throw new BadRequestException("You are not following this user.");
     }
 
     following.followedUsers = following.followedUsers.filter(

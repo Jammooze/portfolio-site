@@ -9,7 +9,7 @@ import {
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { AuthRequiredGuard } from "src/auth/guards/auth-required.guard";
-import { HeartItemResponse } from "src/interaction/heartItem.dto";
+import { HeartItemResponse } from "src/interaction/dtos/heartItem.dto";
 import { PostCommentInteractionService } from "./postCommentInteraction.service";
 import { PostViewGuard } from "src/post/guards/postView.guard";
 import { ApiAccessDeniedResponse } from "src/decorators/apiAccessDeniedResponse";

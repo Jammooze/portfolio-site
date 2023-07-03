@@ -1,6 +1,6 @@
 import { BaseEntity } from "typeorm";
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
-import { HeartItemResponse } from "./heartItem.dto";
+import { HeartItemResponse } from "./dtos/heartItem.dto";
 import { User } from "src/users/user.entity";
 
 class HeartedUsersColumnEntity extends BaseEntity {
