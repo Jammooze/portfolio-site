@@ -77,6 +77,11 @@ export class PostService {
       .where("post.id = :id", { id: postId });
 
     const post = await queryBuilder.getOne();
+
+    if (post === null) {
+      throw new NotFoundException(`Post with ID: ${postId} not found.`);
+    }
+
     return PostDto.from(post);
   }
 
