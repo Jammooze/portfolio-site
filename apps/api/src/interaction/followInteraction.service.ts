@@ -22,6 +22,15 @@ export class FollowInteractionService {
     }
   }
 
+  private async saveEntityAndGetFollowerCount(
+    entity: User
+  ): Promise<FollowUserResponse> {
+    const updatedEntity = await entity.save();
+    return {
+      followerCount: updatedEntity.followedUsers.length,
+    };
+  }
+
   async followUser(
     follower: User,
     following: User
@@ -37,11 +46,7 @@ export class FollowInteractionService {
     }
 
     following.followedUsers.push(follower);
-    const updatedUser = await following.save();
-
-    return {
-      followerCount: updatedUser.followedUsers.length,
-    };
+    return this.saveEntityAndGetFollowerCount(following);
   }
 
   async unfollowUser(
@@ -62,10 +67,6 @@ export class FollowInteractionService {
       (user) => user.id !== follower.id
     );
 
-    const updatedUser = await following.save();
-
-    return {
-      followerCount: updatedUser.followedUsers.length,
-    };
+    return this.saveEntityAndGetFollowerCount(following);
   }
 }

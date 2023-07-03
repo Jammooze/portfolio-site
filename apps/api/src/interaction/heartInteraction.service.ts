@@ -45,7 +45,7 @@ export class HeartInteractionService {
     }
 
     entity.heartedUsers.push(user);
-    return await this.saveEntityAndGetHeartCount(entity);
+    return this.saveEntityAndGetHeartCount(entity);
   }
 
   async unheartItem(
@@ -66,6 +66,6 @@ export class HeartInteractionService {
       (heartedUser) => heartedUser.id !== user.id
     );
 
-    return await this.saveEntityAndGetHeartCount(entity);
+    return this.saveEntityAndGetHeartCount(entity);
   }
 }
