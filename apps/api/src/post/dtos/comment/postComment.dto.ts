@@ -12,8 +12,8 @@ export class PostComment {
   @ApiProperty()
   updatedAt: Date;
 
-  @ApiProperty({ nullable: true })
-  publishedAt: Date | null;
+  // @ApiProperty({ nullable: true })
+  // publishedAt: Date | null;
 
   @ApiProperty()
   createdAt: Date;
@@ -34,8 +34,8 @@ export class PostComment {
     commentDto.content = record.content;
     commentDto.createdAt = record.createdAt;
     commentDto.updatedAt = record.updatedAt;
-    commentDto.publishedAt = record.publishedAt;
-    commentDto.heartedCount = record.heartedUsers.length || 0;
+    // commentDto.publishedAt = record.publishedAt;
+    commentDto.heartedCount = record.heartedCount || 0;
 
     if (record.user) {
       commentDto.user = User.from(record.user);

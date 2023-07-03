@@ -11,12 +11,19 @@ export interface AliasProperty {
   property: string;
 }
 
+export interface Filter {
+  field: string;
+  operator: string;
+  value: any;
+}
+
 export interface OffsetPaginateData<T, U> {
   repository: Repository<T>;
   query: PaginationQuery;
   options?: {
     relations?: AliasProperty[];
     relationsCount?: AliasProperty[];
+    filters?: Filter[];
   };
   transformFn?: (records: T[]) => U[] | Promise<U[]>;
 }
@@ -27,8 +34,6 @@ export class PaginationService {
     const totalRecords = await repository.count();
     return totalRecords;
   }
-
-  private async createWhereQueryString();
 
   // async cursorPaginate() {}
 
@@ -59,11 +64,12 @@ export class PaginationService {
 
     if (options && options.relationsCount) {
       options.relationsCount.forEach((relation) => {
-        const joinProperty = `repo.${relation.alias ?? relation.property}`;
-        queryBuilder.leftJoin(joinProperty, relation.property);
+        const property = `repo.${relation.property}`;
+
+        queryBuilder.leftJoin(property, relation.property);
         queryBuilder.loadRelationCountAndMap(
-          joinProperty,
-          `repo.${relation.property}`
+          `repo.${relation.alias ?? relation.property}`,
+          property
         );
       });
     }
@@ -71,7 +77,20 @@ export class PaginationService {
     queryBuilder.skip(skip);
     queryBuilder.take(query.pageSize);
 
+    // if (options && options.filters) {
+    //   queryBuilder.where(
+    //     options.filters
+    //       .map((filter) => `repo.${filter.field} ${filter.operator} :value`)
+    //       .join(" AND "),
+    //     options.filters.reduce(
+    //       (params, filter) => ({ ...params, value: filter.value }),
+    //       {}
+    //     )
+    //   );
+    // }
+
     const records = await queryBuilder.getMany();
+
     const transformedResults = transformFn
       ? await transformFn(records)
       : (records as unknown as U[]);

@@ -120,4 +120,6 @@ export class PostComment extends BaseEntity {
     length: 750,
   })
   content: string;
+
+  heartedCount: number;
 }

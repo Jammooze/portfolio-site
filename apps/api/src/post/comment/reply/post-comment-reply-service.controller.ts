@@ -40,11 +40,15 @@ export class PostCommentReplyService {
       repository: this.commentRepository,
       query,
       options: {
-        relations: ["user"],
-        where: {
-          postId,
-          parentId: commentId,
-        },
+        relations: [
+          {
+            property: "user",
+          },
+        ],
+        filters: [
+          { field: "id", operator: "=", value: postId },
+          { field: "parentId", value: commentId, operator: "=" },
+        ],
       },
       transformFn: PostCommentDto.fromArray,
     });
