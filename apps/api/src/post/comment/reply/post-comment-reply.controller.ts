@@ -8,7 +8,12 @@ import {
   Query,
   UseGuards,
 } from "@nestjs/common";
-import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import {
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from "@nestjs/swagger";
 import { Request } from "express";
 import { PaginationQuery } from "src/pagination/paginationQuery";
 import { AuthRequiredGuard } from "src/auth/guards/auth-required.guard";
@@ -55,7 +60,7 @@ export class PostCommentReplyController {
 
   @Post("/reply")
   @UseGuards(AuthRequiredGuard, PostViewGuard)
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     type: PostComment,
     description: "Successfully replied to post comment.",
   })

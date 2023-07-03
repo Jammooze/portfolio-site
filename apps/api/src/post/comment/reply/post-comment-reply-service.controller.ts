@@ -35,7 +35,8 @@ export class PostCommentReplyService {
   }
 
   async getReplies(postId: string, commentId: string, query: PaginationQuery) {
-    await this.commentService.getByPostAndCommentId(postId, commentId);
+    console.log(postId, commentId);
+
     const paginationData = await this.paginationService.offsetPaginate({
       repository: this.commentRepository,
       query,
@@ -46,8 +47,8 @@ export class PostCommentReplyService {
           },
         ],
         filters: [
-          { field: "id", operator: "=", value: postId },
           { field: "parentId", value: commentId, operator: "=" },
+          { field: "postId", value: postId, operator: "=" },
         ],
       },
       transformFn: PostCommentDto.fromArray,

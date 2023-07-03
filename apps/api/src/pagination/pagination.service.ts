@@ -30,13 +30,6 @@ export interface OffsetPaginateData<T, U> {
 
 @Injectable()
 export class PaginationService {
-  private async getTotalRecords<T>(repository: Repository<T>) {
-    const totalRecords = await repository.count();
-    return totalRecords;
-  }
-
-  // async cursorPaginate() {}
-
   async offsetPaginate<T, U>({
     repository,
     query,
@@ -49,10 +42,16 @@ export class PaginationService {
     if (options && options.filters) {
       queryBuilder.where(
         options.filters
-          .map((filter) => `repo.${filter.field} ${filter.operator} :value`)
+          .map(
+            (filter) =>
+              `repo.${filter.field} ${filter.operator} :${filter.field}Value`
+          )
           .join(" AND "),
         options.filters.reduce(
-          (params, filter) => ({ ...params, value: filter.value }),
+          (params, filter) => ({
+            ...params,
+            [`${filter.field}Value`]: filter.value,
+          }),
           {}
         )
       );
