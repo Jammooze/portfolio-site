@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./App.css";
 import gameplayFootage from "/assets/gameplayFootage.mp4";
 
-// Import your images from src/assets/photos
+// Import images
 import img1 from "/assets/gallery/img1.png";
 import img2 from "/assets/gallery/img2.png";
 import img3 from "/assets/gallery/img3.png";
@@ -13,7 +13,7 @@ import img6 from "/assets/gallery/img6.png";
 import img7 from "/assets/gallery/img7.png";
 import img8 from "/assets/gallery/img8.png";
 
-const images = [img1, img2, img3, img4, img5, img6, img7, img8];
+const images = [img2, img1, img3, img4, img5, img6, img7, img8];
 
 function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
