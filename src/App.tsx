@@ -3,17 +3,14 @@ import { useState } from "react";
 import "./App.css";
 import gameplayFootage from "/assets/gameplayFootage.mp4";
 
-// Import images
+// Import your images from src/assets/photos
 import img1 from "/assets/gallery/img1.png";
 import img2 from "/assets/gallery/img2.png";
 import img3 from "/assets/gallery/img3.png";
 import img4 from "/assets/gallery/img4.png";
 import img5 from "/assets/gallery/img5.png";
-import img6 from "/assets/gallery/img6.png";
-import img7 from "/assets/gallery/img7.png";
-import img8 from "/assets/gallery/img8.png";
 
-const images = [img2, img1, img3, img4, img5, img6, img7, img8];
+const images = [img1, img2, img3, img4, img5];
 
 function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -44,7 +41,7 @@ function App() {
         <div className="image-gradient"></div>
         <div className="overlay-text">
           <h1>James Nguyen</h1>
-          <p>Programmer & Gamer</p>
+          <p>Programmer & Animator</p>
         </div>
       </div>
 
@@ -210,35 +207,46 @@ function App() {
         <div className="video-container">
           <div className="james-pfp"></div>
           <div className="about-me">
-            <h1>VIDEOS</h1>
-            <h2>I also like to make videos!</h2>
+            <h1>ANIMATIONS</h1>
+            <h2>I also like to make animations!</h2>
             <p>
-              My friends and I have gotten together to start a little Youtube
-              channel! Check out some of the videos I've edited of us!
+              I'm really passionate about Game Art and Animation! <br />
+              Check out some of my reels I've made animating with Autodesk Maya!
             </p>
             <div className="resume" style={{ display: "flex" }}>
               <a
-                href="https://www.youtube.com/@jabillson"
+                href="https://www.artstation.com/jammooze"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="resume-button"
               >
-                Subscribe
+                ArtStation
               </a>
             </div>
           </div>
 
           <div className="youtube-container">
-            <iframe
-              height="500"
-              width="889"
-              src="https://www.youtube.com/embed/UpUEyqn_jBI?si=6AzD4kNCWtmCgpDR"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+            <div
+              style={{
+                padding: "53.61% 0 0 0",
+                position: "relative",
+              }}
+            >
+              <iframe
+                src="https://player.vimeo.com/video/1099043533?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                }}
+                title="Psylocke Weight Animation"
+                allowFullScreen
+              ></iframe>
+            </div>
           </div>
         </div>
       </section>

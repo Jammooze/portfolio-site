@@ -53,7 +53,7 @@ class Navbar extends Component {
               <a href="#projects">Projects</a>
             </li>
             <li>
-              <a href="#videos">Videos</a>
+              <a href="#videos">Animations</a>
             </li>
             <li>
               <a href="#contact">Contact</a>
