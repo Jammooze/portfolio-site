@@ -159,7 +159,7 @@ function App() {
                   <br></br>
                   <p>we won nothing... but we had fun</p>
                   <br></br>
-                  <p>Jun. 2023</p>
+                  <p>June 2023</p>
                 </div>
               </div>
             </div>
