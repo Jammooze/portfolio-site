@@ -78,6 +78,7 @@
   font-family: "Rubik", sans-serif;
   padding-bottom: 10px;
   font-size: 200%;
+  min-width: 300px;
 }
 
 .about-me p {
@@ -230,8 +231,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
-  max-width: 1000px;
   flex: 1;
 }
 
@@ -276,6 +275,7 @@
   padding-left: 25px;
   padding-right: 50px;
   flex: 1;
+  min-width: 400px;
 }
 
 .contact-me h1 {
@@ -289,6 +289,7 @@
   font-family: "Rubik", sans-serif;
   padding-bottom: 10px;
   font-size: 200%;
+ 
 }
 
 .contact-me p {
@@ -408,10 +409,13 @@ html {
 
   .video-gameplay {
     width: 100%;
-    height: auto;
+  max-width: 1200px; /* Increase this to make the video larger */
+  margin: 0 auto;
   }
 
   .video-gameplay video {
     aspect-ratio: 16/9;
   }
+
+
 }

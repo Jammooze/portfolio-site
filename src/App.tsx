@@ -49,7 +49,7 @@ function App() {
         <section id="about">
           <div className="james-pfp">
             <img
-              src="/assets/jamesPfp.png"
+              src="/assets/jimmypfp.png"
               alt="James Nguyen"
               style={{ width: "200px", height: "auto", objectFit: "cover" }}
             />
@@ -59,31 +59,30 @@ function App() {
           <h1>ABOUT ME</h1>
           <h2>Hey! I'm James!</h2>
           <p>
-            I'm currently a 3rd-year at California State University, Los Angeles
-            studying Computer Science with an interest in game development and
-            open-source hardware. When I'm not coding, you'll often find me
-            playing badminton or online playing games like{" "}
+            I’m a Computer Science student with a passion for game development
+            and animation. My love for animation really clicked after playing{" "}
+            <a
+              href="https://store.steampowered.com/app/2691670/Clair_Obscur_Expedition_33/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-link"
+            >
+              Clair Obscur: Expedition 33
+            </a>
+            — the art and gameplay really drove me to have a a deeper
+            appreciation for visual storytelling in video games. When I’m not
+            building something in code, I’m usually animating something cool in
+            Maya or playing{" "}
             <a
               href="https://playvalorant.com/en-us/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-link"
             >
-              {" "}
               Valorant
             </a>{" "}
-            or Counter-Strike. If I peek mid, remember to pick up my AWP if you
-            can. I'm currently playing Elden Ring's latest DLC
-            <a
-              href="https://en.bandainamcoent.eu/elden-ring/elden-ring/shadow-of-the-erdtree"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-link"
-            >
-              {" "}
-              Shadow of The Erdtree
-            </a>
-            , I'm enjoying it so far.
+            with my friends. I honestly think I'd want to go to art school to
+            learn more about Animation!
           </p>
           <div className="resume" style={{ display: "flex" }}>
             <a
