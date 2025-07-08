@@ -62,7 +62,7 @@ function App() {
             I’m a Computer Science student with a passion for game development
             and animation. My love for animation really clicked after playing{" "}
             <a
-              href="https://store.steampowered.com/app/2691670/Clair_Obscur_Expedition_33/"
+              href="https://www.expedition33.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-link"
