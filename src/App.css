@@ -1,26 +1,26 @@
 @font-face {
-    font-family: 'Valorant';
-    src: url('/assets/fonts/Valorant.ttf') format('truetype');
+  font-family: 'Valorant';
+  src: url('/assets/fonts/Valorant.ttf') format('truetype');
 }
 
-/* Define keyframes for the fade-in animation */
 @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .text-link {
-    text-decoration: none;
-    color: #FF4655; /* Optional: keeps the link color the same as the surrounding text */
-  }
+  text-decoration: none;
+  color: #FF4655;
+}
 
 .image-container p {
-    font-family: "Rubik", sans-serif;
+  font-family: "Rubik", sans-serif;
 }
+
 .content-container {
   display: flex;
   padding: 50px;
@@ -29,333 +29,319 @@
 }
 
 .projects-container {
-    display: flex;
-    padding: 50px;
-    flex-wrap: wrap;
-    justify-content: center;
-    background-color: #FF4655;
-  }
+  display: flex;
+  flex-direction: row; /* side by side */
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+  padding: 50px;
+  background-color: #FF4655;
+  flex-wrap: wrap; /* allow wrapping on small screens */
+  box-sizing: border-box;
+}
 
 .image-gradient {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 90vh;
-    background: linear-gradient(
-        to bottom, 
-        rgba(0,0,0,0), 
-        rgba(0,0,0,0.6) 
-    );
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90vh;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
 }
 
 .james-pfp {
-margin-right: 20px;
-
+  margin-right: 20px;
 }
-  
+
 .video-container {
-    display: flex;
-    padding: 50px;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  padding: 50px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .about-me {
-    padding-top: 0px;
-    padding-left: 25px;
-    padding-right: 50px;
-    flex: 1;
+  padding-top: 0px;
+  padding-left: 25px;
+  padding-right: 50px;
+  flex: 1;
 }
 
 .about-me h1 {
   color: #111820;
-  font-family: 'Anton', sans-serif; 
-  font-size:800%;
+  font-family: 'Anton', sans-serif;
+  font-size: 800%;
 }
 
 .about-me h2 {
-    color: #FF4655; 
-    font-family: "Rubik", sans-serif;
-    padding-bottom: 10px;
-    font-size:200%;
-  }
+  color: #FF4655;
+  font-family: "Rubik", sans-serif;
+  padding-bottom: 10px;
+  font-size: 200%;
+}
 
 .about-me p {
-    color: #111820;
-    font-weight: bold;
-    font-size: larger;
-    max-width: 900px;
-    min-width: 500px;
-    padding-bottom: 50px;
-    font-family: "Rubik", sans-serif;
+  color: #111820;
+  font-weight: bold;
+  font-size: larger;
+  max-width: 900px;
+  padding-bottom: 50px;
+  font-family: "Rubik", sans-serif;
 }
 
 .projects {
-    padding-top: 25px;
-    padding-left: 25px;
-    padding-right: 50px;
-    flex: 1;
+
+  text-align: left;
 }
 
 .projects h1 {
   color: #ECE8E1;
-  font-family: 'Anton', sans-serif; 
-  font-size:800%;
+  font-family: 'Anton', sans-serif;
+  font-size: 800%;
 }
 
 .projects h2 {
-    color: #ECE8E1;
-    font-family: 'Anton', sans-serif; 
-    padding-bottom: 10px;
-    font-size:200%;
-  }
-
-.projects p {
-    color: #ECE8E1;
-    font-weight: bold;
-    font-size:larger;
-    max-width: 900px;
-    min-width: 500px;
-    padding-bottom: 50px;
-    font-family: "Rubik", sans-serif;
+  color: #ECE8E1;
+  font-family: 'Anton', sans-serif;
+  padding-bottom: 10px;
+  font-size: 200%;
 }
 
-/* Overlay text styles with fade-in animation */
+.projects p {
+  color: #ECE8E1;
+  font-weight: bold;
+  font-size: larger;
+  max-width: 900px;
+  padding-bottom: 50px;
+  font-family: "Rubik", sans-serif;
+}
+
 .overlay-text {
   position: absolute;
-  top: 79%;
+  bottom: 15%; /* moved up from 5% */
   left: 50%;
-  font-family: 'Valorant', sans-serif; /* Apply the custom Valorant font */
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
+  font-family: 'Valorant', sans-serif;
   color: #ffffff;
   text-align: center;
   font-size: 2em;
-  min-width: 200px;
-  opacity: 0; /* Start hidden */
-  animation: fadeIn 2s forwards; /* Apply fade-in animation */
+  width: 90%;
+  max-width: 600px;
+  padding: 0 10px;
+  word-wrap: break-word;
+  opacity: 0;
+  animation: fadeIn 2s forwards;
   animation-delay: 0.5s;
+  z-index: 2;
 }
 
 .overlay-text p {
-    font-size:x-large;
-    font-weight: bold;
-    font-family: "Rubik", sans-serif;
+  font-size: x-large;
+  font-weight: bold;
+  font-family: "Rubik", sans-serif;
 }
 
 .resume {
-    padding-bottom: 25px;
-   
+  padding-bottom: 25px;
 }
 
 .resume-button {
-    background-color: #FF4655; /* Initial background color */
-    color: white; /* Initial text color */
-    font-family: sans-serif; /* Primary font */
-    font-size:medium;
-    font-weight: bold;
-    font-family: "Rubik", sans-serif;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
-    text-decoration: none;
+  background-color: #FF4655;
+  color: white;
+  font-family: "Rubik", sans-serif;
+  font-size: medium;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
 
-}
-  
 .resume-button:hover {
-    background-color: #111111; /* Background color on hover */
-    color: white; /* Text color on hover */
+  background-color: #111111;
+  color: white;
 }
-  
+
 .video-gameplay {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 800px; /* Set a fixed width for the video */
-    height: 450px; /* Set a fixed height for the video */
-    margin: 0 auto; /* Center the container */
-    overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  height: 450px;
+  margin: 0 auto;
+  overflow: hidden;
 }
-  
+
 .video-gameplay video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the video covers the entire container without distortion */
-    z-index: 1; /* Keep the video behind other elements */
-   
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
 }
 
 .video-description {
-    margin-top: 10px;
-    text-align: center;
-    z-index: 2; /* Ensure the text is above the video */
+  margin-top: 10px;
+  text-align: center;
+  z-index: 2;
 }
-  
-
 
 .slideshow-container {
-    position: relative;
-    width: 600px;
-    margin: auto;
-    min-width: 600px;
+  position: relative;
+  width: 600px;
+  margin: auto;
 }
-  
+
 .slideshow-image {
-    width: 100%;
-    height: auto;
-    border-radius: 5%;
+  width: 100%;
+  height: auto;
+  border-radius: 5%;
 }
-  
+
 .prev-button, .next-button {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    padding: 16px;
-    margin-top: -22px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.5);
-    user-select: none;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  user-select: none;
 }
-  
+
 .prev-button:hover, .next-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
 }
-  
+
 .prev-button {
-   left: 0;
+  left: 0;
 }
-  
+
 .next-button {
-    right: 0;
+  right: 0;
 }
 
 .project-card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 20px;
-    max-height: 400px;
-    min-width: 1000px;
-    padding-bottom: 550px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  max-width: 1000px;
+  flex: 1;
 }
 
 .project-card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    width: 300px;
-    transition: transform 0.3s;
-    overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  width: 300px;
+  transition: transform 0.3s;
+  overflow: hidden;
 }
 
 .project-card:hover {
-    transform: translateY(-10px);
+  transform: translateY(-10px);
 }
 
 .project-card img {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .project-card-description {
-    padding: 15px;
+  padding: 15px;
 }
 
 .project-card-title {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color:#111111;
-    font-family: "Rubik", sans-serif;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #111111;
+  font-family: "Rubik", sans-serif;
 }
 
 .project-card-text {
-    font-size: 1em;
-    color: #555;
-   
-    font-family: "Rubik", sans-serif;
+  font-size: 1em;
+  color: #555;
+  font-family: "Rubik", sans-serif;
 }
 
 .contact-me {
-   
-    padding-top: 25px;
-    padding-left: 25px;
-    padding-right: 50px;
-    flex: 1;
-    
-
+  padding-top: 25px;
+  padding-left: 25px;
+  padding-right: 50px;
+  flex: 1;
 }
 
 .contact-me h1 {
   color: #111820;
-  font-family: 'Anton', sans-serif; 
-  font-size:800%;
+  font-family: 'Anton', sans-serif;
+  font-size: 800%;
 }
 
 .contact-me h2 {
-    color: #FF4655; 
-    font-family: "Rubik", sans-serif;
-    padding-bottom: 10px;
-    font-size:200%;
-  }
+  color: #FF4655;
+  font-family: "Rubik", sans-serif;
+  padding-bottom: 10px;
+  font-size: 200%;
+}
 
 .contact-me p {
-    color: #111820;
-    font-weight: bold;
-    font-size: larger;
-    max-width: 900px;
-    min-width: 500px;
-    padding-bottom: 50px;
-    font-family: "Rubik", sans-serif;
+  color: #111820;
+  font-weight: bold;
+  font-size: larger;
+  max-width: 900px;
+  min-width: 500px;
+  padding-bottom: 50px;
+  font-family: "Rubik", sans-serif;
 }
 
 .contact-email {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #333; /* Adjust to match your theme */
-    font-size: 18px; /* Adjust to desired size */
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
 }
 
 .contact-email i {
-    margin-right: 8px; /* Space between icon and text */
-    font-size: 24px; /* Adjust to desired size */
+  margin-right: 8px;
+  font-size: 24px;
 }
 
 .contact-email:hover {
-    color: #FF4655; /* Change color on hover to your theme color */
+  color: #FF4655;
 }
 
 .footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #111111;
-    color: white;
-    width: 100%;
-    font-family: "Rubik", sans-serif;
-    border-top: 2px solid #242424;
+  text-align: center;
+  padding: 20px;
+  background-color: #111111;
+  color: white;
+  width: 100%;
+  font-family: "Rubik", sans-serif;
+  border-top: 2px solid #242424;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 #about {
-    scroll-margin-top: 125px; /* Adjust this value to match the height of your fixed navbar */
+  scroll-margin-top: 125px;
 }
 
 #projects {
-    scroll-margin-top: 80px; /* Adjust this value to match the height of your fixed navbar */
+  scroll-margin-top: 80px;
 }
 
 #videos {
-    scroll-margin-top: 80px; /* Adjust this value to match the height of your fixed navbar */
+  scroll-margin-top: 80px;
 }
 
 .youtube-container {
@@ -364,4 +350,68 @@ html {
   margin: 0 auto;
   position: relative;
   flex: 1 1 100%;
+}
+
+@media (max-width: 768px) {
+  .projects-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .projects {
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .projects h1 {
+    font-size: 3rem;
+  }
+
+  .projects h2 {
+    font-size: 1.5rem;
+  }
+
+  .projects p {
+    font-size: 1rem;
+    max-width: 90%;
+    min-width: auto;
+    margin: 0 auto;
+  }
+
+  .project-card-container {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .about-me h1,
+  .contact-me h1 {
+    font-size: 3rem;
+  }
+
+  .about-me p,
+  .contact-me p {
+    font-size: 1rem;
+    max-width: 100%;
+    min-width: auto;
+  }
+
+  .resume-button {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+
+  .slideshow-container {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .video-gameplay {
+    width: 100%;
+    height: auto;
+  }
+
+  .video-gameplay video {
+    aspect-ratio: 16/9;
+  }
 }
