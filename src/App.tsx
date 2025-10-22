@@ -86,7 +86,7 @@ function App() {
           </p>
           <div className="resume" style={{ display: "flex" }}>
             <a
-              href="/assets/jNguyen_Resume24.pdf"
+              href="/assets/jNguyen_Resume24_e.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="resume-button"
