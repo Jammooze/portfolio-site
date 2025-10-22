@@ -227,14 +227,18 @@ function App() {
           <div className="youtube-container">
             <div
               style={{
-                padding: "53.61% 0 0 0",
                 position: "relative",
+                paddingTop: "56.25%", // ✅ Correct 16:9 ratio (9 / 16 = 0.5625)
+                backgroundColor: "black", // ✅ Removes white bars on sides
+                overflow: "hidden",
+                borderRadius: "12px", // optional — for rounded corners
               }}
             >
               <iframe
-                src="https://player.vimeo.com/video/1099043533?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                src="https://player.vimeo.com/video/1129419310?h=030f3d6ebb"
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
                 style={{
                   position: "absolute",
                   top: 0,
@@ -242,7 +246,7 @@ function App() {
                   width: "100%",
                   height: "100%",
                 }}
-                title="Psylocke Weight Animation"
+                title="Animation"
                 allowFullScreen
               ></iframe>
             </div>
