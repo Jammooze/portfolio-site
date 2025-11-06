@@ -95,7 +95,7 @@ export default function Home() {
       {/* Hero Section */}
       <section
         id="hero"
-        className="relative w-full h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden"
+        className="relative w-full h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden pt-32"
       >
         <video
           className="absolute top-0 left-0 w-full h-full object-cover opacity-40"
@@ -168,6 +168,7 @@ export default function Home() {
                 width={500}
                 height={350}
                 className="rounded-lg shadow-lg object-cover"
+                priority // <-- preload image
               />
             </div>
             <div className="flex gap-4 mt-4">

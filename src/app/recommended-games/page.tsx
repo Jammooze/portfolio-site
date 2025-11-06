@@ -45,7 +45,7 @@ export default function RecommendedGames() {
     <div className="min-h-screen flex flex-col items-center bg-gray-900 text-white px-6 py-16 font-rubik">
       <Navbar />
       {/* Top Image */}
-      <div className="mb-12">
+      <div className="mb-12 pt-32">
         <Image
           src="/images/cat-gaming.png" // replace with your image
           alt="Games Banner"
