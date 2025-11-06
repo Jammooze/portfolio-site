@@ -55,7 +55,7 @@ export default function Navbar() {
         {/* Logo / Social Links */}
         <div className="flex items-center gap-4">
           <a
-            href="https://www.artstation.com/jamesnguyen"
+            href="https://www.artstation.com/jammooze"
             target="_blank"
             rel="noopener noreferrer"
           >

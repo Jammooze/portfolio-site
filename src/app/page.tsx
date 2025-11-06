@@ -140,7 +140,7 @@ export default function Home() {
       </section>
 
       {/* TechStack Marquee */}
-      <div className="pt-8 bottom-20 w-full overflow-hidden">
+      <div className="pt-8 bottom-20 w-full overflow-hidden pt-16">
         <motion.div
           className="flex whitespace-nowrap items-center"
           animate={{ x: ["0%", "-50%"] }}
@@ -385,7 +385,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="text-gray-500 text-sm py-6">
-        &copy; {new Date().getFullYear()} Built by James Nguyen &copy; 2024
+        &copy; 2024 Built by James Nguyen
       </footer>
     </div>
   );
