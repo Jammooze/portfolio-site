@@ -40,7 +40,7 @@ const projects = [
   },
   {
     title: "Cal Hacks 2023",
-    description: "AI ChatBot using JavaFX and OpenAI's GPT 3.5 Turbo API",
+    description: "AI ChatBot using JavaFX and OpenAI&apos;s GPT 3.5 Turbo API",
     image: "/images/project2.png",
     link: "https://github.com/Jammooze/CalHacks2023",
   },
@@ -58,9 +58,6 @@ const animationVideos = [
 ];
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  // Photo gallery state
   const [currentIndex, setCurrentIndex] = useState(0);
   const galleryImages = [
     "/images/gallery/img1.png",
@@ -73,7 +70,6 @@ export default function Home() {
     "/images/gallery/img8.png",
   ];
 
-  // Animations carousel state
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 
   const nextVideo = () =>
@@ -90,14 +86,8 @@ export default function Home() {
         : currentVideoIndex - 1
     );
 
-  const mobileMenuVariants = {
-    hidden: { opacity: 0, height: 0, transition: { duration: 0.3 } },
-    visible: { opacity: 1, height: "auto", transition: { duration: 0.3 } },
-  };
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-between bg-gradient-to-b from-gray-900 to-gray-800 text-white font-rubik relative">
-      {/* Navbar Section */}
       <div className="fixed top-0 left-0 w-full z-50 bg-gray-900/90 backdrop-blur-md">
         <Navbar />
       </div>
@@ -129,8 +119,8 @@ export default function Home() {
           </div>
           <h1 className="text-5xl font-extrabold mb-4">James Nguyen</h1>
           <p className="text-lg text-gray-300 mb-8 text-center max-w-md">
-            A showcase of my work as a <br /> Software Engineer / Animator /
-            Developer
+            A showcase of my work as a <br />
+            Software Engineer / Animator / Developer
           </p>
           <div className="flex gap-4">
             <a
@@ -170,7 +160,6 @@ export default function Home() {
       {/* About Me Section */}
       <section id="about" className="w-full max-w-6xl px-6 py-16 mx-auto pt-24">
         <div className="flex flex-col sm:flex-row gap-8 items-start">
-          {/* Photo Carousel */}
           <div className="flex flex-col sm:w-1/2 items-center">
             <div className="w-full relative flex justify-center">
               <Image
@@ -181,8 +170,6 @@ export default function Home() {
                 className="rounded-lg shadow-lg object-cover"
               />
             </div>
-
-            {/* Buttons Below */}
             <div className="flex gap-4 mt-4">
               <button
                 onClick={() =>
@@ -212,31 +199,29 @@ export default function Home() {
           </div>
 
           <div className="sm:w-1/2 text-center sm:text-left">
-            <h1 className="text-6xl font-bold mb-4">Hey, I'm James! 👋</h1>
+            <h1 className="text-6xl font-bold mb-4">Hey, I&apos;m James! 👋</h1>
             <p className="text-gray-300 text-lg leading-relaxed">
-              I'm a student passionate about Technology and 3D Animation. I love
-              blending technology and creativity to build interactive
+              I&apos;m a student passionate about Technology and 3D Animation. I
+              love blending technology and creativity to build interactive
               experiences and animations. My journey started in computer
               science, but my love for art and storytelling has driven me to
               explore animation, game development, and creative coding projects.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed mt-4">
-              I'm always learning new tools and techniques to push the
-              boundaries of what I can create, whether it's designing
+              I&apos;m always learning new tools and techniques to push the
+              boundaries of what I can create, whether it&apos;s designing
               animations, building web applications, or collaborating on
               creative projects with other artists and developers.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed mt-4">
               Check out some of my favorite games!
             </p>
-
-            {/* Recommended Games Button */}
             <div className="mt-6">
               <a
                 href="/recommended-games"
                 className="px-6 py-3 rounded-full bg-blue-500 hover:bg-blue-600 transition font-medium"
               >
-                You've Gotta Play These!
+                You&apos;ve Gotta Play These!
               </a>
             </div>
           </div>
@@ -249,20 +234,18 @@ export default function Home() {
         className="w-full max-w-6xl px-6 py-16 mx-auto pt-24"
       >
         <div className="flex flex-col md:flex-row gap-12 items-start">
-          {/* Intro Text */}
           <div className="md:w-1/3 text-center md:text-left">
             <h1 className="text-6xl font-bold mb-10">Projects 💻</h1>
             <h2 className="text-3xl font-semibold mb-4">What I Build...</h2>
             <p className="text-gray-300 text-lg leading-relaxed">
               I enjoy working on projects that combine creativity and technology
-              — from interactive web apps and animations to tools that enhance
-              the player and user experience. Each project represents something
-              I’ve learned and refined along my journey as a developer and
-              artist.
+              &mdash; from interactive web apps and animations to tools that
+              enhance the player and user experience. Each project represents
+              something I&apos;ve learned and refined along my journey as a
+              developer and artist.
             </p>
           </div>
 
-          {/* Project Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:w-2/3">
             {projects.map((project, index) => (
               <div
@@ -302,9 +285,7 @@ export default function Home() {
         className="w-full max-w-7xl px-6 py-16 mx-auto pt-32"
       >
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Left: Video + Buttons */}
           <div className="flex flex-col w-full lg:w-2/3 items-center">
-            {/* Iframe Container */}
             <div className="w-full max-w-[900px] aspect-video rounded-xl shadow-lg overflow-hidden">
               <AnimatePresence initial={false}>
                 <motion.iframe
@@ -324,7 +305,6 @@ export default function Home() {
               </AnimatePresence>
             </div>
 
-            {/* Buttons below iframe */}
             <div className="flex gap-4 mt-4">
               <button
                 onClick={prevVideo}
@@ -341,16 +321,15 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right: Text Section */}
           <div className="md:w-1/3 text-center md:text-left">
             <h1 className="text-6xl font-bold mb-10">Animations</h1>
             <h2 className="text-3xl font-semibold mb-4 text-white">
-              I'm learning 3D Animation!
+              I&apos;m learning 3D Animation!
             </h2>
             <p className="text-gray-300 text-lg leading-relaxed">
               I learned animation using Maya and applied my skills in game and
               cinematic projects. This section showcases some of my work in 3D
-              animation and the techniques I’ve explored along the way.
+              animation and the techniques I&apos;ve explored along the way.
             </p>
           </div>
         </div>
@@ -359,17 +338,15 @@ export default function Home() {
       {/* Contact Me Section */}
       <section id="contact" className="w-full max-w-6xl px-6 py-16 mx-auto">
         <div className="flex flex-col md:flex-row gap-12 items-start">
-          {/* Intro Text */}
           <div className="md:w-1/3 text-center md:text-left">
             <h1 className="text-6xl font-bold mb-10">Contact Me</h1>
-            <h2 className="text-3xl font-semibold mb-4">Let's Connect!</h2>
+            <h2 className="text-3xl font-semibold mb-4">Let&apos;s Connect!</h2>
             <p className="text-gray-300 text-lg leading-relaxed">
               I love collaborating on exciting projects, sharing knowledge, and
               connecting with fellow developers and artists. Feel free to reach
-              out via email or social media — I’d be happy to chat about
-              opportunities, projects, or just creative ideas.
+              out via email or social media &mdash; I&apos;d be happy to chat
+              about opportunities, projects, or just creative ideas.
             </p>
-            {/* Email */}
             <a
               href="mailto:nguyejames03@gmail.com"
               className="mt-4 inline-block px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full font-medium transition"
@@ -378,9 +355,7 @@ export default function Home() {
             </a>
           </div>
 
-          {/* Video + Text Below */}
           <div className="w-full md:w-2/3 flex flex-col items-center">
-            {/* Video Container */}
             <div className="relative group w-full rounded-xl overflow-hidden shadow-lg">
               <video
                 src="/images/jabillson-gaming.mp4"
@@ -389,8 +364,6 @@ export default function Home() {
                 loop
                 muted
               />
-
-              {/* Hover overlay */}
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <a
                   href="https://youtube.com/@jabillson?si=qX-Me7sbUl4qG5g4"
@@ -402,17 +375,16 @@ export default function Home() {
                 </a>
               </div>
             </div>
-
-            {/* Text below video */}
             <p className="text-gray-300 text-center mt-4 text-lg">
-              "Study? Nah we gaming!" - Jabillson
+              &quot;Study? Nah we gaming!&quot; - Jabillson
             </p>
           </div>
         </div>
       </section>
+
       {/* Footer */}
       <footer className="text-gray-500 text-sm py-6">
-        © {new Date().getFullYear()} Built by James Nguyen © 2024
+        &copy; {new Date().getFullYear()} Built by James Nguyen &copy; 2024
       </footer>
     </div>
   );
