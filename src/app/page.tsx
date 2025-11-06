@@ -122,7 +122,7 @@ export default function Home() {
             A showcase of my work as a <br />
             Software Engineer / Animator / Developer
           </p>
-          <div className="flex gap-4">
+          <div className="flex gap-4 pb-16">
             <a
               href="https://www.artstation.com/jammooze"
               className="px-6 py-3 rounded-full bg-blue-500 hover:bg-blue-600 transition font-medium"
@@ -200,7 +200,7 @@ export default function Home() {
           </div>
 
           <div className="sm:w-1/2 text-center sm:text-left">
-            <h1 className="text-6xl font-bold mb-4">Hey, I&apos;m James! 👋</h1>
+            <h1 className="text-6xl font-bold mb-4">Hey, I&apos;m James!👋</h1>
             <p className="text-gray-300 text-lg leading-relaxed">
               I&apos;m a student passionate about Technology and 3D Animation. I
               love blending technology and creativity to build interactive
