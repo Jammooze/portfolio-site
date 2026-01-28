@@ -3,32 +3,28 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Navbar from "@/components/navbar";
+import SectionDivider from "@/components/SectionDivider";
 
 const techStack = [
   { src: "/logos/vscode-original.svg", alt: "VS Code" },
   { src: "/logos/unrealengine-original.svg", alt: "Unreal Engine" },
   { src: "/logos/unity-original.svg", alt: "Unity" },
   { src: "/logos/typescript-original.svg", alt: "TypeScript" },
-  { src: "/logos/tensorflow-original.svg", alt: "TensorFlow" },
   { src: "/logos/python-original.svg", alt: "Python" },
   { src: "/logos/react-original.svg", alt: "React" },
   { src: "/logos/postgresql-original.svg", alt: "PostgreSQL" },
   { src: "/logos/nuxt-original.svg", alt: "Nuxt" },
-  { src: "/logos/opencv-original.svg", alt: "OpenCV" },
   { src: "/logos/nextjs-original.svg", alt: "Next.js" },
   { src: "/logos/mysql-original.svg", alt: "MySQL" },
   { src: "/logos/mongodb-original.svg", alt: "MongoDB" },
   { src: "/logos/maya-original.svg", alt: "Maya" },
-  { src: "/logos/lua-original.svg", alt: "Lua" },
   { src: "/logos/kotlin-original.svg", alt: "Kotlin" },
   { src: "/logos/jira-original.svg", alt: "Jira" },
   { src: "/logos/javascript-original.svg", alt: "JavaScript" },
   { src: "/logos/java-original.svg", alt: "Java" },
   { src: "/logos/git-plain.svg", alt: "Git" },
   { src: "/logos/csharp-plain.svg", alt: "C#" },
-  { src: "/logos/cplusplus-original.svg", alt: "C++" },
   { src: "/logos/apache-original.svg", alt: "Apache" },
-  { src: "/logos/amazonwebservices-original-wordmark.svg", alt: "AWS" },
 ];
 
 const projects = [
@@ -40,7 +36,7 @@ const projects = [
   },
   {
     title: "Cal Hacks 2023",
-    description: "AI ChatBot using JavaFX and OpenAI&apos;s GPT 3.5 Turbo API",
+    description: "AI ChatBot using JavaFX and OpenAI GPT 3.5 Turbo API",
     image: "/images/project2.png",
     link: "https://github.com/Jammooze/CalHacks2023",
   },
@@ -54,6 +50,7 @@ const projects = [
 
 const animationVideos = [
   "https://player.vimeo.com/video/1129419310?h=030f3d6ebb",
+  "https://player.vimeo.com/video/1151375419?h=5855ebc7d7",
   "https://player.vimeo.com/video/1099043533?h=e046a971d2",
 ];
 
@@ -209,14 +206,12 @@ export default function Home() {
               explore animation, game development, and creative coding projects.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed mt-4">
-              I&apos;m always learning new tools and techniques to push the
-              boundaries of what I can create, whether it&apos;s designing
-              animations, building web applications, or collaborating on
-              creative projects with other artists and developers.
+              Passionate to learn new tools and techniques to push the
+              boundaries of what I can create, whether its character animation,
+              building web applications, or collaborating on creative projects
+              with other artists and developers.
             </p>
-            <p className="text-gray-300 text-lg leading-relaxed mt-4">
-              Check out some of my favorite games!
-            </p>
+            <br />
             <div className="mt-6">
               <a
                 href="/recommended-games"
@@ -229,6 +224,8 @@ export default function Home() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* Projects Section */}
       <section
         id="projects"
@@ -236,8 +233,10 @@ export default function Home() {
       >
         <div className="flex flex-col md:flex-row gap-12 items-start">
           <div className="md:w-1/3 text-center md:text-left">
-            <h1 className="text-6xl font-bold mb-10">Projects 💻</h1>
-            <h2 className="text-3xl font-semibold mb-4">What I Build...</h2>
+            <h1 className="text-6xl font-bold mb-10">Coding Projects</h1>
+            <h2 className="text-3xl font-semibold mb-4 text-blue-400">
+              What I do with Code...
+            </h2>
             <p className="text-gray-300 text-lg leading-relaxed">
               I enjoy working on projects that combine creativity and technology
               &mdash; from interactive web apps and animations to tools that
@@ -280,12 +279,15 @@ export default function Home() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* Animations Section */}
       <section
         id="animations"
-        className="w-full max-w-7xl px-6 py-16 mx-auto pt-32"
+        className="w-full max-w-6xl px-6 py-16 mx-auto pt-32"
       >
         <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left: Video */}
           <div className="flex flex-col w-full lg:w-2/3 items-center">
             <div className="w-full max-w-[900px] aspect-video rounded-xl shadow-lg overflow-hidden">
               <AnimatePresence initial={false}>
@@ -306,6 +308,7 @@ export default function Home() {
               </AnimatePresence>
             </div>
 
+            {/* Navigation Buttons */}
             <div className="flex gap-4 mt-4">
               <button
                 onClick={prevVideo}
@@ -322,9 +325,10 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="md:w-1/3 text-center md:text-left">
+          {/* Right: Text */}
+          <div className="lg:w-1/3 text-center lg:text-left">
             <h1 className="text-6xl font-bold mb-10">Animations</h1>
-            <h2 className="text-3xl font-semibold mb-4 text-white">
+            <h2 className="text-3xl font-semibold mb-4 text-blue-400">
               I&apos;m learning 3D Animation!
             </h2>
             <p className="text-gray-300 text-lg leading-relaxed">
@@ -336,12 +340,107 @@ export default function Home() {
         </div>
       </section>
 
+      <SectionDivider />
+
+      {/* Tools-Pipeline Section */}
+      <section
+        id="tech-art"
+        className="w-full max-w-6xl px-6 py-16 mx-auto pt-24"
+      >
+        <div className="flex flex-col md:flex-row gap-12 items-start">
+          {/* Left: Text */}
+          <div className="md:w-1/3 text-center md:text-left">
+            <h1 className="text-6xl font-bold mb-10">Tech & Art</h1>
+            <h2 className="text-3xl font-semibold mb-4 text-blue-400">
+              What I Build...
+            </h2>
+            <p className="text-gray-300 text-lg leading-relaxed">
+              I approach technical art by listening to artists first. By
+              understanding their creative needs, I build tools and workflows
+              that empower them to work faster, iterate freely, and focus on
+              making great art.
+            </p>
+          </div>
+
+          {/* Right: Vimeo Video + GitHub link */}
+          <div className="md:w-2/3 w-full flex flex-col items-center">
+            <div className="w-full max-w-[900px] aspect-video rounded-xl overflow-hidden shadow-lg">
+              <iframe
+                title="vimeo-player"
+                src="https://player.vimeo.com/video/1159140500?h=c1121c3207"
+                className="w-full h-full"
+                frameBorder="0"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                allowFullScreen
+              />
+            </div>
+
+            {/* GitHub Link */}
+            <a
+              href="https://github.com/Jammooze/maya-unreal-fbx-exporter-tool"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-full font-medium transition"
+            >
+              View GitHub Repository
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* Game Dev Section */}
+      <section
+        id="game-dev"
+        className="w-full max-w-6xl px-6 py-16 mx-auto pt-24"
+      >
+        <div className="flex flex-col md:flex-row gap-12 items-start">
+          {/* Left: Video */}
+          <div className="md:w-2/3 w-full flex justify-center">
+            <div className="w-full max-w-[900px] aspect-video rounded-xl overflow-hidden shadow-lg">
+              <iframe
+                title="silly-class-project"
+                src="https://player.vimeo.com/video/1159159700?h=1d10f220a6"
+                className="w-full h-full"
+                frameBorder="0"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+          {/* Right: Text */}
+          <div className="md:w-1/3 text-center md:text-left">
+            <h1 className="text-6xl font-bold mb-10">Game Dev</h1>
+            <h2 className="text-3xl font-semibold mb-4 text-blue-400">
+              My first Game Jam
+            </h2>
+            <p className="text-gray-300 text-lg leading-relaxed">
+              Fall 2025, my friend and I decided to make something completely
+              ridiculous for our campus game jam. Not a very serious, project,
+              but it was a great opportunity to experiment, learn new tools, and
+              have a lot of fun while creating.
+            </p>
+            <p className="text-gray-300 text-lg leading-relaxed">
+              <br />I look forward to making more in the future!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
       {/* Contact Me Section */}
       <section id="contact" className="w-full max-w-6xl px-6 py-16 mx-auto">
         <div className="flex flex-col md:flex-row gap-12 items-start">
           <div className="md:w-1/3 text-center md:text-left">
             <h1 className="text-6xl font-bold mb-10">Contact Me</h1>
-            <h2 className="text-3xl font-semibold mb-4">Let&apos;s Connect!</h2>
+            <h2 className="text-3xl font-semibold mb-4 text-blue-400">
+              Let&apos;s Connect!
+            </h2>
             <p className="text-gray-300 text-lg leading-relaxed">
               I love collaborating on exciting projects, sharing knowledge, and
               connecting with fellow developers and artists. Feel free to reach
