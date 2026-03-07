@@ -127,7 +127,7 @@ export default function Home() {
               ArtStation
             </a>
             <a
-              href="/resume/jNguyen_Resume24_e.pdf"
+              href="/resume/james_nguyen_resume_26.pdf"
               className="px-6 py-3 rounded-full border border-gray-400 hover:bg-gray-700 transition font-medium"
             >
               Resume
