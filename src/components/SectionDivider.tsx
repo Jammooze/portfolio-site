@@ -1,7 +1,9 @@
 export default function SectionDivider() {
   return (
-    <div className="w-full flex justify-center">
-      <div className="w-2/3 h-[2px] bg-gray-500/40 rounded-full" />
+    <div className="w-full flex justify-center py-2">
+      <div className="w-full max-w-6xl px-6">
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+      </div>
     </div>
   );
 }

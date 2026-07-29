@@ -1,32 +1,165 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #111827; /* gray-900 */
+  --background-alt: #1f2937; /* gray-800 */
+  --foreground: #f9fafb;
+  --muted: #d1d5db; /* gray-300 */
+  --muted-2: #9ca3af; /* gray-400 */
+  --accent: #3b82f6; /* blue-500 */
+  --accent-hover: #2563eb; /* blue-600 */
+  --accent-soft: #60a5fa; /* blue-400 */
+  --border: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-rubik);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer base {
   .font-rubik {
-    font-family: 'Rubik', sans-serif;
+    font-family: "Rubik", sans-serif;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: #fff;
+  }
+}
+
+@layer utilities {
+  /* Section label / eyebrow */
+  .eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+  }
+
+  /* Solid panel used for cards / media frames (no blur, matches the original look) */
+  .panel {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+  }
+
+  .panel-solid {
+    background: var(--background-alt);
+    border: 1px solid var(--border);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.75rem 1.75rem;
+    font-weight: 500;
+    background: var(--accent);
+    color: #fff;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.75rem 1.75rem;
+    font-weight: 500;
+    border: 1px solid #4b5563; /* gray-600 */
+    color: var(--foreground);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .btn-secondary:hover {
+    background: #374151; /* gray-700 */
+    transform: translateY(-1px);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    border: 1px solid #4b5563;
+    color: var(--muted-2);
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+  .chip[data-active="true"] {
+    color: #fff;
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .chip:not([data-active="true"]):hover {
+    border-color: #6b7280;
+    color: var(--foreground);
+  }
+
+  /* Seamless infinite marquee — pure CSS so the loop never has to "reset" via JS */
+  .animate-marquee {
+    animation: marquee var(--marquee-duration, 24s) linear infinite;
+  }
+
+  /* Avatar accents: soft pulsing glow + gentle float */
+  .animate-pulse-glow {
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+  .animate-float {
+    animation: float 5s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee,
+    .animate-pulse-glow,
+    .animate-float {
+      animation: none;
+    }
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.2;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }

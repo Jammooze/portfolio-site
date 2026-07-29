@@ -1,93 +1,24 @@
-"use client";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Navbar from "@/components/navbar";
-import SectionDivider from "@/components/SectionDivider";
-
-const techStack = [
-  { src: "/logos/vscode-original.svg", alt: "VS Code" },
-  { src: "/logos/unrealengine-original.svg", alt: "Unreal Engine" },
-  { src: "/logos/unity-original.svg", alt: "Unity" },
-  { src: "/logos/typescript-original.svg", alt: "TypeScript" },
-  { src: "/logos/python-original.svg", alt: "Python" },
-  { src: "/logos/react-original.svg", alt: "React" },
-  { src: "/logos/postgresql-original.svg", alt: "PostgreSQL" },
-  { src: "/logos/nuxt-original.svg", alt: "Nuxt" },
-  { src: "/logos/nextjs-original.svg", alt: "Next.js" },
-  { src: "/logos/mysql-original.svg", alt: "MySQL" },
-  { src: "/logos/mongodb-original.svg", alt: "MongoDB" },
-  { src: "/logos/maya-original.svg", alt: "Maya" },
-  { src: "/logos/kotlin-original.svg", alt: "Kotlin" },
-  { src: "/logos/jira-original.svg", alt: "Jira" },
-  { src: "/logos/javascript-original.svg", alt: "JavaScript" },
-  { src: "/logos/java-original.svg", alt: "Java" },
-  { src: "/logos/git-plain.svg", alt: "Git" },
-  { src: "/logos/csharp-plain.svg", alt: "C#" },
-  { src: "/logos/apache-original.svg", alt: "Apache" },
-];
-
-const projects = [
-  {
-    title: "BOE Sidewalk Rover",
-    description: "Fall 2025",
-    image: "/images/sidewalk_rover.jpg",
-    link: "https://ascent.cysun.org/project/project/view/249",
-  },
-  {
-    title: "Cal Hacks 2023",
-    description: "AI ChatBot using JavaFX and OpenAI GPT 3.5 Turbo API",
-    image: "/images/project2.png",
-    link: "https://github.com/Jammooze/CalHacks2023",
-  },
-  {
-    title: "2D Unity Cafe Game",
-    description: "Game development project using Unity and C#.",
-    image: "/images/project3.png",
-    link: "#",
-  },
-];
-
-const animationVideos = [
-  "https://player.vimeo.com/video/1129419310?h=030f3d6ebb",
-  "https://player.vimeo.com/video/1151375419?h=5855ebc7d7",
-  "https://player.vimeo.com/video/1099043533?h=e046a971d2",
-];
+import Section from "@/components/Section";
+import TechMarquee from "@/components/TechMarquee";
+import ImageCarousel from "@/components/ImageCarousel";
+import VideoCarousel from "@/components/VideoCarousel";
+import ProjectsGrid from "@/components/ProjectsGrid";
+import SectionIntro from "@/components/SectionIntro";
+import Footer from "@/components/Footer";
+import {
+  techStack,
+  projects,
+  animationVideos,
+  techArtVideos,
+  galleryImages,
+} from "@/data/portfolio";
 
 export default function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const galleryImages = [
-    "/images/gallery/img1.png",
-    "/images/gallery/img2.png",
-    "/images/gallery/img3.png",
-    "/images/gallery/img4.png",
-    "/images/gallery/img5.png",
-    "/images/gallery/img6.png",
-    "/images/gallery/img7.png",
-    "/images/gallery/img8.png",
-  ];
-
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-
-  const nextVideo = () =>
-    setCurrentVideoIndex(
-      currentVideoIndex === animationVideos.length - 1
-        ? 0
-        : currentVideoIndex + 1
-    );
-
-  const prevVideo = () =>
-    setCurrentVideoIndex(
-      currentVideoIndex === 0
-        ? animationVideos.length - 1
-        : currentVideoIndex - 1
-    );
-
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between bg-gradient-to-b from-gray-900 to-gray-800 text-white font-rubik relative">
-      <div className="fixed top-0 left-0 w-full z-50 bg-gray-900/90 backdrop-blur-md">
-        <Navbar />
-      </div>
+    <div className="min-h-screen flex flex-col items-center bg-[var(--background)] text-white font-rubik relative">
+      <Navbar />
 
       {/* Hero Section */}
       <section
@@ -100,35 +31,52 @@ export default function Home() {
           loop
           muted
           playsInline
+          preload="none"
         >
           <source src="/images/gameplayFootage.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/60 to-gray-900/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/60 to-gray-900/80" />
         <div className="relative z-10 flex flex-col items-center justify-center px-6">
-          <div className="mb-6">
-            <Image
-              src="/images/jimmypfp.png"
-              alt="James Nguyen"
-              width={250}
-              height={250}
-              className="rounded-full border-4 border-blue-500 shadow-lg"
-            />
+          <div className="mb-6 relative flex items-center justify-center">
+            <div className="absolute w-[280px] h-[280px] rounded-full bg-blue-500/50 blur-3xl animate-pulse-glow" />
+            <div className="relative animate-float">
+              <Image
+                src="/images/jimmypfp.png"
+                alt="James Nguyen"
+                width={250}
+                height={250}
+                priority
+                className="rounded-full border-4 border-blue-500 shadow-lg shadow-blue-500/30 transition-transform duration-300 hover:scale-105"
+              />
+
+              {/* Discord-style status badge */}
+              <div className="absolute bottom-1 right-1 translate-x-[12%] translate-y-[10%] flex items-center gap-1.5 pl-2 pr-2.5 py-1 rounded-full bg-gray-900 border border-gray-700 shadow-lg">
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                </span>
+                <span className="text-[11px] sm:text-xs font-medium text-gray-200 whitespace-nowrap">
+                  Currently Studying at Gnomon
+                </span>
+              </div>
+            </div>
           </div>
           <h1 className="text-5xl font-extrabold mb-4">James Nguyen</h1>
           <p className="text-lg text-gray-300 mb-8 text-center max-w-md">
-            A showcase of my work as a <br />
-            Software Engineer / Animator / Developer
+            Software Developer / Animator / Technical Artist
           </p>
-          <div className="flex gap-4 pb-16">
+          <div className="flex flex-wrap justify-center gap-4 pb-16">
             <a
               href="https://www.artstation.com/jammooze"
-              className="px-6 py-3 rounded-full bg-blue-500 hover:bg-blue-600 transition font-medium"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
             >
               ArtStation
             </a>
             <a
               href="/resume/james_nguyen_resume_26.pdf"
-              className="px-6 py-3 rounded-full border border-gray-400 hover:bg-gray-700 transition font-medium"
+              className="btn-secondary"
             >
               Resume
             </a>
@@ -136,266 +84,110 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TechStack Marquee */}
-      <div className="pt-8 bottom-20 w-full overflow-hidden pt-16">
-        <motion.div
-          className="flex whitespace-nowrap items-center"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-        >
-          {[...techStack, ...techStack].map((tech, index) => (
-            <motion.img
-              key={index}
-              src={tech.src}
-              alt={tech.alt}
-              className="mx-8 h-10 w-auto opacity-70 hover:opacity-100 transition"
-            />
-          ))}
-        </motion.div>
-      </div>
+      <TechMarquee items={techStack} />
 
       {/* About Me Section */}
-      <section id="about" className="w-full max-w-6xl px-6 py-16 mx-auto pt-24">
-        <div className="flex flex-col sm:flex-row gap-8 items-start">
-          <div className="flex flex-col sm:w-1/2 items-center">
-            <div className="w-full relative flex justify-center">
-              <Image
-                src={galleryImages[currentIndex]}
-                alt={`Project ${currentIndex + 1}`}
-                width={500}
-                height={350}
-                className="rounded-lg shadow-lg object-cover"
-                priority // <-- preload image
-              />
-            </div>
-            <div className="flex gap-4 mt-4">
-              <button
-                onClick={() =>
-                  setCurrentIndex(
-                    currentIndex === 0
-                      ? galleryImages.length - 1
-                      : currentIndex - 1
-                  )
-                }
-                className="px-4 py-2 bg-gray-800/70 text-white rounded-full hover:bg-gray-700 transition"
-              >
-                ◀
-              </button>
-              <button
-                onClick={() =>
-                  setCurrentIndex(
-                    currentIndex === galleryImages.length - 1
-                      ? 0
-                      : currentIndex + 1
-                  )
-                }
-                className="px-4 py-2 bg-gray-800/70 text-white rounded-full hover:bg-gray-700 transition"
-              >
-                ▶
-              </button>
-            </div>
-          </div>
+      <Section id="about" tone="base">
+        <div className="flex flex-col sm:flex-row gap-8 items-center sm:items-start">
+          <ImageCarousel images={galleryImages} altPrefix="Gallery" />
 
           <div className="sm:w-1/2 text-center sm:text-left">
-            <h1 className="text-6xl font-bold mb-4">Hey, I&apos;m James!👋</h1>
+            <h2 className="text-6xl font-bold mb-4">Hey, I&apos;m James!👋</h2>
             <p className="text-gray-300 text-lg leading-relaxed">
-              I&apos;m a student passionate about Technology and 3D Animation. I
-              love blending technology and creativity to build interactive
-              experiences and animations. My journey started in computer
-              science, but my love for art and storytelling has driven me to
-              explore animation, game development, and creative coding projects.
+              I&apos;m endlessly curious about technology, art, and the ways
+              they come together to create meaningful experiences. I&apos;m
+              constantly expanding my technical and creative skills in
+              interactive media, 3D animation, film, and game development.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed mt-4">
-              Passionate to learn new tools and techniques to push the
-              boundaries of what I can create, whether its character animation,
-              building web applications, or collaborating on creative projects
-              with other artists and developers.
+              I began my journey studying computer science, where I built a
+              strong technical foundation. Along the way, I discovered a
+              passion for 3D animation, filmmaking, and games&mdash;creative
+              fields that allow me to combine problem-solving with
+              storytelling. Whether I&apos;m animating a character, building
+              an interactive experience, or learning a new tool, I&apos;m
+              always excited to create, experiment, and grow.
             </p>
-            <br />
-            <div className="mt-6">
+            <div className="mt-6 flex justify-center sm:justify-start">
               <a
                 href="/recommended-games"
-                className="px-6 py-3 rounded-full bg-blue-500 hover:bg-blue-600 transition font-medium"
+                className="group relative inline-flex items-center"
               >
-                You&apos;ve Gotta Play These!
+                <Image
+                  src="/images/glorp-button.png"
+                  alt="You've Gotta Play These!"
+                  width={150}
+                  height={97}
+                  className="drop-shadow-lg transition-transform duration-300 group-hover:scale-110"
+                />
+                <span className="pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-gray-700 bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
+                  You&apos;ve gotta play these games!
+                  <span className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-gray-900" />
+                </span>
               </a>
             </div>
           </div>
         </div>
-      </section>
-
-      <SectionDivider />
+      </Section>
 
       {/* Projects Section */}
-      <section
-        id="projects"
-        className="w-full max-w-6xl px-6 py-16 mx-auto pt-24"
-      >
-        <div className="flex flex-col md:flex-row gap-12 items-start">
-          <div className="md:w-1/3 text-center md:text-left">
-            <h1 className="text-6xl font-bold mb-10">Coding Projects</h1>
-            <h2 className="text-3xl font-semibold mb-4 text-blue-400">
-              What I do with Code...
-            </h2>
-            <p className="text-gray-300 text-lg leading-relaxed">
-              I enjoy working on projects that combine creativity and technology
-              &mdash; from interactive web apps and animations to tools that
-              enhance the player and user experience. Each project represents
-              something I&apos;ve learned and refined along my journey as a
-              developer and artist.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:w-2/3">
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className="relative group rounded-xl overflow-hidden shadow-lg cursor-pointer"
-              >
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  width={500}
-                  height={300}
-                  className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center text-center p-4">
-                  <h3 className="text-2xl font-bold mb-2 text-white">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-300 mb-4">{project.description}</p>
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-full text-white font-medium transition"
-                  >
-                    View Project
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
+      <Section id="projects" tone="alt">
+        <div className="max-w-2xl mb-10 text-center md:text-left mx-auto md:mx-0">
+          <h2 className="text-6xl font-bold mb-4">Projects</h2>
+          <h3 className="text-3xl font-semibold mb-4 text-blue-400">
+            Check out some cool stuff...
+          </h3>
+          <p className="text-gray-300 text-lg leading-relaxed">
+            I enjoy working on projects that combine creativity and technology
+            &mdash; from interactive web apps and animations to tools that
+            enhance the player and user experience. This grid grows as I ship
+            new things, so check back for more.
+          </p>
         </div>
-      </section>
 
-      <SectionDivider />
+        <ProjectsGrid projects={projects} />
+      </Section>
 
       {/* Animations Section */}
-      <section
-        id="animations"
-        className="w-full max-w-6xl px-6 py-16 mx-auto pt-32"
-      >
+      <Section id="animations" tone="base">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Left: Video */}
-          <div className="flex flex-col w-full lg:w-2/3 items-center">
-            <div className="w-full max-w-[900px] aspect-video rounded-xl shadow-lg overflow-hidden">
-              <AnimatePresence initial={false}>
-                <motion.iframe
-                  key={currentVideoIndex}
-                  src={animationVideos[currentVideoIndex]}
-                  title={`vimeo-player-${currentVideoIndex}`}
-                  frameBorder="0"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  allowFullScreen
-                  className="w-full h-full"
-                  initial={{ x: 300, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: -300, opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                />
-              </AnimatePresence>
-            </div>
+          <VideoCarousel videos={animationVideos} />
 
-            {/* Navigation Buttons */}
-            <div className="flex gap-4 mt-4">
-              <button
-                onClick={prevVideo}
-                className="px-4 py-2 bg-gray-800/70 text-white rounded-full hover:bg-gray-700 transition"
-              >
-                ◀
-              </button>
-              <button
-                onClick={nextVideo}
-                className="px-4 py-2 bg-gray-800/70 text-white rounded-full hover:bg-gray-700 transition"
-              >
-                ▶
-              </button>
-            </div>
-          </div>
-
-          {/* Right: Text */}
-          <div className="lg:w-1/3 text-center lg:text-left">
-            <h1 className="text-6xl font-bold mb-10">Animations</h1>
-            <h2 className="text-3xl font-semibold mb-4 text-blue-400">
-              I&apos;m learning 3D Animation!
-            </h2>
-            <p className="text-gray-300 text-lg leading-relaxed">
-              I learned animation using Maya and applied my skills in game and
-              cinematic projects. This section showcases some of my work in 3D
-              animation and the techniques I&apos;ve explored along the way.
-            </p>
+          <div className="lg:w-1/3">
+            <SectionIntro
+              title="Animations"
+              eyebrow="I'm learning 3D Animation!"
+            >
+              Animation has inspired me for as long as I can remember. I grew
+              up watching Pixar films, and <em>Toy Story 2</em> is still my
+              favorite to this day. What started as admiration for great
+              storytelling has become the career I&apos;m working toward. My
+              goal is to contribute to a film or game as a 3D Character
+              Animator, and I&apos;m always looking for opportunities to
+              learn, improve, and get one step closer.
+            </SectionIntro>
           </div>
         </div>
-      </section>
-
-      <SectionDivider />
+      </Section>
 
       {/* Tools-Pipeline Section */}
-      <section
-        id="tech-art"
-        className="w-full max-w-6xl px-6 py-16 mx-auto pt-24"
-      >
-        <div className="flex flex-col md:flex-row gap-12 items-start">
-          {/* Left: Text */}
-          <div className="md:w-1/3 text-center md:text-left">
-            <h1 className="text-6xl font-bold mb-10">Tech & Art</h1>
-            <h2 className="text-3xl font-semibold mb-4 text-blue-400">
-              What I Build...
-            </h2>
-            <p className="text-gray-300 text-lg leading-relaxed">
-              I approach technical art by listening to artists first. By
-              understanding their creative needs, I build tools and workflows
-              that empower them to work faster, iterate freely, and focus on
-              making great art.
-            </p>
+      <Section id="tech-art" tone="alt">
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="lg:w-1/3">
+            <SectionIntro title="Tech & Art" eyebrow="Supporting Artists">
+              I build tools that take the friction out of an artist&apos;s
+              workflow, from pipeline utilities to scripts that help animators
+              move faster through repetitive work. I&apos;m currently expanding
+              into character rigging as well.
+            </SectionIntro>
           </div>
 
-          {/* Right: Vimeo Video + GitHub link */}
-          <div className="md:w-2/3 w-full flex flex-col items-center">
-            <div className="w-full max-w-[900px] aspect-video rounded-xl overflow-hidden shadow-lg">
-              <iframe
-                title="vimeo-player"
-                src="https://player.vimeo.com/video/1159140500?h=c1121c3207"
-                className="w-full h-full"
-                frameBorder="0"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                allowFullScreen
-              />
-            </div>
-
-            {/* GitHub Link */}
-            <a
-              href="https://github.com/Jammooze/maya-unreal-fbx-exporter-tool"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-block px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-full font-medium transition"
-            >
-              View GitHub Repository
-            </a>
-          </div>
+          <VideoCarousel videos={techArtVideos} />
         </div>
-      </section>
-
-      <SectionDivider />
+      </Section>
 
       {/* Game Dev Section */}
-      <section
-        id="game-dev"
-        className="w-full max-w-6xl px-6 py-16 mx-auto pt-24"
-      >
+      <Section id="game-dev" tone="base">
         <div className="flex flex-col md:flex-row gap-12 items-start">
           {/* Left: Video */}
           <div className="md:w-2/3 w-full flex justify-center">
@@ -404,6 +196,7 @@ export default function Home() {
                 title="silly-class-project"
                 src="https://player.vimeo.com/video/1159159700?h=1d10f220a6"
                 className="w-full h-full"
+                loading="lazy"
                 frameBorder="0"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
@@ -412,35 +205,27 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right: Text */}
-          <div className="md:w-1/3 text-center md:text-left">
-            <h1 className="text-6xl font-bold mb-10">Game Dev</h1>
-            <h2 className="text-3xl font-semibold mb-4 text-blue-400">
-              My first Game Jam
-            </h2>
-            <p className="text-gray-300 text-lg leading-relaxed">
+          <div className="md:w-1/3">
+            <SectionIntro title="Game Dev" eyebrow="My first Game Jam">
               Fall 2025, my friend and I decided to make something completely
               ridiculous for our campus game jam. Not a very serious, project,
               but it was a great opportunity to experiment, learn new tools, and
               have a lot of fun while creating.
-            </p>
-            <p className="text-gray-300 text-lg leading-relaxed">
+              <br />
               <br />I look forward to making more in the future!
-            </p>
+            </SectionIntro>
           </div>
         </div>
-      </section>
-
-      <SectionDivider />
+      </Section>
 
       {/* Contact Me Section */}
-      <section id="contact" className="w-full max-w-6xl px-6 py-16 mx-auto">
+      <Section id="contact" tone="alt">
         <div className="flex flex-col md:flex-row gap-12 items-start">
           <div className="md:w-1/3 text-center md:text-left">
-            <h1 className="text-6xl font-bold mb-10">Contact Me</h1>
-            <h2 className="text-3xl font-semibold mb-4 text-blue-400">
+            <h2 className="text-6xl font-bold mb-10">Contact Me</h2>
+            <h3 className="text-3xl font-semibold mb-4 text-blue-400">
               Let&apos;s Connect!
-            </h2>
+            </h3>
             <p className="text-gray-300 text-lg leading-relaxed">
               I love collaborating on exciting projects, sharing knowledge, and
               connecting with fellow developers and artists. Feel free to reach
@@ -449,7 +234,7 @@ export default function Home() {
             </p>
             <a
               href="mailto:nguyejames03@gmail.com"
-              className="mt-4 inline-block px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full font-medium transition"
+              className="btn-primary mt-6"
             >
               nguyejames03@gmail.com
             </a>
@@ -463,6 +248,8 @@ export default function Home() {
                 autoPlay
                 loop
                 muted
+                playsInline
+                preload="none"
               />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <a
@@ -480,12 +267,9 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Footer */}
-      <footer className="text-gray-500 text-sm py-6">
-        &copy; 2024 Built by James Nguyen
-      </footer>
+      <Footer />
     </div>
   );
 }
