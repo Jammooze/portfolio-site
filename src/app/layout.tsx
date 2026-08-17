@@ -13,7 +13,7 @@ const rubik = Rubik({
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nguyenjames.me";
 const title = "James Nguyen | Software Engineer & 3D Animator";
 const description =
-  "Portfolio of James Nguyen — a software engineer and 3D animator building interactive experiences, games, and animation pipelines.";
+  "Portfolio of James Nguyen, a software engineer and 3D animator building interactive experiences, games, and animation pipelines.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

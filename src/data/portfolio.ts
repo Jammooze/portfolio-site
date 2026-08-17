@@ -75,9 +75,70 @@ export const animationVideos = [
   "https://player.vimeo.com/video/1099043533?h=e046a971d2",
 ];
 
+// Powers the "See More" modal in the Animations section. Each entry needs a
+// title and a description (rendered as a dashed list) of what was involved
+// (software, role, technique, etc.) — update the placeholders below with the
+// real details.
+export type AnimationDetail = {
+  url: string;
+  title: string;
+  description: string[];
+};
+
+export const animationDetails: AnimationDetail[] = [
+  {
+    url: "https://player.vimeo.com/video/1129419310?h=030f3d6ebb",
+    title: "ART 4940 Semester Reel (Fall 2025)",
+    description: [
+      "Intro to 3D Animation course, taught by animator Celia Bullwinkel",
+      "Focused on animation fundamentals",
+      "Learned timing, squash and stretch, anticipation, and appeal",
+    ],
+  },
+  {
+    url: "https://player.vimeo.com/video/1151375419?h=5855ebc7d7",
+    title: "ART 4940 Dialogue Test (Fall 2025)",
+    description: [
+      "Dialogue animation test inspired by a scene from AdHoc Studio's Dispatch",
+      "Learned how to animate lip sync for dialogue",
+      "Practiced acting choices and facial animation",
+    ],
+  },
+  {
+    url: "https://player.vimeo.com/video/1099043533?h=e046a971d2",
+    title: "Psylocke Anim (Summer 2025)",
+    description: [
+      "My first test animating weight",
+      "Focused on selling heavy weight through timing and body mechanics",
+    ],
+  },
+];
+
 export const techArtVideos = [
   "https://player.vimeo.com/video/1159140500?h=c1121c3207",
   "https://player.vimeo.com/video/1199435617?h=d5127add05",
+];
+
+// Powers the "See More" modal in the Tech & Art section. Same shape as
+// animationDetails — update the placeholders below with the real details.
+export const techArtDetails: AnimationDetail[] = [
+  {
+    url: "https://player.vimeo.com/video/1159140500?h=c1121c3207",
+    title: "Maya FBX Exporter (Fall 2025)",
+    description: [
+      "My introduction to scripting tools in Maya",
+      "Focused on building small tools to speed up an artist's workflow",
+    ],
+  },
+  {
+    url: "https://player.vimeo.com/video/1199435617?h=d5127add05",
+    title: "Grass Distortion Shader (Spring 2026)",
+    description: [
+      "Grass distortion shader implemented in Unity ShaderGraph",
+      "Simulated interaction-based movement across the grass",
+      "Explored real-time shader techniques for environmental art",
+    ],
+  },
 ];
 
 export const galleryImages = [

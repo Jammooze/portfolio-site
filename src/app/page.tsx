@@ -6,12 +6,15 @@ import ImageCarousel from "@/components/ImageCarousel";
 import VideoCarousel from "@/components/VideoCarousel";
 import ProjectsGrid from "@/components/ProjectsGrid";
 import SectionIntro from "@/components/SectionIntro";
+import AnimationsSeeMore from "@/components/AnimationsSeeMore";
 import Footer from "@/components/Footer";
 import {
   techStack,
   projects,
   animationVideos,
+  animationDetails,
   techArtVideos,
+  techArtDetails,
   galleryImages,
 } from "@/data/portfolio";
 
@@ -94,19 +97,20 @@ export default function Home() {
           <div className="sm:w-1/2 text-center sm:text-left">
             <h2 className="text-6xl font-bold mb-4">Hey, I&apos;m James!👋</h2>
             <p className="text-gray-300 text-lg leading-relaxed">
-              I&apos;m endlessly curious about technology, art, and the ways
-              they come together to create meaningful experiences. I&apos;m
-              constantly expanding my technical and creative skills in
-              interactive media, 3D animation, film, and game development.
+              I&apos;ve always been curious about technology and art, and I
+              love finding ways to bring the two together. Right now I&apos;m
+              spending most of my time getting better at interactive media,
+              3D animation, film, and game development.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed mt-4">
-              I began my journey studying computer science, where I built a
-              strong technical foundation. Along the way, I discovered a
-              passion for 3D animation, filmmaking, and games&mdash;creative
-              fields that allow me to combine problem-solving with
-              storytelling. Whether I&apos;m animating a character, building
-              an interactive experience, or learning a new tool, I&apos;m
-              always excited to create, experiment, and grow.
+              I actually started out studying computer science, which gave me
+              a solid technical foundation to build on. Somewhere along the
+              way I fell in love with 3D animation, filmmaking, and games.
+              They let me combine problem-solving with storytelling, which is
+              honestly my favorite combination. Whether I&apos;m animating a
+              character, building something interactive, or just messing
+              around with a new tool, I&apos;m always down to create,
+              experiment, and see where it takes me.
             </p>
             <div className="mt-6 flex justify-center sm:justify-start">
               <a
@@ -138,10 +142,10 @@ export default function Home() {
             Check out some cool stuff...
           </h3>
           <p className="text-gray-300 text-lg leading-relaxed">
-            I enjoy working on projects that combine creativity and technology
-            &mdash; from interactive web apps and animations to tools that
-            enhance the player and user experience. This grid grows as I ship
-            new things, so check back for more.
+            I like building things that sit somewhere between creative and
+            technical: web apps, animation tools, little scripts that make
+            someone&apos;s day a bit easier. This grid keeps growing as I
+            finish new stuff, so check back every once in a while.
           </p>
         </div>
 
@@ -166,6 +170,7 @@ export default function Home() {
               Animator, and I&apos;m always looking for opportunities to
               learn, improve, and get one step closer.
             </SectionIntro>
+            <AnimationsSeeMore videos={animationDetails} />
           </div>
         </div>
       </Section>
@@ -175,11 +180,13 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-1/3">
             <SectionIntro title="Tech & Art" eyebrow="Supporting Artists">
-              I build tools that take the friction out of an artist&apos;s
-              workflow, from pipeline utilities to scripts that help animators
-              move faster through repetitive work. I&apos;m currently expanding
-              into character rigging as well.
+              I like building tools that make an artist&apos;s day easier.
+              Sometimes that&apos;s a pipeline script, sometimes it&apos;s a
+              small utility that saves an animator from doing the same
+              tedious task fifty times. Lately I&apos;ve also been teaching
+              myself character rigging.
             </SectionIntro>
+            <AnimationsSeeMore videos={techArtDetails} heading="Tech & Art Work" />
           </div>
 
           <VideoCarousel videos={techArtVideos} />
@@ -207,12 +214,12 @@ export default function Home() {
 
           <div className="md:w-1/3">
             <SectionIntro title="Game Dev" eyebrow="My first Game Jam">
-              Fall 2025, my friend and I decided to make something completely
-              ridiculous for our campus game jam. Not a very serious, project,
-              but it was a great opportunity to experiment, learn new tools, and
-              have a lot of fun while creating.
+              Back in fall 2025, my friend and I set out to make something
+              completely ridiculous for our campus game jam. It wasn&apos;t
+              meant to be a serious project, just a chance to mess around,
+              learn some new tools, and have fun making something together.
               <br />
-              <br />I look forward to making more in the future!
+              <br />I&apos;m hoping to do a lot more of these.
             </SectionIntro>
           </div>
         </div>
@@ -227,10 +234,10 @@ export default function Home() {
               Let&apos;s Connect!
             </h3>
             <p className="text-gray-300 text-lg leading-relaxed">
-              I love collaborating on exciting projects, sharing knowledge, and
-              connecting with fellow developers and artists. Feel free to reach
-              out via email or social media &mdash; I&apos;d be happy to chat
-              about opportunities, projects, or just creative ideas.
+              I genuinely enjoy meeting other developers and artists, trading
+              ideas, and hearing about what people are working on. If you
+              want to talk about a project, an opportunity, or just nerd out
+              about animation and games, my inbox is always open.
             </p>
             <a
               href="mailto:nguyejames03@gmail.com"
