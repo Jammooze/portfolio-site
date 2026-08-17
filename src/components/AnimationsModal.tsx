@@ -45,8 +45,8 @@ export default function AnimationsModal({
       />
 
       <div className="relative w-full max-w-5xl max-h-[85vh] overflow-y-auto rounded-2xl bg-gray-900 border border-gray-700 shadow-2xl">
-        <div className="sticky top-0 flex items-center justify-between px-6 py-4 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 z-10">
-          <h3 className="text-2xl font-bold">{heading}</h3>
+        <div className="sticky top-0 flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 z-10">
+          <h3 className="text-lg sm:text-2xl font-bold">{heading}</h3>
           <button
             onClick={onClose}
             aria-label="Close"
@@ -56,7 +56,7 @@ export default function AnimationsModal({
           </button>
         </div>
 
-        <div className="flex flex-col gap-10 px-6 py-8">
+        <div className="flex flex-col gap-6 sm:gap-10 px-4 sm:px-6 py-6 sm:py-8">
           {videos.map((video, index) => (
             <div key={video.url} className="flex flex-col md:flex-row gap-6">
               <div className="w-full shrink-0 md:w-3/5">

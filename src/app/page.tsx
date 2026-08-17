@@ -26,7 +26,7 @@ export default function Home() {
       {/* Hero Section */}
       <section
         id="hero"
-        className="relative w-full h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden pt-32"
+        className="relative w-full h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden pt-24 sm:pt-28 lg:pt-32"
       >
         <video
           className="absolute top-0 left-0 w-full h-full object-cover opacity-40"
@@ -40,8 +40,8 @@ export default function Home() {
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/60 to-gray-900/80" />
         <div className="relative z-10 flex flex-col items-center justify-center px-6">
-          <div className="mb-6 relative flex items-center justify-center">
-            <div className="absolute w-[280px] h-[280px] rounded-full bg-blue-500/50 blur-3xl animate-pulse-glow" />
+          <div className="mb-4 sm:mb-6 relative flex items-center justify-center">
+            <div className="absolute w-[190px] h-[190px] sm:w-[240px] sm:h-[240px] lg:w-[280px] lg:h-[280px] rounded-full bg-blue-500/50 blur-3xl animate-pulse-glow" />
             <div className="relative animate-float">
               <Image
                 src="/images/jimmypfp.png"
@@ -49,7 +49,7 @@ export default function Home() {
                 width={250}
                 height={250}
                 priority
-                className="rounded-full border-4 border-blue-500 shadow-lg shadow-blue-500/30 transition-transform duration-300 hover:scale-105"
+                className="w-[160px] h-[160px] sm:w-[210px] sm:h-[210px] lg:w-[250px] lg:h-[250px] object-cover rounded-full border-4 border-blue-500 shadow-lg shadow-blue-500/30 transition-transform duration-300 hover:scale-105"
               />
 
               {/* Discord-style status badge */}
@@ -64,11 +64,13 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <h1 className="text-5xl font-extrabold mb-4">James Nguyen</h1>
-          <p className="text-lg text-gray-300 mb-8 text-center max-w-md">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-3 sm:mb-4">
+            James Nguyen
+          </h1>
+          <p className="text-sm sm:text-base lg:text-lg text-gray-300 mb-6 sm:mb-8 text-center max-w-md">
             Software Developer / Animator / Technical Artist
           </p>
-          <div className="flex flex-wrap justify-center gap-4 pb-16">
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 pb-8 sm:pb-12 lg:pb-16">
             <a
               href="https://www.artstation.com/jammooze"
               target="_blank"
@@ -91,18 +93,20 @@ export default function Home() {
 
       {/* About Me Section */}
       <Section id="about" tone="base">
-        <div className="flex flex-col sm:flex-row gap-8 items-center sm:items-start">
+        <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start">
           <ImageCarousel images={galleryImages} altPrefix="Gallery" />
 
           <div className="sm:w-1/2 text-center sm:text-left">
-            <h2 className="text-6xl font-bold mb-4">Hey, I&apos;m James!👋</h2>
-            <p className="text-gray-300 text-lg leading-relaxed">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">
+              Hey, I&apos;m James!👋
+            </h2>
+            <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
               I&apos;ve always been curious about technology and art, and I
               love finding ways to bring the two together. Right now I&apos;m
               spending most of my time getting better at interactive media,
               3D animation, film, and game development.
             </p>
-            <p className="text-gray-300 text-lg leading-relaxed mt-4">
+            <p className="text-gray-300 text-base sm:text-lg leading-relaxed mt-4">
               I actually started out studying computer science, which gave me
               a solid technical foundation to build on. Somewhere along the
               way I fell in love with 3D animation, filmmaking, and games.
@@ -136,12 +140,14 @@ export default function Home() {
 
       {/* Projects Section */}
       <Section id="projects" tone="alt">
-        <div className="max-w-2xl mb-10 text-center md:text-left mx-auto md:mx-0">
-          <h2 className="text-6xl font-bold mb-4">Projects</h2>
-          <h3 className="text-3xl font-semibold mb-4 text-blue-400">
+        <div className="max-w-2xl mb-6 sm:mb-10 text-center md:text-left mx-auto md:mx-0">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">
+            Projects
+          </h2>
+          <h3 className="text-lg sm:text-2xl lg:text-3xl font-semibold mb-3 sm:mb-4 text-blue-400">
             Check out some cool stuff...
           </h3>
-          <p className="text-gray-300 text-lg leading-relaxed">
+          <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
             I like building things that sit somewhere between creative and
             technical: web apps, animation tools, little scripts that make
             someone&apos;s day a bit easier. This grid keeps growing as I
@@ -154,7 +160,7 @@ export default function Home() {
 
       {/* Animations Section */}
       <Section id="animations" tone="base">
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           <VideoCarousel videos={animationVideos} />
 
           <div className="lg:w-1/3">
@@ -177,7 +183,7 @@ export default function Home() {
 
       {/* Tools-Pipeline Section */}
       <Section id="tech-art" tone="alt">
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           <div className="lg:w-1/3">
             <SectionIntro title="Tech & Art" eyebrow="Supporting Artists">
               I like building tools that make an artist&apos;s day easier.
@@ -195,7 +201,7 @@ export default function Home() {
 
       {/* Game Dev Section */}
       <Section id="game-dev" tone="base">
-        <div className="flex flex-col md:flex-row gap-12 items-start">
+        <div className="flex flex-col md:flex-row gap-6 sm:gap-8 lg:gap-12 items-start">
           {/* Left: Video */}
           <div className="md:w-2/3 w-full flex justify-center">
             <div className="w-full max-w-[900px] aspect-video rounded-xl overflow-hidden shadow-lg">
@@ -227,13 +233,15 @@ export default function Home() {
 
       {/* Contact Me Section */}
       <Section id="contact" tone="alt">
-        <div className="flex flex-col md:flex-row gap-12 items-start">
+        <div className="flex flex-col md:flex-row gap-6 sm:gap-8 lg:gap-12 items-start">
           <div className="md:w-1/3 text-center md:text-left">
-            <h2 className="text-6xl font-bold mb-10">Contact Me</h2>
-            <h3 className="text-3xl font-semibold mb-4 text-blue-400">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 lg:mb-10">
+              Contact Me
+            </h2>
+            <h3 className="text-lg sm:text-2xl lg:text-3xl font-semibold mb-3 sm:mb-4 text-blue-400">
               Let&apos;s Connect!
             </h3>
-            <p className="text-gray-300 text-lg leading-relaxed">
+            <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
               I genuinely enjoy meeting other developers and artists, trading
               ideas, and hearing about what people are working on. If you
               want to talk about a project, an opportunity, or just nerd out

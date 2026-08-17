@@ -9,8 +9,8 @@ export default function RecommendedGames() {
     <div className="min-h-screen flex flex-col items-center bg-[var(--background)] text-white font-rubik">
       <Navbar />
 
-      <div className="w-full max-w-4xl px-6 pt-40 pb-20 flex flex-col items-center">
-        <div className="mb-12 relative w-full max-w-[400px] aspect-[4/1]">
+      <div className="w-full max-w-4xl px-5 sm:px-6 pt-28 sm:pt-32 lg:pt-40 pb-12 sm:pb-16 lg:pb-20 flex flex-col items-center">
+        <div className="mb-6 sm:mb-10 lg:mb-12 relative w-full max-w-[400px] aspect-[4/1]">
           <Image
             src="/images/cat-gaming.png"
             alt="Games Banner"
@@ -20,11 +20,11 @@ export default function RecommendedGames() {
           />
         </div>
 
-        <h1 className="text-6xl font-bold mb-12 text-center">
+        <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold mb-6 sm:mb-10 lg:mb-12 text-center">
           YOU NEED TO PLAY THESE GAMES! 🎮
         </h1>
 
-        <div className="flex flex-col gap-12 w-full">
+        <div className="flex flex-col gap-6 sm:gap-8 lg:gap-12 w-full">
           {recommendedGames.map((game) => (
             <a
               key={game.title}
